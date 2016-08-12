@@ -1,4 +1,4 @@
-package com.web.config;
+package com.config;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
