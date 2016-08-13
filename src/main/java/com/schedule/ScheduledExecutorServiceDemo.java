@@ -1,15 +1,13 @@
 package com.schedule;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Created by MyWorld on 2016/8/13.
  */
 public class ScheduledExecutorServiceDemo {
-    public static void main(String[] args) {
-        ScheduledExecutorService schedule = Executors.newScheduledThreadPool(10);
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        final ScheduledExecutorService schedule = Executors.newScheduledThreadPool(10);
         System.out.println(JDKTimer.getCurrentDate() + "   begin ....");
         schedule.schedule(new Runnable() {
             @Override
@@ -32,7 +30,20 @@ public class ScheduledExecutorServiceDemo {
             }
         }, 10, TimeUnit.SECONDS);
 
-        schedule.shutdown();
+        final String workerName = "  Worker3 ";
+        final ScheduledFuture<?> scheduledFuture = schedule.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(JDKTimer.getCurrentDate() + workerName + " executing !");
+            }
+        }, 0, 10, TimeUnit.SECONDS);
 
+        schedule.schedule(new Runnable() {
+            @Override
+            public void run() {
+                scheduledFuture.cancel(true);
+                schedule.shutdown();
+            }
+        }, 3, TimeUnit.MINUTES);
     }
 }
