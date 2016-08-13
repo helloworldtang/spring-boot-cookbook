@@ -6,62 +6,73 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Created by MyWorld on 2016/8/13.
+ * 一个Timer中多个schedule之间是相互干扰的
  */
 public class JDKTimer {
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("YYYY-MM-dd  HH:mm:ss SSS");
 
     public static void main(String[] args) throws InterruptedException {
-        Timer timer = new Timer();
+        final Timer timer = new Timer();
+        executeAtFixDelay(timer);
+        executeAtFixPeriod(timer);
+        atFixedDelayFixedPeriod(timer);
+        executeAtFixedTimeAndCancel(timer);
+    }
 
-        CountDownLatch countDownLatch = new CountDownLatch(2);
-        int delay = 10 * 1000;
-        String name = "Scheduler1";
-        System.out.println(getCurrentDate() + " After " + delay + "ms to execute  " + name);
-        timer.schedule(new TimerTaskWork(countDownLatch, name), delay);
-
-        name = "Scheduler2";
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 12);
-        System.out.println(getCurrentDate() + " After " + 12 + "s to execute  " + name);
-        timer.schedule(new TimerTaskWork(countDownLatch, name), calendar.getTime());
-        countDownLatch.await();
-        timer.cancel();
-        System.out.println(getCurrentDate() + "  finish!");
-
-        System.out.println(getCurrentDate() + " fixRate 10s ");
-        timer = new Timer();
+    private static void atFixedDelayFixedPeriod(Timer timer) {
+        System.out.println(getCurrentDate() + " FixedDelayFixedPeriod delay 2s,period 3s.Command cost 10s");
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println(getCurrentDate() + " fix rate  executing");
+                try {
+                    System.out.println(getCurrentDate() + " FixedDelayFixedPeriod execute ...");
+                    TimeUnit.SECONDS.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }, new Date(), 10000);
+        }, 2000, 3000);
+    }
 
+    private static void executeAtFixDelay(Timer timer) {
+        int delay = 10 * 1000;
+        String name = " fixed delay ";
+        System.out.println(getCurrentDate() + name + " After " + delay + "ms to execute  ");
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println(getCurrentDate() + " fixed delay executing!");
+            }
+        }, delay);
+    }
+
+    private static void executeAtFixPeriod(Timer timer) {
+        System.out.println(getCurrentDate() + " fixed Rate 1s ");
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println(getCurrentDate() + " fixed Rate  executing");
+            }
+        }, new Date(), 1000);
+    }
+
+    private static void executeAtFixedTimeAndCancel(final Timer timer) {
+        System.out.println(getCurrentDate() + " After " + 2 + " MINUTE to complete and cancel timer");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, 2);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timer.cancel();
+            }
+        }, calendar.getTime());
     }
 
     public static String getCurrentDate() {
         return DATE_FORMAT.format(new Date());
-    }
-
-    private static class TimerTaskWork extends TimerTask {
-
-        private final CountDownLatch countDownLatch;
-        private final String name;
-
-        public TimerTaskWork(CountDownLatch countDownLatch, String name) {
-            this.countDownLatch = countDownLatch;
-            this.name = name;
-        }
-
-        @Override
-        public void run() {
-            this.countDownLatch.countDown();
-            System.out.println(getCurrentDate() + " " + name + " executing!");
-        }
     }
 
 }
