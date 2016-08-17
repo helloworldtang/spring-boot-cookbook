@@ -1,7 +1,7 @@
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread]%logger -%msg%n</Pattern>
+            <Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread][%logger] %msg%n</Pattern>
         </encoder>
     </appender>
 
@@ -16,7 +16,7 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <encoder>
-            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread]%logger -%msg%n</pattern>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread][%logger] %msg%n</pattern>
         </encoder>
     </appender>
 
