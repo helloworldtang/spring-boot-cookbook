@@ -14,7 +14,7 @@ import com.config.AuthorSettings;
 
 @RestController
 @SpringBootApplication
-public class Ch623Application extends SpringBootServletInitializer {
+public class Ch623Application /*extends SpringBootServletInitializer*/ {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Ch623Application.class);
     @Autowired
@@ -27,10 +27,10 @@ public class Ch623Application extends SpringBootServletInitializer {
         return result;
     }
 
-    @Override
+ /*   @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(Ch623Application.class);
-    }
+    }*/
 
     public static void main(String[] args) {
         SpringApplication.run(Ch623Application.class, args);
