@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e8fe0c9-b356-4242-a111-f1975b4a2efb" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/artifacts/ch6_2_3_war.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/artifacts/ch6_2_3_war_exploded.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="" />
@@ -55,7 +54,7 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ch6_2_3.iml" afterPath="$PROJECT_DIR$/ch6_2_3.iml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ch6_2_3.iml" afterPath="" />
     </list>
     <ignored mask="*.iws" />
     <ignored path=".idea/" />
@@ -752,7 +751,7 @@
       <updated>1471415955263</updated>
       <workItem from="1471415957829" duration="2606000" />
       <workItem from="1473486522644" duration="1927000" />
-      <workItem from="1473692314156" duration="12468000" />
+      <workItem from="1473692314156" duration="12807000" />
     </task>
     <task id="LOCAL-00001" summary="fix bugs.&#10;add eventbus">
       <created>1471418887428</created>
@@ -775,11 +774,18 @@
       <option name="project" value="LOCAL" />
       <updated>1473726951700</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="del project define files">
+      <created>1473727201432</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1473727201432</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17001000" />
+    <option name="totallyTimeSpent" value="17340000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -827,7 +833,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fix bugs.&#10;add eventbus" />
     <MESSAGE value="add quartz" />
-    <option name="LAST_COMMIT_MESSAGE" value="add quartz" />
+    <MESSAGE value="del project define files" />
+    <option name="LAST_COMMIT_MESSAGE" value="del project define files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
