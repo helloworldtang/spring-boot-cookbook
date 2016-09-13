@@ -3,6 +3,7 @@ package com.schedule.quartz.factory;
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.scheduling.quartz.AdaptableJobFactory;
 
 public class MyJobFactory extends AdaptableJobFactory {
 
