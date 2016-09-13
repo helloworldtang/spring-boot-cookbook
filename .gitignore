@@ -2,4 +2,5 @@ Mask:*.iml
 Mask:*.ipr
 Mask:*.iws
 Directory:target
+Directory:.idea
 Directory:out
