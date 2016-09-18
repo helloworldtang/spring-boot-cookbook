@@ -1,7 +1,6 @@
 package com.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.RedisSystemException;
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -15,20 +14,15 @@ public class RedisDemo {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Transactional
+    @Transactional(rollbackFor = {NullPointerException.class})
     public void doBiz() {
-        //// TODO: 2016/9/13 事务没有实现
-        try {
-            BoundListOperations listOps = redisTemplate.boundListOps("myList");
-            listOps.leftPush("hello");
-            String value = getValue();
-            if (value.equals("world")) {
-                System.out.println("O,my god");
-            }
-        } catch (Exception e) {
-            RedisSystemException redisSystemException = new RedisSystemException("Fail to doBiz", e);
-            throw redisSystemException;
+        BoundListOperations listOps = redisTemplate.boundListOps("myList");
+        listOps.leftPush("hello");
+        String value = getValue();
+        if (value.equals("world")) {
+            System.out.println("O,my god");
         }
+
     }
 
     private String getValue() {
