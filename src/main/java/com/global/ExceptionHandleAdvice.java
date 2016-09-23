@@ -32,7 +32,7 @@ public class ExceptionHandleAdvice {
         RestError restError = new RestError();
         restError.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         restError.setMessage(e.getMessage());
-        restError.setDeveloperMessage("拦截Exception就可以了，如果出现error，jvm就挂了");
+        restError.setDeveloperMessage("拦截Exception就可以了，如果出现error，jvm已经挂了");
         restError.setThrowable(e);
         return restError;
     }
