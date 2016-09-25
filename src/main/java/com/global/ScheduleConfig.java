@@ -1,5 +1,6 @@
 package com.global;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
@@ -25,6 +26,7 @@ public class ScheduleConfig {
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean(TaskScheduler.class)
     public TaskScheduler taskScheduler() {
         ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
         ;
