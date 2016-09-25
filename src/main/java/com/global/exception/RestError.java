@@ -1,4 +1,4 @@
-package com.global;
+package com.global.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.util.ObjectUtils;

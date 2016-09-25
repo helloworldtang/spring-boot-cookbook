@@ -29,7 +29,7 @@ public class TransactionManagerConfig implements TransactionManagementConfigurer
 /*       @Bean
         public DataSource dataSource() {
             DruidDataSource ds = new DruidDataSource();
-            //todo add customer config
+            //todo add customer custom
             return ds;
         }*/
 

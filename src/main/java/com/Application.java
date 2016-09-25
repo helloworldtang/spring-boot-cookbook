@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.config.AuthorSettings;
+import com.custom.AuthorSettings;
 
 @RestController
 @SpringBootApplication
