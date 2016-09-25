@@ -16,6 +16,8 @@ public class ParameterRequestWrapper extends HttpServletRequestWrapper {
      *
      * @param request The request to wrap
      * @throws IllegalArgumentException if the request is null
+     * http://www.cnblogs.com/softidea/p/5903873.html
+     * http://www.cnblogs.com/softidea/p/5904831.html
      */
     private Map<String, String[]> params;
 
