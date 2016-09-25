@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
  * Created by MyWorld on 2016/8/12.
  */
 @Configuration
-@ComponentScan("com.web")
+@ComponentScan("com")
 public class SettingsConfig {
 }
