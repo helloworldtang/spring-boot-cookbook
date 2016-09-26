@@ -1,6 +1,5 @@
 package com.global.filter;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.Enumeration;
@@ -13,6 +12,7 @@ import java.util.Vector;
 public class ParameterRequestWrapper extends HttpServletRequestWrapper {
     /**
      * Constructs a request object wrapping the given request.
+     * 这个class是一个tmp，不涉及业务逻辑
      *
      * @param request The request to wrap
      * @throws IllegalArgumentException if the request is null
@@ -24,12 +24,6 @@ public class ParameterRequestWrapper extends HttpServletRequestWrapper {
     public ParameterRequestWrapper(HttpServletRequest request, Map<String, String[]> params) {
         super(request);
         this.params = params;
-        addHeaderInfoToParams(request);
-    }
-
-    private void addHeaderInfoToParams(HttpServletRequest request) {
-        request.getHeader("_pid");
-
     }
 
     @Override
@@ -54,12 +48,7 @@ public class ParameterRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public String[] getParameterValues(String name) {
-        String[] values = params.get(name);
-        if (values == null) {
-            return null;
-        } else {
-            return values;
-        }
+        return params.get(name);
     }
 
 
