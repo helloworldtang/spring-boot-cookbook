@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.Serializable;
-
 /**
  * Created by tang.cheng on 2016/9/27.
  */
@@ -15,12 +13,13 @@ public class RewriteServletPathController {
     public static final String CHANGE_USER_URL = "/change/user";
 
     @RequestMapping(CHANGE_USER_URL + "/{userId}")
-    public String pathPathVariable(@PathVariable("userId") String userId) {
-        return new PathParam("PathVariable", CHANGE_USER_URL, userId).toString();
+    public PathParam pathPathVariable(@PathVariable("userId") String userId) {
+        return new PathParam("PathVariable", CHANGE_USER_URL, userId);
     }
 
     /**
      * 经过重写HttpServletRequestWrapper中的getServletPath方法，这个rest接口永远不会被调用到
+     *
      * @param userId
      * @return
      */
@@ -32,11 +31,11 @@ public class RewriteServletPathController {
 
 }
 
-class PathParam implements Serializable{
+class PathParam {
 
     private String type;
-    private final String changeUserUrl;
-    private final String userId;
+    private String changeUserUrl;
+    private String userId;
 
     public PathParam(String type, String changeUserUrl, String userId) {
         this.type = type;
@@ -58,6 +57,14 @@ class PathParam implements Serializable{
 
     public String getUserId() {
         return userId;
+    }
+
+    public void setChangeUserUrl(String changeUserUrl) {
+        this.changeUserUrl = changeUserUrl;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Override
