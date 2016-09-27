@@ -2,6 +2,7 @@ package com.rest;
 
 import com.Application;
 import com.custom.AuthorSettings;
+import com.custom.ThreadSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,14 @@ public class DefaultController {
     @Autowired
     private AuthorSettings authorSettings; //1
 
+    @Autowired
+    private ThreadSettings threadSettings;
+
     @RequestMapping("/")
     public String index() {
-        String result = "author name is " + authorSettings.getName() + " and author age is " + authorSettings.getAge();
+        String result = "author name is " + authorSettings.getName() +
+                ", author age is " + authorSettings.getAge() +
+                ",count:" + threadSettings.getCount();
         LOGGER.info("Visit / :{}", result);
         return result;
     }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * Created by MyWorld on 2016/8/9.
  */
 @Component
-@ConfigurationProperties(prefix = "thread", locations = {"classpath:thread.properties"})
+@ConfigurationProperties(prefix = "thread", locations = {"classpath:config/thread.properties"})
 public class ThreadSettings {
     int count;
 
