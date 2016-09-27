@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AddExtraHeadController {
 
-    @RequestMapping("/addHead/{1}")
+    @RequestMapping("/addHead/{name}")
     public TestRequest addExtraHeadInfo(TestRequest request) {
         return request;
     }

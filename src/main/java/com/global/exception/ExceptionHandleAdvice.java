@@ -1,5 +1,7 @@
 package com.global.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,11 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class ExceptionHandleAdvice {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandleAdvice.class);
+
     //Throwable.class的子类也可以的
     @ExceptionHandler(Throwable.class)
     public
     @ResponseBody
     RestError throwable(Throwable e) {
+        LOGGER.error("{}", e.getClass(), e);
         RestError restError = new RestError();
         restError.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         restError.setMessage(e.getMessage());
@@ -29,6 +34,7 @@ public class ExceptionHandleAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public RestError exception(Exception e) {
+        LOGGER.error("{}", e.getClass(), e);
         RestError restError = new RestError();
         restError.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         restError.setMessage(e.getMessage());
