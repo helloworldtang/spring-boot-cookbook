@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by tang.cheng on 2016/9/27.
  */
@@ -13,8 +15,8 @@ public class RewriteServletPathController {
     public static final String CHANGE_USER_URL = "/change/user";
 
     @RequestMapping(CHANGE_USER_URL + "/{userId}")
-    public PathParam pathPathVariable(@PathVariable("userId") String userId) {
-        return new PathParam("PathVariable", CHANGE_USER_URL, userId);
+    public PathParam pathPathVariable(HttpServletRequest request, @PathVariable("userId") String userId) {
+        return new PathParam("PathVariable", request.getRequestURI(), request.getQueryString(), userId);
     }
 
     /**
@@ -25,7 +27,7 @@ public class RewriteServletPathController {
      */
     @RequestMapping(CHANGE_USER_URL)
     public String pathRequestParam(@RequestParam("userId") String userId) {
-        return new PathParam("RequestParam", CHANGE_USER_URL, userId).toString();
+        return new PathParam("RequestParam", "PathVariable", CHANGE_USER_URL, userId).toString();
     }
 
 
@@ -34,12 +36,14 @@ public class RewriteServletPathController {
 class PathParam {
 
     private String type;
-    private String changeUserUrl;
+    private String uri;
+    private String queryString;
     private String userId;
 
-    public PathParam(String type, String changeUserUrl, String userId) {
+    public PathParam(String type, String uri, String queryString, String userId) {
         this.type = type;
-        this.changeUserUrl = changeUserUrl;
+        this.uri = uri;
+        this.queryString = queryString;
         this.userId = userId;
     }
 
@@ -51,27 +55,36 @@ class PathParam {
         this.type = type;
     }
 
-    public String getChangeUserUrl() {
-        return changeUserUrl;
+    public String getQueryString() {
+        return queryString;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public void setChangeUserUrl(String changeUserUrl) {
-        this.changeUserUrl = changeUserUrl;
+    public void setQueryString(String queryString) {
+        this.queryString = queryString;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
     @Override
     public String toString() {
         return "PathParam{" +
                 "type='" + type + '\'' +
-                ", changeUserUrl='" + changeUserUrl + '\'' +
+                ", uri='" + uri + '\'' +
+                ", queryString='" + queryString + '\'' +
                 ", userId='" + userId + '\'' +
                 '}';
     }
