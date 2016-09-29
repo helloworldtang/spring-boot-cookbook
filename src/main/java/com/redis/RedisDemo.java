@@ -18,6 +18,7 @@ public class RedisDemo {
     public void doBiz() {
         BoundListOperations listOps = redisTemplate.boundListOps("myList");
         listOps.leftPush("hello");
+        listOps.leftPush("world");
         String value = getValue();
         if (value.equals("world")) {
             System.out.println("O,my god");

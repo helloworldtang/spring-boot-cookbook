@@ -32,7 +32,7 @@ public class RedisConfig {
 
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<Object,Object> redisTemplate = new RedisTemplate<>();
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
 
@@ -42,7 +42,9 @@ public class RedisConfig {
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-
+        /**
+         * 这个应该是支持数据库的事务成功才执行的意思。
+         */
         redisTemplate.setEnableTransactionSupport(true);
         return redisTemplate;
     }
