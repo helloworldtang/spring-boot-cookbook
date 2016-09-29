@@ -1,5 +1,8 @@
 package com.rest;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 public class RewriteServletPathController {
     public static final String CHANGE_USER_URL = "/change/user";
 
+    @ApiOperation(value = "获取请求信息", notes = "通过重写HttpServletRequest来更改入参")
+    @ApiImplicitParams({
+            //此处只有一个参数，单独使用ApiImplicitParam也可以
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long")
+    })
     @RequestMapping(CHANGE_USER_URL + "/{userId}")
     public PathParam pathPathVariable(HttpServletRequest request, @PathVariable("userId") String userId) {
         return new PathParam("PathVariable", request.getRequestURI(), request.getQueryString(), userId);
