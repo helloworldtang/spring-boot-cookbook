@@ -3,10 +3,7 @@ package com.rest;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,7 +19,7 @@ public class RewriteServletPathController {
             //此处只有一个参数，单独使用ApiImplicitParam也可以
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long")
     })
-    @RequestMapping(CHANGE_USER_URL + "/{userId}")
+    @RequestMapping(value = CHANGE_USER_URL + "/{userId}",method = RequestMethod.GET)
     public PathParam pathPathVariable(HttpServletRequest request, @PathVariable("userId") String userId) {
         return new PathParam("PathVariable", request.getRequestURI(), request.getQueryString(), userId);
     }
@@ -33,7 +30,7 @@ public class RewriteServletPathController {
      * @param userId
      * @return
      */
-    @RequestMapping(CHANGE_USER_URL)
+    @RequestMapping(value = CHANGE_USER_URL,method = RequestMethod.GET)
     public String pathRequestParam(@RequestParam("userId") String userId) {
         return new PathParam("RequestParam", "PathVariable", CHANGE_USER_URL, userId).toString();
     }

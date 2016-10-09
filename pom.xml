@@ -78,7 +78,9 @@
             <version>2.2.2</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+      <!--
+       没有这个dependency报java.lang.NoClassDefFoundError: com/google/common/collect/FluentIterable
+       https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
