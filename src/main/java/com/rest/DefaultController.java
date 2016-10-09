@@ -17,7 +17,7 @@ public class DefaultController {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
     @Autowired
-    private AuthorSettings authorSettings; //1
+    private AuthorSettings authorSettings;
 
     @Autowired
     private ThreadSettings threadSettings;
