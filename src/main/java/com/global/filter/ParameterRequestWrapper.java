@@ -43,7 +43,8 @@ public class ParameterRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public Enumeration<String> getParameterNames() {
-        return new Vector(params.keySet()).elements();
+        Vector<String> vector = new Vector<>(params.keySet());
+        return vector.elements();
     }
 
     @Override

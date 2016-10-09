@@ -12,11 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class RedisDemo {
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<Object, Object> redisTemplate;
 
     @Transactional(rollbackFor = {NullPointerException.class})
     public void doBiz() {
-        BoundListOperations listOps = redisTemplate.boundListOps("myList");
+        BoundListOperations<Object, Object> listOps = redisTemplate.boundListOps("myList");
         listOps.leftPush("hello");
         listOps.leftPush("world");
         String value = getValue();
