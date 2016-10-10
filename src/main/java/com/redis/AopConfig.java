@@ -41,4 +41,18 @@ public class AopConfig {
         advisor.setAdvice(advice);
         return advisor;
     }*/
+
+/**
+ * <tx:advice id="txAdvice" transaction-manager="txManager">//只是定义了AOP通知，用于把事务边界通知给方法
+ *     <tx:attributes>
+ *         <tx:method name="save*" propagation="REQUIRED"></tx:method>
+ *         <tx:method name="*" propagation="SUPPORTs" read-only="true"></tx:method>
+ *     </tx:attributes>
+ *   </tx:advice>
+ *
+ *   <aop:config>
+ *       <aop:advisor pointcut="execute(* *..SpitterService.*(..)"  advice-ref="txAdvice">
+ *       </aop:advisor>
+ *   </aop:config>
+ */
 }
