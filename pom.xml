@@ -78,14 +78,23 @@
             <version>2.2.2</version>
         </dependency>
 
-      <!--
-       没有这个dependency报java.lang.NoClassDefFoundError: com/google/common/collect/FluentIterable
-       https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <!--
+         没有这个dependency报java.lang.NoClassDefFoundError: com/google/common/collect/FluentIterable
+         https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>19.0</version>
         </dependency>
+
+        <!--java.lang.NoClassDefFoundError: org/apache/http/client/HttpClient-->
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+
 
         <!--
            devtools可以实现页面热部署（即页面修改后会立即生效，这个可以直接在application.properties文件中配置spring.thymeleaf.cache=false来实现），
