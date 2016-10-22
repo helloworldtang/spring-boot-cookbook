@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by tang.cheng on 2016/10/19.
  */
 @RestController
-public class RestTemplateDemo {
+public class RestTemplateDemoController {
 
     public static final String AUTH = "auth";
 
@@ -67,6 +67,9 @@ class Result {
     private Integer pageSize;
     private String auth;
 
+    public Result() {
+    }
+
     public Result(String userId, int pageId, int pageSize, String auth) {
 
         this.userId = userId;
@@ -119,5 +122,26 @@ class Result {
         return auth;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Result result = (Result) o;
+
+        if (userId != null ? !userId.equals(result.userId) : result.userId != null) return false;
+        if (pageId != null ? !pageId.equals(result.pageId) : result.pageId != null) return false;
+        if (pageSize != null ? !pageSize.equals(result.pageSize) : result.pageSize != null) return false;
+        return auth != null ? auth.equals(result.auth) : result.auth == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userId != null ? userId.hashCode() : 0;
+        result = 31 * result + (pageId != null ? pageId.hashCode() : 0);
+        result = 31 * result + (pageSize != null ? pageSize.hashCode() : 0);
+        result = 31 * result + (auth != null ? auth.hashCode() : 0);
+        return result;
+    }
 }

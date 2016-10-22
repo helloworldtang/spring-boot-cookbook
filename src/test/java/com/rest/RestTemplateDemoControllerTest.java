@@ -21,9 +21,14 @@ import static org.hamcrest.core.Is.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-public class RestTemplateDemoTest {
+public class RestTemplateDemoControllerTest {
 
     String domain = "http://localhost:9999";
+
+    @Autowired
+    RestTemplateDemoController restTemplateDemoController;
+    //待测试的服务需要先启动，否则会提示 Connect to localhost:9999 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: connect
+
     @Autowired
     private RestTemplate restTemplate;
 
@@ -31,10 +36,9 @@ public class RestTemplateDemoTest {
     public void testGetPathVariable() {
         String url = domain + "/user/{userId}";
         MultiValueMap<String, Integer> urlVariables = new LinkedMultiValueMap<>();
-        int expected = 1;
-        urlVariables.add("userId", expected);
-        ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, urlVariables);
+        String userId = String.valueOf(1);
+        ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, userId);
         Result body = forEntity.getBody();
-        assertThat(body.getUserId(), is(expected));
+        assertThat(body.getUserId(), is(userId));
     }
 }
