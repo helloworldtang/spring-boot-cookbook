@@ -26,7 +26,7 @@ import static org.hamcrest.core.Is.is;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RestTemplateConfig.class)
-public class RestTemplateDemoControllerTest {
+public class RestTemplateDemo {
 
     //待测试的服务需要先启动，
     // 否则会提示 Connect to localhost:9999 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: connect
