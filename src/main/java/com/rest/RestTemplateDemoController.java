@@ -144,4 +144,14 @@ class Result {
         result = 31 * result + (auth != null ? auth.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "userId='" + userId + '\'' +
+                ", pageId=" + pageId +
+                ", pageSize=" + pageSize +
+                ", auth='" + auth + '\'' +
+                '}';
+    }
 }
