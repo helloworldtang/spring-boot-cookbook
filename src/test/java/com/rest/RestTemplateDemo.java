@@ -33,7 +33,9 @@ public class RestTemplateDemo {
     String domain = "http://localhost:9999";
     /**
      * digest:
-     * (1)get请求中只有url.如果需要传入header信息，则需要使用exchange相关的api
+     * (1)get请求中只有url，使用get打着的api，queryString必须拼到urk中。
+     * 如果使用可变参数传入，变量名和urk中的变量名 不要求必须一致，只要与url中出现的顺序一致就可以了
+     * 如果需要传入header信息，则需要使用exchange相关的api
      * (2)post请求中将url分拆成uri和body。
      * 需要传入的header信息可以放到HttpEntity类型的request参数中
      * 需要传入的body信息，可以通过add方法放到org.springframework.util.MultiValueMap类型的集合中
@@ -47,7 +49,6 @@ public class RestTemplateDemo {
 
     @Autowired
     private RestTemplate restTemplate;
-
 
     @Test
     //ResponseEntity<T> getForEntity(URI url, Class<T> responseType)
@@ -106,6 +107,22 @@ public class RestTemplateDemo {
         Result actual = forEntity.getBody();
         assertThat(actual, is(excepted));
     }
+    @Test
+    public void testGetForEntityWithRequestParam_Varargs_ignoreParamName() {
+        //因为get请求没有请求体，RequestParam只能拼到url字符串中
+
+        //使用可变参数往url中传入数据，不要求 变量名 与 url中的变量名 必须一致，只要顺序依次写入就可以了
+        String firestParameter = "1";
+        int second = 0;
+        int third = 10;
+        Result excepted = new Result(firestParameter, second, third);
+
+        String url = domain + "/user/{userId}/detail?pageId={pageId}&pageSize={pageSize}";
+
+        ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, firestParameter, second, third);
+        Result actual = forEntity.getBody();
+        assertThat(actual, is(excepted));
+    }
 
     @Test
     public void testGetForEntityWithRequestParam_Map() {
@@ -122,6 +139,21 @@ public class RestTemplateDemo {
         urlVariables.put("pageSize", pageSize);
 
         String url = domain + "/user/{userId}/detail?pageId={pageId}&pageSize={pageSize}";
+        /**
+         *
+         * 如果不将queryString拼到url中这些参数在服务器端是收到 不到的
+         * eg:
+         MultiValueMap<String, Object> urlVariables = new LinkedMultiValueMap<>();
+         urlVariables.add("userId", userId);
+         urlVariables.add("pageId", pageId);
+         urlVariables.add("pageSize", pageSize);
+
+         String url = domain + "/user/{userId}/detail";
+         ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, urlVariables);
+
+         Expected :is <Result{userId='1', pageId=0, pageSize=10, auth='null'}>
+         Actual   :<Result{userId='[1]', pageId=null, pageSize=null, auth='null'}>
+         */
         ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, urlVariables);
         Result actual = forEntity.getBody();
         assertThat(actual, is(excepted));

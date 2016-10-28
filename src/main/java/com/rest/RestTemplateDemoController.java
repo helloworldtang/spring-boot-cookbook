@@ -78,7 +78,7 @@ class Result {
         this.auth = auth;
     }
 
-    public Result(String userId, int pageId, int pageSize) {
+    public Result(String userId, Integer pageId, Integer pageSize) {//如果pageId，pageSize如果使用基本类型，传入null时会报java.lang.NullPointerException
 
         this.userId = userId;
         this.pageId = pageId;
