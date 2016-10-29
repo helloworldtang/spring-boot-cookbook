@@ -78,7 +78,7 @@ class Result {
         this.auth = auth;
     }
 
-    public Result(String userId, int pageId, int pageSize) {
+    public Result(String userId, Integer pageId, Integer pageSize) {//如果pageId，pageSize如果使用基本类型，传入null时会报java.lang.NullPointerException
 
         this.userId = userId;
         this.pageId = pageId;
@@ -143,5 +143,15 @@ class Result {
         result = 31 * result + (pageSize != null ? pageSize.hashCode() : 0);
         result = 31 * result + (auth != null ? auth.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "userId='" + userId + '\'' +
+                ", pageId=" + pageId +
+                ", pageSize=" + pageSize +
+                ", auth='" + auth + '\'' +
+                '}';
     }
 }
