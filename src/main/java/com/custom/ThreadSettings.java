@@ -20,7 +20,7 @@ public class ThreadSettings {
      * Field error in object 'thread' on field 'count': rejected value [1000]; codes [Max.thread.count,Max.count,Max.int,Max]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [thread.count,count]; arguments []; default message [count],999]; default message [最大不能超过999]
      * at org.springframework.boot.bind.PropertiesConfigurationFactory.validate(PropertiesConfigurationFactory.java:296)
      */
-    @Max(999)
+    @Max(1000)
     @Valid
     Integer count;
 
