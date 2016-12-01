@@ -9,18 +9,15 @@ public class ScheduledExecutorServiceDemo {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         final ScheduledExecutorService schedule = Executors.newScheduledThreadPool(10);
         System.out.println(JDKTimer.getCurrentDate() + "   begin ....");
-        schedule.schedule(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    System.out.println(JDKTimer.getCurrentDate() + "  Worker1  executing !");
-                    TimeUnit.SECONDS.sleep(20);//Will not affect the execution of the next
-                    System.out.println(JDKTimer.getCurrentDate() + " After sleep.  Worker1  executing !");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+        schedule.schedule(() -> {
+            try {
+                System.out.println(JDKTimer.getCurrentDate() + "  Worker1  executing !");
+                TimeUnit.SECONDS.sleep(20);//Will not affect the execution of the next
+                System.out.println(JDKTimer.getCurrentDate() + " After sleep.  Worker1  executing !");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
         }, 10, TimeUnit.SECONDS);
 
         schedule.schedule(new Runnable() {

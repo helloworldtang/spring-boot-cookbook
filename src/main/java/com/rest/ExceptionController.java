@@ -1,6 +1,7 @@
 package com.rest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ExceptionController {
 
-    @RequestMapping("/exception")
+    @RequestMapping(value = "/exception", method = RequestMethod.GET)
     public String createException() {
         int j = 1;
         int i = 0;
@@ -20,7 +21,7 @@ public class ExceptionController {
     }
 
 
-    @RequestMapping("/throwable")
+    @RequestMapping(value = "/throwable", method = RequestMethod.GET)
     public String throwable() throws Throwable {
         throw new Throwable("Throwable Demo!");
     }

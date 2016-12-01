@@ -3,9 +3,9 @@ package com.config.datasource.druid;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
-import org.springframework.boot.context.embedded.ServletRegistrationBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,16 +19,12 @@ public class DruidConfiguration {
         return new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
     }
 
+    //这两种init DataSource的方式都可以
     @Bean
-    public DataSource druidDataSource(@Value("${spring.datasource.driverClassName}") String driver,
-                                      @Value("${spring.datasource.url}") String url,
-                                      @Value("${spring.datasource.username}") String username,
-                                      @Value("${spring.datasource.password}") String password) {
+//    @ConfigurationProperties(prefix = "spring.datasource")
+    @ConfigurationProperties(prefix = "spring.druid.datasource", locations = {"classpath:config/druid.properties"})
+    public DataSource druidDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
-        druidDataSource.setDriverClassName(driver);
-        druidDataSource.setUrl(url);
-        druidDataSource.setUsername(username);
-        druidDataSource.setPassword(password);
         try {
             druidDataSource.setFilters("stat, wall");
         } catch (SQLException e) {

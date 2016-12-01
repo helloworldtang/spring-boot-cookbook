@@ -59,7 +59,19 @@
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
         </dependency>
-
+        <!--
+                As you may already know, to use MyBatis with Spring you need at least an SqlSessionFactory and at least one mapper interface.
+                MyBatis-Spring-Boot-Starter will:
+                Autodetect an existing DataSource.
+                Will create and register an instance of a SqlSessionFactoryBean passing that DataSource as an input.
+                Will create and register an instance of a SqlSessionTemplate got out of the SqlSessionFactoryBean.
+                Autoscan your mappers, link them to the SqlSessionTemplate and register them to Spring context so they can be injected into your beans.
+                -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.1.1</version>
+        </dependency>
         <!--
          没有这个dependency报java.lang.NoClassDefFoundError: com/google/common/collect/FluentIterable
          这个class在 version  19.0 中有。
