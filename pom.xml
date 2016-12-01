@@ -23,6 +23,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <druid.version>1.0.24</druid.version>
+        <guava.version>19.0</guava.version>
+        <quartz.version>2.2.3</quartz.version>
+        <springfox.version>2.2.2</springfox.version>
     </properties>
 
     <dependencies>
@@ -48,16 +51,19 @@
             <version>${druid.version}</version>
         </dependency>
 
+        <!--
+         没有这个dependency报java.lang.NoClassDefFoundError: com/google/common/collect/FluentIterable
+         https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>11.0.2</version>
+            <version>${guava.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.2.3</version>
+            <version>${quartz.version}</version>
         </dependency>
 
         <dependency>
@@ -69,22 +75,14 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.2.2</version>
+            <version>${springfox.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.2.2</version>
+            <version>${springfox.version}</version>
         </dependency>
 
-        <!--
-         没有这个dependency报java.lang.NoClassDefFoundError: com/google/common/collect/FluentIterable
-         https://mvnrepository.com/artifact/com.google.guava/guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>19.0</version>
-        </dependency>
 
         <!--java.lang.NoClassDefFoundError: org/apache/http/client/HttpClient-->
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
