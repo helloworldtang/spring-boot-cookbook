@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class CookBookApplication {
 
     /**
      * Spring Boot uses a very particular PropertySource order that is designed to allow sensible overriding of values, properties are considered in the following order:
@@ -42,6 +42,6 @@ public class Application {
      * Default properties (specified using SpringApplication.setDefaultProperties).
      */
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(CookBookApplication.class, args);
     }
 }

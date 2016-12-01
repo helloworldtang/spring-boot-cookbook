@@ -121,7 +121,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.Application</mainClass>
+                    <mainClass>com.CookBookApplication</mainClass>
                     <!--
                     You can also start your application via the supported build plugins (i.e. Maven and Gradle) as long as forking is enabled since DevTools need an isolated application classloader to operate properly.
                     You can force the plugin to fork the process as follows:
