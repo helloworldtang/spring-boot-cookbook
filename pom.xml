@@ -53,6 +53,8 @@
 
         <!--
          没有这个dependency报java.lang.NoClassDefFoundError: com/google/common/collect/FluentIterable
+         这个class在 version  19.0 中有。
+         从哪个版本中开始有，没有进一步跟踪
          https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
