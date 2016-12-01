@@ -1,6 +1,6 @@
 package com.rest;
 
-import com.Application;
+import com.CookBookApplication;
 import com.custom.AuthorSettings;
 import com.custom.ThreadSettings;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class DefaultController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CookBookApplication.class);
 
     @Autowired
     private AuthorSettings authorSettings;

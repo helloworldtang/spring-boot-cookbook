@@ -1,9 +1,8 @@
 package com.rest;
 
-import com.Application;
+import com.CookBookApplication;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +24,7 @@ import static org.hamcrest.Matchers.is;
  * Created by MyWorld on 2016/10/19.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+@SpringApplicationConfiguration(classes = CookBookApplication.class)
 @WebAppConfiguration
 public class MockMvcDemo {
 
