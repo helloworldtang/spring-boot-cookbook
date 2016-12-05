@@ -2,6 +2,7 @@ package com.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.request.async.DeferredResult;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -20,9 +21,14 @@ public class Swagger2Config {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
+                .groupName("cookbook")//分组，在html页面展示时有用
+                .genericModelSubstitutes(DeferredResult.class)
+                .useDefaultResponseMessages(false)
+                .forCodeGeneration(true)
+                .pathMapping("/")//base,最终调用接口后会和paths拼接在一起
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.rest"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.any())// .paths(Predicates.or(PathSelectors.regex("/api/.*")))//过滤的接口,此片过滤掉/api/打头的接口
                 .build();
     }
     private ApiInfo apiInfo() {
@@ -30,7 +36,7 @@ public class Swagger2Config {
                 .title("Spring Boot中使用Swagger2构建RESTful APIs")
                 .description("http://chaojihao.net/")
                 .termsOfServiceUrl("https://github.com/helloworldtang/SpringBootCookbook")
-                .contact("helloworld.tang")
+                .contact("helloworld.tang@qq.com")
                 .version("0.1")
                 .build();
     }

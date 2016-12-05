@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.MessageFormat;
@@ -25,28 +26,28 @@ public class TestRedisTemplateOperation {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    @RequestMapping("/add")
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
     public String set() {
         String key = "mykey";
         stringRedisTemplate.boundValueOps(key).increment(1);
         return key;
     }
 
-    @RequestMapping("/get")
+    @RequestMapping(value = "/get",method = RequestMethod.GET)
     public String get() {
         String key = "mykey";
         //如果key不存在时，Jedis会返回空字符串（key中无值时，redis会删除这个key）
         return stringRedisTemplate.boundValueOps(key).get();
     }
 
-    @RequestMapping("/getList")
+    @RequestMapping(value = "/getList",method = RequestMethod.GET)
     public String getList() {
         String key = "myList";
         //如果key不存在时，Jedis会返回空集合（key中无值时，redis会删除这个key）。这种场景的返回值为"[]"
         return redisTemplate.boundListOps(key).range(0, -1).toString();
     }
 
-    @RequestMapping("/setList/{element}")
+    @RequestMapping(value = "/setList/{element}",method = RequestMethod.GET)
     public void setList(@PathVariable("element") String element) {
         String key = "myList";
         redisTemplate.boundListOps(key).leftPush(element);
@@ -59,7 +60,7 @@ public class TestRedisTemplateOperation {
      *
      * @return
      */
-    @RequestMapping("/getHash")
+    @RequestMapping(value = "/getHash",method = RequestMethod.GET)
     public String getHash() {
         String key = "myHash";
         Collection collection = Arrays.asList(1, 2, 3, 4, 5);
@@ -82,7 +83,7 @@ public class TestRedisTemplateOperation {
         return result;
     }
 
-    @RequestMapping("/setHash/{field}/{value}")
+    @RequestMapping(value = "/setHash/{field}/{value}",method = RequestMethod.GET)
     public void setHash(@PathVariable("field") String field, @PathVariable("value") String value) {
         String key = "myHash";
         //执行hmset myHash 1 value1后
@@ -94,7 +95,7 @@ public class TestRedisTemplateOperation {
      * 存放在Redis中的值：
      * hash : {"keyEmptyArrayList":[],"key2":"key2","keyWithNullValue":null}
      */
-    @RequestMapping("/set/hash/null")
+    @RequestMapping(value = "/set/hash/null",method = RequestMethod.GET)
     public void setHasWithNullValue() {
         String key = "myhashWithNull";
         redisTemplate.boundHashOps(key).put("keyWithNullValue", null);//在hash的value中会存放字符串“null”
@@ -103,7 +104,7 @@ public class TestRedisTemplateOperation {
     }
 
 
-    @RequestMapping("/redis/{key}")
+    @RequestMapping(value = "/redis/{key}",method = RequestMethod.GET)
     public String getRedisData(@PathVariable("key") String key) throws JsonProcessingException {
         if (redisTemplate.hasKey(key)) {
             ObjectMapper objectMapper = new ObjectMapper();

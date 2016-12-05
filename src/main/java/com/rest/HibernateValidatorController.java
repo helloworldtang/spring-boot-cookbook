@@ -3,6 +3,7 @@ package com.rest;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -29,7 +30,7 @@ public class HibernateValidatorController {
      * @param student
      * @return
      */
-    @RequestMapping(value = "Validated")
+    @RequestMapping(value = "Validated",method = RequestMethod.GET)
     public Student testValidatorWithValidated(@Validated Student student) {
         return student;
     }
@@ -41,7 +42,7 @@ public class HibernateValidatorController {
      * @param student
      * @return
      */
-    @RequestMapping(value = "Valid")
+    @RequestMapping(value = "Valid",method = RequestMethod.GET)
     public Student testValidatorWithValid(@Valid Student student) {
         return student;
     }
@@ -52,7 +53,7 @@ public class HibernateValidatorController {
      * @param student
      * @return
      */
-    @RequestMapping(value = "noValid")
+    @RequestMapping(value = "noValid",method = RequestMethod.GET)
     public Student testValidatorWithoutAnnotation(Student student) {
         return student;
     }

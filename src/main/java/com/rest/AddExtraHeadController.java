@@ -1,6 +1,7 @@
 package com.rest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AddExtraHeadController {
 
-    @RequestMapping("/addHead/{name}")
+    @RequestMapping(value = "/addHead/{name}",method = RequestMethod.GET)
     public TestRequest addExtraHeadInfo(TestRequest request) {
         return request;
     }
