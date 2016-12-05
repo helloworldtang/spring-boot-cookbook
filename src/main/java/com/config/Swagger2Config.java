@@ -18,7 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class Swagger2Config {
     @Bean
-    public Docket createRestApi() {
+    public Docket createRestApi() {//可以定义多个Docket，类似于sql中的group by
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .groupName("cookbook")//分组，在html页面展示时有用
