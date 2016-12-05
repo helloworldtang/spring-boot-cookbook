@@ -1,8 +1,8 @@
 package com.rest;
 
 import com.CookBookApplication;
-import com.custom.AuthorSettings;
-import com.custom.ThreadSettings;
+import com.demo.custom.AuthorSettings;
+import com.demo.custom.ThreadSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

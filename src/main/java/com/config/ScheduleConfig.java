@@ -21,7 +21,7 @@ public class ScheduleConfig {
      * at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:372) ~[spring-beans-4.2.0.RC1.jar:4.2.0.RC1]
      * 注册下面的bean后，报错消失：
      * 2016-09-23 23:37:27.286 DEBUG [com.Application.main()][org.springframework.beans.factory.support.DefaultListableBeanFactory] Returning cached instance of singleton bean 'taskScheduler'
-     * 2016-09-23 23:37:27.290 INFO  [pool-1-thread-1][com.schedule.ScheduledTaskService] fixRate : 2016-09-23 23:37:27 290
+     * 2016-09-23 23:37:27.290 INFO  [pool-1-thread-1][com.demo.schedule.ScheduledTaskService] fixRate : 2016-09-23 23:37:27 290
      *
      * @return
      */
