@@ -33,7 +33,7 @@ public class ExceptionHandleAdvice {
     //Throwable.class的子类也可以的
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public RestError exception(Exception e) {
+    public RestError handleAllException(Exception e) {
         LOGGER.error("{}", e.getClass(), e);
         RestError restError = new RestError();
         restError.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
