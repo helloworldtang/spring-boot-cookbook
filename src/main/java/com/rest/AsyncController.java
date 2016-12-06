@@ -23,36 +23,39 @@ import java.util.concurrent.TimeUnit;
 public class AsyncController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AsyncController.class);
 
-
     @Autowired
     private LongTimeAsyncCallService longTimeAsyncCallService;
 
     /**
-     * 19:28:35.202 INFO  [http-nio-9999-exec-1][com.rest.AsyncController] /deferred 调用！thread id is:44
-     * 19:28:35.202 INFO  [http-nio-9999-exec-1][com.service.LongTimeAsyncCallService] 完成此任务需要:3秒
-     * 19:28:35.210 DEBUG [http-nio-9999-exec-1][org.springframework.web.context.request.async.WebAsyncManager] Concurrent handling starting for GET [/deferred]
-     * 19:28:35.210 DEBUG [http-nio-9999-exec-1][org.springframework.web.servlet.DispatcherServlet] Leaving response open for concurrent processing
-     * 19:28:35.212 DEBUG [http-nio-9999-exec-1][org.springframework.boot.web.filter.OrderedRequestContextFilter] Cleared thread-bound request context: org.apache.catalina.connector.RequestFacade@450aaf0a
-     * 19:28:38.204 INFO  [pool-1-thread-1][com.rest.AsyncController] 异步调用执行完成, thread id is:45
-     * 19:28:38.204 DEBUG [pool-1-thread-1][org.springframework.web.context.request.async.WebAsyncManager] Concurrent result value [长时间异步调用完成.] - dispatching request to resume processing
-     * 19:28:38.209 DEBUG [http-nio-9999-exec-2][org.springframework.boot.web.filter.OrderedRequestContextFilter] Bound request context to thread: com.global.filter.URLRewriteRequestWrapper@2c70504e
-     * 19:28:38.210 INFO  [http-nio-9999-exec-2][com.global.filter.AddExtraToParamsFilter] com.global.filter.AddExtraToParamsFilter
-     * 19:28:38.210 INFO  [http-nio-9999-exec-2][com.global.filter.RewriteServletPathFilter] com.global.filter.RewriteServletPathFilter
-     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] DispatcherServlet with name 'dispatcherServlet' resumed processing GET request for [/deferred]
-     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] Looking up handler method for path /deferred
-     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] Returning handler method [public org.springframework.web.context.request.async.DeferredResult<java.lang.String> com.rest.AsyncController.asyncTask()]
-     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.beans.factory.support.DefaultListableBeanFactory] Returning cached instance of singleton bean 'asyncController'
-     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] Last-Modified value for [/deferred] is: -1
-     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter] Found concurrent result value [长时间异步调用完成.]
-     * 19:28:38.226 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor] Written [长时间异步调用完成.] as "text/plain" using [org.springframework.http.converter.StringHttpMessageConverter@6c020dea]
-     * 19:28:38.227 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] Null ModelAndView returned to DispatcherServlet with name 'dispatcherServlet': assuming HandlerAdapter completed request handling
-     * 19:28:38.227 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] Successfully completed request
+     * 19:47:06.248 DEBUG [http-nio-9999-exec-1][org.springframework.web.servlet.DispatcherServlet] Last-Modified value for [/deferred] is: -1
+     * 19:47:06.254 INFO  [http-nio-9999-exec-1][com.rest.AsyncController] /deferred 调用！thread id is:Thread[http-nio-9999-exec-1,5,main]
+     * 19:47:06.255 INFO  [http-nio-9999-exec-1][com.service.LongTimeAsyncCallService] 完成此任务需要:3秒,Thread[http-nio-9999-exec-1,5,main]
+     * 19:47:06.260 DEBUG [http-nio-9999-exec-1][org.springframework.web.context.request.async.WebAsyncManager] Concurrent handling starting for GET [/deferred]
+     * 19:47:06.261 DEBUG [http-nio-9999-exec-1][org.springframework.web.servlet.DispatcherServlet] Leaving response open for concurrent processing
+     * 19:47:06.262 DEBUG [http-nio-9999-exec-1][org.springframework.boot.web.filter.OrderedRequestContextFilter] Cleared thread-bound request context: org.apache.catalina.connector.RequestFacade@7a582546
+     * //此处的停顿，是因为LongTimeAsyncCallService有sleep 3 s的操作。因为2s就超时了，另外1s就没有等
+     * 19:47:08.721 INFO  [http-nio-9999-exec-2][com.rest.AsyncController] 异步调用执行超时！thread id is:Thread[http-nio-9999-exec-2,5,main]
+     * 19:47:08.722 DEBUG [http-nio-9999-exec-2][org.springframework.web.context.request.async.WebAsyncManager] Concurrent result value [异步调用执行超时] - dispatching request to resume processing
+     * 19:47:08.732 DEBUG [http-nio-9999-exec-2][org.springframework.boot.web.filter.OrderedRequestContextFilter] Bound request context to thread: com.global.filter.URLRewriteRequestWrapper@1c1a0b83
+     * 19:47:08.733 INFO  [http-nio-9999-exec-2][com.global.filter.AddExtraToParamsFilter] com.global.filter.AddExtraToParamsFilter
+     * 19:47:08.733 INFO  [http-nio-9999-exec-2][com.global.filter.RewriteServletPathFilter] com.global.filter.RewriteServletPathFilter
+     * 19:47:08.733 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] DispatcherServlet with name 'dispatcherServlet' resumed processing GET request for [/deferred]
+     * 19:47:08.734 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] Looking up handler method for path /deferred
+     * 19:47:08.734 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] Returning handler method [public org.springframework.web.context.request.async.DeferredResult<java.lang.String> com.rest.AsyncController.asyncTask()]
+     * 19:47:08.734 DEBUG [http-nio-9999-exec-2][org.springframework.beans.factory.support.DefaultListableBeanFactory] Returning cached instance of singleton bean 'asyncController'
+     * 19:47:08.734 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] Last-Modified value for [/deferred] is: -1
+     * 19:47:08.735 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter] Found concurrent result value [异步调用执行超时]
+     * 19:47:08.763 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor] Written [异步调用执行超时] as "text/plain" using [org.springframework.http.converter.StringHttpMessageConverter@57eea9]
+     * 19:47:08.764 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] Null ModelAndView returned to DispatcherServlet with name 'dispatcherServlet': assuming HandlerAdapter completed request handling
+     * 19:47:08.764 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] Successfully completed request
+     * 19:47:08.764 DEBUG [http-nio-9999-exec-2][org.springframework.boot.web.filter.OrderedRequestContextFilter] Cleared thread-bound request context: com.global.filter.URLRewriteRequestWrapper@1c1a0b83
+     * 19:47:09.256 INFO  [pool-1-thread-1][com.rest.AsyncController] 异步调用执行完成, thread id is:Thread[pool-1-thread-1,5,main]
      *
-     * @return
+     * @return 异步调用执行超时
      */
     @RequestMapping(value = "/deferred", method = RequestMethod.GET)
     public DeferredResult<String> asyncTask() {
-        DeferredResult<String> deferredResult = new DeferredResult<>();
+        DeferredResult<String> deferredResult = new DeferredResult<>(2000L);//超时时间设置为2S
         LOGGER.info("{} 调用！thread id is:{}", RequestHolder.getRequestFacade().getRequestURI(), Thread.currentThread());
         longTimeAsyncCallService.makeRemoteCallAndUnknownWhenFinish(new LongTermTask() {
             @Override
