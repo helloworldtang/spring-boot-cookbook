@@ -27,22 +27,45 @@ public class AsyncController {
     @Autowired
     private LongTimeAsyncCallService longTimeAsyncCallService;
 
+    /**
+     * 19:28:35.202 INFO  [http-nio-9999-exec-1][com.rest.AsyncController] /deferred 调用！thread id is:44
+     * 19:28:35.202 INFO  [http-nio-9999-exec-1][com.service.LongTimeAsyncCallService] 完成此任务需要:3秒
+     * 19:28:35.210 DEBUG [http-nio-9999-exec-1][org.springframework.web.context.request.async.WebAsyncManager] Concurrent handling starting for GET [/deferred]
+     * 19:28:35.210 DEBUG [http-nio-9999-exec-1][org.springframework.web.servlet.DispatcherServlet] Leaving response open for concurrent processing
+     * 19:28:35.212 DEBUG [http-nio-9999-exec-1][org.springframework.boot.web.filter.OrderedRequestContextFilter] Cleared thread-bound request context: org.apache.catalina.connector.RequestFacade@450aaf0a
+     * 19:28:38.204 INFO  [pool-1-thread-1][com.rest.AsyncController] 异步调用执行完成, thread id is:45
+     * 19:28:38.204 DEBUG [pool-1-thread-1][org.springframework.web.context.request.async.WebAsyncManager] Concurrent result value [长时间异步调用完成.] - dispatching request to resume processing
+     * 19:28:38.209 DEBUG [http-nio-9999-exec-2][org.springframework.boot.web.filter.OrderedRequestContextFilter] Bound request context to thread: com.global.filter.URLRewriteRequestWrapper@2c70504e
+     * 19:28:38.210 INFO  [http-nio-9999-exec-2][com.global.filter.AddExtraToParamsFilter] com.global.filter.AddExtraToParamsFilter
+     * 19:28:38.210 INFO  [http-nio-9999-exec-2][com.global.filter.RewriteServletPathFilter] com.global.filter.RewriteServletPathFilter
+     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] DispatcherServlet with name 'dispatcherServlet' resumed processing GET request for [/deferred]
+     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] Looking up handler method for path /deferred
+     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] Returning handler method [public org.springframework.web.context.request.async.DeferredResult<java.lang.String> com.rest.AsyncController.asyncTask()]
+     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.beans.factory.support.DefaultListableBeanFactory] Returning cached instance of singleton bean 'asyncController'
+     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] Last-Modified value for [/deferred] is: -1
+     * 19:28:38.210 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter] Found concurrent result value [长时间异步调用完成.]
+     * 19:28:38.226 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor] Written [长时间异步调用完成.] as "text/plain" using [org.springframework.http.converter.StringHttpMessageConverter@6c020dea]
+     * 19:28:38.227 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] Null ModelAndView returned to DispatcherServlet with name 'dispatcherServlet': assuming HandlerAdapter completed request handling
+     * 19:28:38.227 DEBUG [http-nio-9999-exec-2][org.springframework.web.servlet.DispatcherServlet] Successfully completed request
+     *
+     * @return
+     */
     @RequestMapping(value = "/deferred", method = RequestMethod.GET)
     public DeferredResult<String> asyncTask() {
         DeferredResult<String> deferredResult = new DeferredResult<>();
-        LOGGER.info("{} 调用！thread id is:{}",RequestHolder.getRequestFacade().getRequestURI(), Thread.currentThread().getId());
+        LOGGER.info("{} 调用！thread id is:{}", RequestHolder.getRequestFacade().getRequestURI(), Thread.currentThread());
         longTimeAsyncCallService.makeRemoteCallAndUnknownWhenFinish(new LongTermTask() {
             @Override
             public void callback(Object result) {
-                LOGGER.info("异步调用执行完成, thread id is:{}", Thread.currentThread().getId());
-                deferredResult.setResult("Success");
+                LOGGER.info("异步调用执行完成, thread id is:{}", Thread.currentThread());
+                deferredResult.setResult(result.toString());
             }
         });
 
         deferredResult.onTimeout(new Runnable() {
             @Override
             public void run() {
-                LOGGER.info("异步调用执行超时！thread id is:{}", Thread.currentThread().getId());
+                LOGGER.info("异步调用执行超时！thread id is:{}", Thread.currentThread());
                 deferredResult.setResult("异步调用执行超时");
             }
         });
@@ -52,10 +75,10 @@ public class AsyncController {
 
     @RequestMapping(value = "/webAsyncTask", method = RequestMethod.GET)
     public WebAsyncTask longTimeTask() {
-        LOGGER.info("{} 被调用 thread id is:{} ", RequestHolder.getRequestFacade().getRequestURI(),Thread.currentThread().getId());
+        LOGGER.info("{} 被调用 thread id is:{} ", RequestHolder.getRequestFacade().getRequestURI(), Thread.currentThread());
         Callable<String> callable = () -> {
             TimeUnit.SECONDS.sleep(3);//假设是一些长时间任务
-            LOGGER.info("执行成功 thread id is:{}", Thread.currentThread().getId());
+            LOGGER.info("执行成功 thread id is:{}", Thread.currentThread());
             return "执行成功";
         };
 
@@ -74,7 +97,7 @@ public class AsyncController {
                    ModelAndView mav = new ModelAndView("longtimetask");
                     mav.addObject("result", "执行超时");
                   */
-                    LOGGER.info("执行超时 thread id is:{}", Thread.currentThread().getId());
+                    LOGGER.info("执行超时 thread id is:{}", Thread.currentThread());
                     return "执行超时";
                 }
         );

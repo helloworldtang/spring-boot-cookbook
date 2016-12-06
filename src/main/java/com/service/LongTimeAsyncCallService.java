@@ -14,11 +14,11 @@ public class LongTimeAsyncCallService {
     private static final Logger LOGGER = LoggerFactory.getLogger(LongTimeAsyncCallService.class);
 
     private final int CorePoolSize = 4;
-    private final int NeedSeconds = 3;
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(CorePoolSize);
 
     public void makeRemoteCallAndUnknownWhenFinish(LongTermTask task) {
-        LOGGER.info("完成此任务需要:{}秒", NeedSeconds);
-        scheduler.schedule(() -> task.callback("长时间异步调用完成."), NeedSeconds, TimeUnit.SECONDS);
+        int needSeconds = 3;
+        LOGGER.info("完成此任务需要:{}秒,{}", needSeconds, Thread.currentThread());
+        scheduler.schedule(() -> task.callback("长时间异步调用完成."), needSeconds, TimeUnit.SECONDS);
     }
 }
