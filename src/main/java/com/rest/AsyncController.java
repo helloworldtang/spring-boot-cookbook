@@ -60,7 +60,8 @@ public class AsyncController {
         longTimeAsyncCallService.makeRemoteCallAndUnknownWhenFinish(new LongTermTask() {
             @Override
             public void callback(Object result) {
-                LOGGER.info("异步调用执行完成, thread id is:{}", Thread.currentThread());
+                LOGGER.info("业务逻辑 执行完成，执行回调callback。将控制权转到 回调处理线程。{}",Thread.currentThread());
+                LOGGER.info("异步调用执行完成,{}", Thread.currentThread());
                 deferredResult.setResult(result.toString());
             }
         });
@@ -68,7 +69,7 @@ public class AsyncController {
         deferredResult.onTimeout(new Runnable() {
             @Override
             public void run() {
-                LOGGER.info("异步调用执行超时！thread id is:{}", Thread.currentThread());
+                LOGGER.info("异步调用执行超时！{}", Thread.currentThread());
                 deferredResult.setResult("异步调用执行超时");
             }
         });
@@ -78,10 +79,10 @@ public class AsyncController {
 
     @RequestMapping(value = "/webAsyncTask", method = RequestMethod.GET)
     public WebAsyncTask longTimeTask() {
-        LOGGER.info("{} 被调用 thread id is:{} ", RequestHolder.getRequestFacade().getRequestURI(), Thread.currentThread());
+        LOGGER.info("{} 被调用.{} ", RequestHolder.getRequestFacade().getRequestURI(), Thread.currentThread());
         Callable<String> callable = () -> {
             TimeUnit.SECONDS.sleep(3);//假设是一些长时间任务
-            LOGGER.info("执行成功 thread id is:{}", Thread.currentThread());
+            LOGGER.info("执行成功.{}", Thread.currentThread());
             return "执行成功";
         };
 
@@ -100,7 +101,7 @@ public class AsyncController {
                    ModelAndView mav = new ModelAndView("longtimetask");
                     mav.addObject("result", "执行超时");
                   */
-                    LOGGER.info("执行超时 thread id is:{}", Thread.currentThread());
+                    LOGGER.info("执行超时.{}", Thread.currentThread());
                     return "执行超时";
                 }
         );

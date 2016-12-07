@@ -18,7 +18,7 @@ public class LongTimeAsyncCallService {
 
     public void makeRemoteCallAndUnknownWhenFinish(LongTermTask task) {
         int needSeconds = 3;
-        LOGGER.info("完成此任务需要:{}秒,{}", needSeconds, Thread.currentThread());
+        LOGGER.info("invoke 耗时的业务逻辑。需要{}秒.{}", needSeconds, Thread.currentThread());
         scheduler.schedule(() -> task.callback("长时间异步调用完成."), needSeconds, TimeUnit.SECONDS);
     }
 }
