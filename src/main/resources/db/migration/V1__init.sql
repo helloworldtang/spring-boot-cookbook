@@ -1,30 +1,13 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : localhost
-Source Server Version : 100113
-Source Host           : localhost:3306
-Source Database       : test
-
-Target Server Type    : MYSQL
-Target Server Version : 100113
-File Encoding         : 65001
-
-Date: 2016-12-01 15:34:16
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
 -- ----------------------------
 -- Table structure for city
 -- ----------------------------
-DROP TABLE IF EXISTS `city`;
+-- DROP TABLE IF EXISTS `city`;
 CREATE TABLE `city` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='市级信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='市级信息';
 
 -- ----------------------------
 -- Records of city
@@ -36,13 +19,13 @@ INSERT INTO `city` VALUES ('3', 'Sacramento', 'CA');
 -- ----------------------------
 -- Table structure for country
 -- ----------------------------
-DROP TABLE IF EXISTS `country`;
+-- DROP TABLE IF EXISTS `country`;
 CREATE TABLE `country` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `countryname` varchar(255) DEFAULT NULL COMMENT '名称',
   `countrycode` varchar(255) DEFAULT NULL COMMENT '代码',
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=utf8 COMMENT='国家信息';
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='国家信息';
 
 -- ----------------------------
 -- Records of country
@@ -234,19 +217,19 @@ INSERT INTO `country` VALUES ('183', 'Zambia', 'ZM');
 -- ----------------------------
 -- Table structure for user_info
 -- ----------------------------
-DROP TABLE IF EXISTS `user_info`;
+-- DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(32) NOT NULL DEFAULT '' COMMENT '用户名',
-  `password` varchar(32) DEFAULT NULL COMMENT '密码',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(32) NOT NULL COMMENT '用户名',
+  `password` varchar(32) NOT NULL COMMENT '密码',
   `usertype` varchar(2) DEFAULT NULL COMMENT '用户类型',
   `enabled` int(2) DEFAULT NULL COMMENT '是否可用',
   `realname` varchar(32) DEFAULT NULL COMMENT '真实姓名',
   `qq` varchar(14) DEFAULT NULL COMMENT 'QQ',
   `email` varchar(100) DEFAULT NULL,
   `tel` varchar(255) DEFAULT NULL COMMENT '联系电话',
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 
 -- ----------------------------
 -- Records of user_info
@@ -257,21 +240,4 @@ INSERT INTO `user_info` VALUES ('3', 'test3', 'bbbb', '1', null, null, null, nul
 INSERT INTO `user_info` VALUES ('4', 'test4', 'cccc', '2', null, null, null, null, null);
 INSERT INTO `user_info` VALUES ('5', 'test5', 'dddd', '1', null, null, null, null, null);
 
--- ----------------------------
--- Table structure for util
--- ----------------------------
-DROP TABLE IF EXISTS `util`;
-CREATE TABLE `util` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `nom` varchar(25) DEFAULT NULL,
-  `prenom` varchar(30) DEFAULT NULL,
-  `email` varchar(20) DEFAULT NULL,
-  `login` varchar(20) DEFAULT NULL,
-  `mdp` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- ----------------------------
--- Records of util
--- ----------------------------
-SET FOREIGN_KEY_CHECKS=1;

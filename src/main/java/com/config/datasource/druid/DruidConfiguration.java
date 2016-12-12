@@ -21,8 +21,8 @@ public class DruidConfiguration {
 
     //这两种init DataSource的方式都可以
     @Bean
-//    @ConfigurationProperties(prefix = "spring.datasource")
-    @ConfigurationProperties(prefix = "spring.druid.datasource", locations = {"classpath:config/druid.properties"})
+    @ConfigurationProperties(prefix = "spring.datasource")
+//    @ConfigurationProperties(prefix = "spring.druid.datasource", locations = {"classpath:config/druid.properties"})
     public DataSource druidDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
         try {
