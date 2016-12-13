@@ -1,6 +1,6 @@
 package com.global.aop;
 
-import com.global.annotation.MethodLogAnnotation;
+import com.api.MethodLogAnnotation;
 import com.util.NetworkUtil;
 import com.util.RequestHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
 public class RecordAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(RecordAspect.class);
 
-    @Pointcut("@annotation(com.global.annotation.MethodLogAnnotation)")
+    @Pointcut("@annotation(com.api.MethodLogAnnotation)")
     public void methodLog() {
     }
 

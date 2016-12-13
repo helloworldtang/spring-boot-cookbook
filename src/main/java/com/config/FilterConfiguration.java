@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by MyWorld on 2016/9/25.
  */
 @Configuration
-public class FilterConfig {
+public class FilterConfiguration {
 
     /**
      * 定义多个FilterRegistrationBean，都会生效，类似于web.xml中的定义

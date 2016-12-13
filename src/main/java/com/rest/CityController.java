@@ -2,7 +2,7 @@ package com.rest;
 
 import com.db.dao.CityBiz;
 import com.db.entity.City;
-import com.global.annotation.MethodLogAnnotation;
+import com.api.MethodLogAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

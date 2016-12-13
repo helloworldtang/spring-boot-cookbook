@@ -1,4 +1,4 @@
-package com.global.annotation;
+package com.api;
 
 import java.lang.annotation.*;
 

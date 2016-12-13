@@ -16,7 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-public class Swagger2Config {
+public class Swagger2Configuration {
     @Bean
     public Docket createRestApi() {//可以定义多个Docket，类似于sql中的group by
         return new Docket(DocumentationType.SWAGGER_2)

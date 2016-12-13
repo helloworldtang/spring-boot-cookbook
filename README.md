@@ -8,6 +8,7 @@ http://localhost:9999/swagger-ui.html
 
 //mybatis-spring-boot-starter
 http://localhost:9999/city/河北
+You can look at http://localhost:8080/flyway to review the list of scripts.
 
 todo:
 transaction
