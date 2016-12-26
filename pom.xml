@@ -121,6 +121,7 @@
         swagger简单来说就是统一定义了api的语义描述(json,yaml)，并提供ui显示，代码自动生成等等，即建立了rest api生态系统。
         如何生成这些api数据描述文件，大部分语言都有相关实现。
         java方面比较好的实现就是springfox
+        springfox通过annotation来实现api描述，生成api   json描述文件。再交由swagger-ui实现展示。
         -->
         <dependency>
             <groupId>io.springfox</groupId>
