@@ -7,6 +7,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -31,13 +32,14 @@ public class Swagger2Configuration {
                 .paths(PathSelectors.any())// .paths(Predicates.or(PathSelectors.regex("/api/.*")))//过滤的接口,此片过滤掉/api/打头的接口
                 .build();
     }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Spring Boot中使用Swagger2构建RESTful APIs")
-                .description("http://chaojihao.net/")
+                .description("Spring boot cookbook")
                 .termsOfServiceUrl("https://github.com/helloworldtang/SpringBootCookbook")
-                .contact("helloworld.tang@qq.com")
                 .version("0.1")
+                .contact(new Contact("Tang.Cheng", "http://chaojihao.net/", "helloworld.tang@qq.com"))
                 .build();
     }
 }
