@@ -121,6 +121,7 @@
         swagger简单来说就是统一定义了api的语义描述(json,yaml)，并提供ui显示，代码自动生成等等，即建立了rest api生态系统。
         如何生成这些api数据描述文件，大部分语言都有相关实现。
         java方面比较好的实现就是springfox
+        Springfox的前身是swagger-springmvc,是一个开源的API doc框架
         springfox通过annotation来实现api描述，生成api   json描述文件。再交由swagger-ui实现展示。
         -->
         <dependency>
@@ -132,6 +133,18 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox.version}</version>
+        </dependency>
+        <!--
+        Springfox-staticdocs is a module which brings together springfox and swagger2markup
+        Swagger2Markup converts a Swagger JSON or YAML file into several AsciiDoc or GitHub Flavored Markdown documents which can be converted to HTML, PDF and EPUB.
+        The output of Swagger2Markup can be used as an alternative to swagger-ui and can be served as static content.
+        http://springfox.github.io/springfox/docs/current/#configuring-springfox-staticdocs
+        -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-staticdocs</artifactId>
+            <version>${springfox.version}</version>
+            <scope>test</scope>
         </dependency>
 
 

@@ -1,13 +1,13 @@
 package com.rest;
 
-import org.hibernate.validator.constraints.NotBlank;
+import com.domain.Student;
+import io.swagger.annotations.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 
 /**
  * Created by tang.cheng on 2016/11/8.
@@ -30,20 +30,8 @@ public class HibernateValidatorController {
      * @param student
      * @return
      */
-    @RequestMapping(value = "Validated",method = RequestMethod.GET)
+    @RequestMapping(value = "Validated", method = RequestMethod.GET)
     public Student testValidatorWithValidated(@Validated Student student) {
-        return student;
-    }
-
-    /**
-     * 方式2：
-     * javax.validation.Valid
-     *
-     * @param student
-     * @return
-     */
-    @RequestMapping(value = "Valid",method = RequestMethod.GET)
-    public Student testValidatorWithValid(@Valid Student student) {
         return student;
     }
 
@@ -53,45 +41,33 @@ public class HibernateValidatorController {
      * @param student
      * @return
      */
-    @RequestMapping(value = "noValid",method = RequestMethod.GET)
+    @RequestMapping(value = "noValid", method = RequestMethod.GET)
     public Student testValidatorWithoutAnnotation(Student student) {
+        return student;
+    }
+
+    /**
+     * 问题一 ：Controller API中用对象来接收url参数，用什么注解
+     * 这个问题在上文中已经解决，基本分为两步：
+     * 第一步：在配置文件中使用.ignoredParameterTypes(XXX.class)
+     * 第二步：在api上方使用@ApiImplicitParams和@ApiImplicitParam注解
+     */
+    @ApiOperation(value = "The second method: test spring boot with hibernate validator",
+            notes = "use javax.validation.Valid",
+            response = Student.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name", defaultValue = "Tom", value = "用户名", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "age", defaultValue = "20", value = "年龄", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "classes", defaultValue = "G1", value = "班级", required = true, dataType = "string", paramType = "query")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Success", response = Student.class)
+    })
+    @RequestMapping(value = "Valid", method = RequestMethod.GET)
+    public Student testValidatorWithValid(@Valid Student student) {
         return student;
     }
 
 
 }
 
-class Student {
-    //在需要校验的字段上指定约束条件
-    @NotBlank
-    private String name;
-    @Min(3)
-    private int age;
-    @NotBlank
-    private String classes;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getClasses() {
-        return classes;
-    }
-
-    public void setClasses(String classes) {
-        this.classes = classes;
-    }
-
-}
