@@ -3,11 +3,12 @@ package com.domain;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 
 /**
  * Created by tang.cheng on 2016/12/27.
  */
-public class Student {
+public class Student implements Serializable {
     //在需要校验的字段上指定约束条件
     @NotBlank
     private String name;

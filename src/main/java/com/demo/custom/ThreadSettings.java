@@ -3,7 +3,6 @@ package com.demo.custom;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Max;
 
 /**
@@ -21,7 +20,6 @@ public class ThreadSettings {
      * at org.springframework.boot.bind.PropertiesConfigurationFactory.validate(PropertiesConfigurationFactory.java:296)
      */
     @Max(1000)
-    @Valid
     Integer count;
 
     public int getCount() {

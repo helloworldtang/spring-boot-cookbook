@@ -2,6 +2,7 @@ package com.rest;
 
 import com.domain.Student;
 import io.swagger.annotations.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,7 +37,7 @@ public class HibernateValidatorController {
     }
 
     /**
-     * 不使用Annotation时，不会对Student上的约束失效
+     * 不使用Annotation时，不会对Student上的约束生效
      *
      * @param student
      * @return
@@ -53,19 +54,15 @@ public class HibernateValidatorController {
      * 第二步：在api上方使用@ApiImplicitParams和@ApiImplicitParam注解
      */
     @ApiOperation(value = "The second method: test spring boot with hibernate validator",
-            notes = "use javax.validation.Valid",
-            response = Student.class)
+            notes = "use javax.validation.Valid")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", defaultValue = "Tom", value = "用户名", required = true, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "age", defaultValue = "20", value = "年龄", dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "classes", defaultValue = "G1", value = "班级", required = true, dataType = "string", paramType = "query")
-    })
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Success", response = Student.class)
+            @ApiImplicitParam(name = "classes", defaultValue = "Freshman Year", value = "班级", required = true, dataType = "string", paramType = "query")
     })
     @RequestMapping(value = "Valid", method = RequestMethod.GET)
-    public Student testValidatorWithValid(@Valid Student student) {
-        return student;
+    public ResponseEntity<Student> testValidatorWithValid(@Valid Student student) {
+        return ResponseEntity.ok(student);
     }
 
 
