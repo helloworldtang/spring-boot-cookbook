@@ -62,7 +62,7 @@ public class Swagger2Configuration {
         return new ApiInfoBuilder()
                 .title("Spring Boot中使用Swagger2构建RESTful APIs")
                 .description("Spring boot cookbook")
-                .termsOfServiceUrl("https://github.com/helloworldtang/SpringBootCookbook")//license证书信息
+                .termsOfServiceUrl("https://github.com/helloworldtang/SpringBootCookbook")//服务条款
                 .version("0.1")//本次发布的版本
                 .contact(new Contact("Tang.Cheng", "https://github.com/helloworldtang/SpringBootCookbook", "helloworld.tang@qq.com"))
                 .build();
