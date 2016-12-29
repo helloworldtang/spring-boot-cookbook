@@ -32,21 +32,24 @@ public class Swagger2Configuration {
      * (2)传递复杂对象 By RequestBody
      * json格式传递对象使用RequestBody注解
      * (3) PathVariable是Spring 的注解，对于这种简单的参数，就可以不用写ApiParam来描述接口参数。
-     *
-     * @return
+     * <p>
+     * <p>
+     * Every Docket bean is picked up by the swagger-mvc framework - allowing for multiple
+     * swagger groups i.e. same code base multiple swagger resource listings.
+     * http://springfox.github.io/springfox/docs/current/#introduction
      */
     @Bean
-    public Docket createRestApi() {//可以定义多个Docket，类似于sql中的group by
-        return new Docket(DocumentationType.SWAGGER_2)
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)//Docket, Springfox’s, primary api configuration mechanism is initialized for swagger specification 2.0
                 .groupName("cookbook")//分组，在html页面展示时有用。启用group选项会更改api json的访问路径。可以在/swagger-resources中location字段中找到
-//                .ignoredParameterTypes(Student.class)//swagger-ui.html中如果有返回值是Student时，就会显示 Response Class (Status 200) OK <span class="strong">Student is not defined!</span>
-                .genericModelSubstitutes(DeferredResult.class)//异步http请求
-                .forCodeGeneration(true)//自动生成代码
-                .pathMapping("/")// 在这里可以设置请求的统一前缀；默认请求都是以 / 根路径开始，如果我们的应用不是部署在根路径，比如以/platform（应用名）部署，则可以通过一下方式设置请求的统一前缀。
-                .select()//启用api选择构建者(将创建一个新的构建者)
+                .select()//select() returns an instance of ApiSelectorBuilder to give fine grained control over the endpoints exposed via swagger.
                 .apis(RequestHandlerSelectors.basePackage("com.rest"))
                 .paths(PathSelectors.any())// .paths(Predicates.or(PathSelectors.regex("/api/.*")))//过滤的接口,此片过滤掉/api/打头的接口
-                .build()
+                .build()//The selector requires to be built after configuring the api and path selectors. Out of the box we provide predicates for regex, ant, any, none
+//                .ignoredParameterTypes(Student.class)//swagger-ui.html中如果有返回值是Student时，就会显示 Response Class (Status 200) OK <span class="strong">Student is not defined!</span>
+                .genericModelSubstitutes(DeferredResult.class)//异步http请求
+                .forCodeGeneration(true)//By default, types with generics will be labeled with '\u00ab'(<<), '\u00bb'(>>), and commas. This can be problematic with things like swagger-codegen. You can override this behavior by implementing your own GenericTypeNamingStrategy.
+                .pathMapping("/")// 在这里可以设置请求的统一前缀；默认请求都是以 / 根路径开始，如果我们的应用不是部署在根路径，比如以/platform（应用名）部署，则可以通过一下方式设置请求的统一前缀。
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)//使用默认的响应信息true：默认响应信息将会回到全局的响应信息中；false:不加到全局的响应信息中
                 ;
