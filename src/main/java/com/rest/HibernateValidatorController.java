@@ -1,9 +1,12 @@
 package com.rest;
 
 import com.domain.Student;
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,12 +30,15 @@ public class HibernateValidatorController {
     /**
      * 方式1：
      * org.springframework.validation.annotation.Validated
+     * <p>
+     * <p>
+     * ModelAttribute 是Spring mvc的注解，这里Swagger可以解析这个注解，获得User的属性描述--good
      *
      * @param student
      * @return
      */
     @RequestMapping(value = "Validated", method = RequestMethod.GET)
-    public Student testValidatorWithValidated(@Validated Student student) {
+    public Student testValidatorWithValidated(@Validated @ModelAttribute Student student) {
         return student;
     }
 
@@ -43,7 +49,7 @@ public class HibernateValidatorController {
      * @return
      */
     @RequestMapping(value = "noValid", method = RequestMethod.GET)
-    public Student testValidatorWithoutAnnotation(Student student) {
+    public Student testValidatorWithoutAnnotation(@ModelAttribute Student student) {
         return student;
     }
 
@@ -61,7 +67,7 @@ public class HibernateValidatorController {
             @ApiImplicitParam(name = "classes", defaultValue = "Freshman Year", value = "班级", required = true, dataType = "string", paramType = "query")
     })
     @RequestMapping(value = "Valid", method = RequestMethod.GET)
-    public ResponseEntity<Student> testValidatorWithValid(@Valid Student student) {
+    public ResponseEntity<Student> testValidatorWithValid(@Valid @ModelAttribute Student student) {
         return ResponseEntity.ok(student);
     }
 
