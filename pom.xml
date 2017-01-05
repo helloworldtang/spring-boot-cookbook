@@ -34,13 +34,18 @@
         <druid.version>1.0.24</druid.version>
         <guava.version>19.0</guava.version>
         <quartz.version>2.2.3</quartz.version>
-        <springfox.version>2.2.2</springfox.version>
+        <springfox.version>2.6.1</springfox.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--aspectjrt.jar是aspectjweaver.jar的子集.aop场景使用-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
         <dependency>
@@ -111,7 +116,14 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-
+        <!--
+        SpringFox dependencies
+        swagger简单来说就是统一定义了api的语义描述(json,yaml)，并提供ui显示，代码自动生成等等，即建立了rest api生态系统。
+        如何生成这些api数据描述文件，大部分语言都有相关实现。
+        java方面比较好的实现就是springfox
+        Springfox的前身是swagger-springmvc,是一个开源的API doc框架
+        springfox通过annotation来实现api描述，生成api   json描述文件。再交由swagger-ui实现展示。
+        -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -121,6 +133,18 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox.version}</version>
+        </dependency>
+        <!--
+        Springfox-staticdocs is a module which brings together springfox and swagger2markup
+        Swagger2Markup converts a Swagger JSON or YAML file into several AsciiDoc or GitHub Flavored Markdown documents which can be converted to HTML, PDF and EPUB.
+        The output of Swagger2Markup can be used as an alternative to swagger-ui and can be served as static content.
+        http://springfox.github.io/springfox/docs/current/#configuring-springfox-staticdocs
+        -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-staticdocs</artifactId>
+            <version>${springfox.version}</version>
+            <scope>test</scope>
         </dependency>
 
 
@@ -180,64 +204,64 @@
                 </configuration>
             </plugin>
 
-<!--            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>4.0.3</version>
-                <configuration>
-                    <url>jdbc:mysql://192.168.33.88:3306/ggg</url>
-                    <user>root</user>
-                    <password>123456</password>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.38</version>
-                    </dependency>
-                </dependencies>
-            </plugin>-->
+            <!--            <plugin>
+                            <groupId>org.flywaydb</groupId>
+                            <artifactId>flyway-maven-plugin</artifactId>
+                            <version>4.0.3</version>
+                            <configuration>
+                                <url>jdbc:mysql://192.168.33.88:3306/ggg</url>
+                                <user>root</user>
+                                <password>123456</password>
+                            </configuration>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>mysql</groupId>
+                                    <artifactId>mysql-connector-java</artifactId>
+                                    <version>5.1.38</version>
+                                </dependency>
+                            </dependencies>
+                        </plugin>-->
 
 
         </plugins>
     </build>
 
-   <!-- <repositories>
-        <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>-->
+    <!-- <repositories>
+         <repository>
+             <id>spring-snapshots</id>
+             <name>Spring Snapshots</name>
+             <url>https://repo.spring.io/snapshot</url>
+             <snapshots>
+                 <enabled>true</enabled>
+             </snapshots>
+         </repository>
+         <repository>
+             <id>spring-milestones</id>
+             <name>Spring Milestones</name>
+             <url>https://repo.spring.io/milestone</url>
+             <snapshots>
+                 <enabled>false</enabled>
+             </snapshots>
+         </repository>
+     </repositories>
+     <pluginRepositories>
+         <pluginRepository>
+             <id>spring-snapshots</id>
+             <name>Spring Snapshots</name>
+             <url>https://repo.spring.io/snapshot</url>
+             <snapshots>
+                 <enabled>true</enabled>
+             </snapshots>
+         </pluginRepository>
+         <pluginRepository>
+             <id>spring-milestones</id>
+             <name>Spring Milestones</name>
+             <url>https://repo.spring.io/milestone</url>
+             <snapshots>
+                 <enabled>false</enabled>
+             </snapshots>
+         </pluginRepository>
+     </pluginRepositories>-->
 
 
 </project>

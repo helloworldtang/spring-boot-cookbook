@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -23,8 +23,12 @@ import static org.hamcrest.Matchers.is;
 /**
  * Created by MyWorld on 2016/10/19.
  */
+
+/*Spring Boot的SpringApplicationConfiguration注解在Spring Boot 1.4开始，被标记为Deprecated
+解决：替换为SpringBootTest即可*/
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = CookBookApplication.class)
+@SpringBootTest(classes = CookBookApplication.class)
 @WebAppConfiguration
 public class MockMvcDemo {
 

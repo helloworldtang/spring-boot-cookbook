@@ -27,7 +27,7 @@ public class DefaultController {
     public String index() {
         String result = "author name is " + authorSettings.getName() +
                 ", author age is " + authorSettings.getAge() +
-                ",count:" + threadSettings.getCount();
+                ",thread count:" + threadSettings.getCount();
         LOGGER.info("Visit / :{}", result);
         return result;
     }
