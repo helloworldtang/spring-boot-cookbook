@@ -20,6 +20,12 @@ public class DemoController {
 
     /**
      * {
+     * "array": [
+     * "array1",
+     * "array2",
+     * "array3",
+     * "array4"
+     * ],
      * "list": [
      * "1List",
      * "2List",
@@ -40,6 +46,8 @@ public class DemoController {
     @RequestMapping(value = "/test/json", method = RequestMethod.GET)
     public ResponseEntity<Test> test() {
         Test test = new Test();
+        String[] array = {"array1", "array2", "array3", "array4"};
+        test.setArray(array);
         test.setList(newArrayList("1List", "2List", "3List"));
         Map<Integer, String> map = new HashMap<>();
         for (int i = 0; i < 5; i++) {
@@ -53,9 +61,18 @@ public class DemoController {
 }
 
 class Test implements Serializable {
+    private String[] array;
     private List<String> list;
     private Map<Integer, String> map;
     private String string;
+
+    public String[] getArray() {
+        return array;
+    }
+
+    public void setArray(String[] array) {
+        this.array = array;
+    }
 
     public List<String> getList() {
         return list;
