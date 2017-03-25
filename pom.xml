@@ -171,7 +171,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <!--<optional>true</optional>&lt;!&ndash; optional=true,依赖不会传递，该项目依赖devtools；之后依赖myboot项目的项目如果想要使用devtools，需要重新引入 &ndash;&gt;-->
+            <optional>true
+            </optional><!--optional=true,依赖不会传递，该项目依赖devtools；之后依赖myboot项目的项目如果想要使用devtools，需要重新引入 &ndash;&gt;-->
         </dependency>
 
 
@@ -196,11 +197,6 @@
                 <configuration>
                     <mainClass>com.tangcheng.CookBookApplication</mainClass>
                     <executable>true</executable><!--linux下生成的Jar可以像binary文件一样，设置成服务-->
-                    <!--
-                    You can also start your application via the supported build plugins (i.e. Maven and Gradle) as long as forking is enabled since DevTools need an isolated application classloader to operate properly.
-                    You can force the plugin to fork the process as follows:
-                    -->
-                    <!--<fork>true</fork>&lt;!&ndash; 如果没有该项配置，肯呢个devtools不会起作用，即应用不会restart &ndash;&gt;-->
                 </configuration>
             </plugin>
 
@@ -221,8 +217,6 @@
                                 </dependency>
                             </dependencies>
                         </plugin>-->
-
-
         </plugins>
     </build>
 
