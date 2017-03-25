@@ -19,6 +19,8 @@ import static com.google.common.collect.Lists.newArrayList;
 public class MapToJsonTestController {
 
     /**
+     * 数组和List转换成json后，格式相同
+     * map和POJO转换成json后，格式相同
      * {
      * "array": [
      * "array1",
