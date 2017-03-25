@@ -1,4 +1,4 @@
-package com.rest;
+package com.tangcheng.rest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ import static com.google.common.collect.Lists.newArrayList;
  * Created by tang.cheng on 2017/1/17.
  */
 @RestController
-public class DemoController {
+public class MapToJsonTestController {
 
     /**
      * {
