@@ -50,7 +50,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-redis</artifactId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
             <!--org.springframework.jdbc.datasource.DataSourceTransactionManager-->
@@ -194,7 +194,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.CookBookApplication</mainClass>
+                    <mainClass>com.tangcheng.CookBookApplication</mainClass>
                     <executable>true</executable><!--linux下生成的Jar可以像binary文件一样，设置成服务-->
                     <!--
                     You can also start your application via the supported build plugins (i.e. Maven and Gradle) as long as forking is enabled since DevTools need an isolated application classloader to operate properly.
