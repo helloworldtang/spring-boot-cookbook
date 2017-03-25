@@ -14,5 +14,9 @@ http://localhost:9999/swagger-resources/configuration/security
 http://localhost:9999/city/河北
 You can look at http://localhost:8080/flyway to review the list of scripts.
 
+rest result:
+http://localhost:9999/student/-1
+http://localhost:9999/student/1
+
 todo:
 transaction
