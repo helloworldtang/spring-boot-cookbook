@@ -1,5 +1,6 @@
 package com.tangcheng.global.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.tangcheng.global.exception.BizError;
 import com.tangcheng.global.exception.GlobalCode;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
 public class ResultData<T> implements Serializable {
     private Integer code;
     private String msg;
+    @JSONField(name = "result")
     private T detail;
 
     public ResultData(BizError bizError) {
