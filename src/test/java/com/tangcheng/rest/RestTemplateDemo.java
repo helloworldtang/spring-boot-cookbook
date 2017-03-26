@@ -1,7 +1,6 @@
 package com.tangcheng.rest;
 
-import com.tangcheng.config.RestTemplateConfiguration;
-import com.tangcheng.rest.Result;
+import com.tangcheng.config.RestTemplateConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ import static org.hamcrest.core.Is.is;
  * Created by tang.cheng on 2016/10/19.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = RestTemplateConfiguration.class)
+@ContextConfiguration(classes = RestTemplateConfig.class)
 public class RestTemplateDemo {
 
     //待测试的服务需要先启动，

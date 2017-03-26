@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
  * Created by tang.cheng on 2016/10/19.
  */
 @Configuration
-public class RestTemplateConfiguration {
+public class RestTemplateConfig {
 
     /**
      * http://docs.spring.io/spring-boot/docs/1.4.3.RELEASE/reference/htmlsingle/#boot-features-restclient-customization

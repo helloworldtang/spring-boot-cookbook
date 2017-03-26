@@ -13,7 +13,7 @@ import java.util.concurrent.ScheduledExecutorService;
  * Created by MyWorld on 2016/9/23.
  */
 @Configuration
-public class ScheduleConfiguration {
+public class ScheduleConfig {
     /**
      * 解决Spring Boot启动时下面的报错：
      * 2016-09-23 23:28:07.241 DEBUG [com.Application.main()][org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor] Could not find default TaskScheduler bean
