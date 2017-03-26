@@ -19,6 +19,7 @@ import java.util.List;
 
 
 @RestController
+@SuppressWarnings(value = "unchecked")
 public class TestRedisTemplateOperation {
 
     @Autowired

@@ -1,9 +1,11 @@
-package com.tangcheng.db.entity;
+package com.tangcheng.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
 /**
@@ -12,6 +14,7 @@ import javax.validation.constraints.Min;
 
 @ApiModel
 public class Student {
+    private Long id;
     //在需要校验的字段上指定约束条件
     @ApiModelProperty(example = "Tom", value = "TomValue")
     @NotBlank
@@ -49,4 +52,11 @@ public class Student {
         this.classes = classes;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

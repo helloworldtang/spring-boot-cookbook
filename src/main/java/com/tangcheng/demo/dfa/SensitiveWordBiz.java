@@ -5,6 +5,7 @@ import java.util.*;
 /**
  * Created by tang.cheng on 2016/10/29.
  */
+@SuppressWarnings(value = "unchecked")
 public class SensitiveWordBiz {
 
     /**

@@ -1,36 +1,55 @@
 package com.tangcheng.db.entity;
 
-import org.springframework.stereotype.Component;
+import javax.persistence.*;
 
-/**
- * Created by tang.cheng on 2016/12/1.
- */
-@Component
-public class City {
+@Table(name = "city")
+public class CityDo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String state;
 
+    /**
+     * @return id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @return state
+     */
     public String getState() {
         return state;
     }
 
+    /**
+     * @param state
+     */
     public void setState(String state) {
         this.state = state;
     }

@@ -29,7 +29,6 @@ public class ScheduleConfig {
     @ConditionalOnMissingBean(TaskScheduler.class)
     public TaskScheduler taskScheduler() {
         ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
-        ;
         return new ConcurrentTaskScheduler(localExecutor);
     }
 }

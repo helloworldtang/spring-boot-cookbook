@@ -1,7 +1,7 @@
 package com.tangcheng.rest;
 
-import com.tangcheng.db.dao.CityBiz;
-import com.tangcheng.db.entity.City;
+import com.tangcheng.db.biz.CityBiz;
+import com.tangcheng.db.entity.CityDo;
 import com.tangcheng.global.aop.MethodLogAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +24,9 @@ public class CityController {
 
     @MethodLogAnnotation(desc = "查找City")
     @RequestMapping(value = "/city/{state}", method = RequestMethod.GET)
-    public ResponseEntity<List<City>> selectState(@PathVariable("state") String state) {
-        List<City> cityList = cityBiz.selectCity(state);
-        ResponseEntity<List<City>> cityResponseEntity = new ResponseEntity<>(cityList, HttpStatus.OK);
+    public ResponseEntity<List<CityDo>> selectState(@PathVariable("state") String state) {
+        List<CityDo> cityList = cityBiz.selectCity(state);
+        ResponseEntity<List<CityDo>> cityResponseEntity = new ResponseEntity<>(cityList, HttpStatus.OK);
         return cityResponseEntity;
     }
 

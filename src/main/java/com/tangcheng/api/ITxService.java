@@ -1,6 +1,6 @@
 package com.tangcheng.api;
 
-import com.tangcheng.db.entity.Student;
+import com.tangcheng.db.entity.StudentDo;
 import com.tangcheng.global.domain.ResultData;
 
 import java.util.List;
@@ -11,5 +11,5 @@ import java.util.List;
 public interface ITxService {
     void addRecord(Boolean hasError);
 
-    ResultData<List<Student>> getAll();
+    ResultData<List<StudentDo>> getAll();
 }

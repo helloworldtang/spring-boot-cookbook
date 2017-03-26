@@ -13,12 +13,12 @@ import java.sql.SQLException;
 /**
  * Created by MyWorld on 2016/9/16.
  */
-@Configuration
+//@Configuration
 @EnableTransactionManagement// 开启注解事务管理，等同于xml配置文件中的 <tx:annotation-driven />
 public class TxConfig {
 
-    @Autowired
-    private DataSource dataSource;
+//    @Autowired
+//    private DataSource dataSource;
 
     /**
      * 在Spring Boot中，当我们使用了spring-boot-starter-jdbc或spring-boot-starter-data-jpa依赖的时候，
@@ -28,9 +28,9 @@ public class TxConfig {
      * @return
      * @throws SQLException
      */
-    @Bean
-    public PlatformTransactionManager transactionManager() throws SQLException {
-        return new DataSourceTransactionManager(dataSource);
-    }
+//    @Bean
+//    public PlatformTransactionManager transactionManager() throws SQLException {
+//        return new DataSourceTransactionManager(dataSource);
+//    }
 
 }

@@ -1,7 +1,7 @@
 package com.tangcheng.rest;
 
 import com.tangcheng.api.ITxService;
-import com.tangcheng.db.entity.Student;
+import com.tangcheng.db.entity.StudentDo;
 import com.tangcheng.global.domain.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,14 +17,15 @@ import java.util.List;
  * Created by tangcheng on 3/26/2017.
  */
 @RestController
+@RequestMapping(value = "/tx")
 public class TxController {
     public static final Logger LOGGER = LoggerFactory.getLogger(TxController.class);
 
     @Autowired
     private ITxService txService;
 
-    @RequestMapping(value = "/test2/exception", method = RequestMethod.POST)
-    public ResultData<List<Student>> test2WriteWithException(@RequestParam(value = "hasError") Boolean hasError) {
+    @RequestMapping(value = "test", method = RequestMethod.GET)
+    public ResultData<List<StudentDo>> testTx(@RequestParam(value = "hasError", defaultValue = "false") Boolean hasError) {
         txService.addRecord(hasError);
         return txService.getAll();
     }
