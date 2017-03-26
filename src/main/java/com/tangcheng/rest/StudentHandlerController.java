@@ -2,8 +2,10 @@ package com.tangcheng.rest;
 
 import com.tangcheng.domain.Student;
 import com.tangcheng.domain.StudentError;
+import com.tangcheng.global.domain.ResultData;
 import com.tangcheng.global.exception.BizException;
-import com.tangcheng.global.exception.ResultData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,9 +19,12 @@ import java.util.concurrent.ThreadLocalRandom;
 @RestController
 public class StudentHandlerController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(StudentHandlerController.class);
+
     @RequestMapping(value = "/student/{id}", method = RequestMethod.GET)
     public ResultData<?> getStudent(@PathVariable("id") Long id) {
-        if (id == -1) {
+        if (id < 1) {
+            LOGGER.warn("invalid id:{}", id);
             throw new BizException(StudentError.NotExist);
         }
 

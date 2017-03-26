@@ -1,4 +1,7 @@
-package com.tangcheng.global.exception;
+package com.tangcheng.global.domain;
+
+import com.tangcheng.global.exception.BizError;
+import com.tangcheng.global.exception.GlobalCode;
 
 import java.io.Serializable;
 

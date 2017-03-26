@@ -32,7 +32,6 @@
     <properties>
         <java.version>1.8</java.version>
         <druid.version>1.0.24</druid.version>
-        <guava.version>19.0</guava.version>
         <quartz.version>2.2.3</quartz.version>
         <springfox.version>2.6.1</springfox.version>
     </properties>
@@ -102,7 +101,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
+            <version>19.0</version>
         </dependency>
 
         <dependency>
