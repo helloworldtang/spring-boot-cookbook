@@ -1,6 +1,5 @@
 package com.tangcheng.global.aop;
 
-import com.tangcheng.api.MethodLogAnnotation;
 import com.tangcheng.util.NetworkUtil;
 import com.tangcheng.util.RequestHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -23,7 +22,7 @@ import java.lang.reflect.Method;
 public class RecordAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(RecordAspect.class);
 
-    @Pointcut("@annotation(com.tangcheng.api.MethodLogAnnotation)")
+    @Pointcut("@annotation(MethodLogAnnotation)")
     public void methodLog() {
     }
 
@@ -32,14 +31,14 @@ public class RecordAspect {
      * at org.springframework.aop.aspectj.AbstractAspectJAdvice.maybeBindProceedingJoinPoint(AbstractAspectJAdvice.java:405)
      *
      * @param joinPoint
-     * @throws ClassNotFoundException
+     * @throws Throwable
      */
     @Around("methodLog()")
     public Object record(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest httpServletRequest = RequestHolder.getRequestFacade();
         String remoteIp = NetworkUtil.getRemoteIp(httpServletRequest);
         LOGGER.info("{},{},{},{}", remoteIp, httpServletRequest.getMethod(), httpServletRequest.getRequestURI(), httpServletRequest.getRequestURL());
-        
+
 
         Method invokingMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
         MethodLogAnnotation annotation = invokingMethod.getAnnotation(MethodLogAnnotation.class);

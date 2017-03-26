@@ -1,4 +1,4 @@
-package com.tangcheng.domain;
+package com.tangcheng.db.entity;
 
 /**
  * Created by tangcheng on 3/25/2017.

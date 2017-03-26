@@ -1,10 +1,9 @@
-package com.tangcheng.demo.redis;
+package com.tangcheng.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -17,7 +16,6 @@ import redis.clients.jedis.JedisPoolConfig;
  * Created by MyWorld on 2016/9/13.
  */
 @Configuration
-@ComponentScan("com.demo.redis")
 public class RedisConfig {
 
     @Bean
@@ -30,6 +28,16 @@ public class RedisConfig {
         return new JedisConnectionFactory(jedisPoolConfig);
     }
 
+    /**
+     * Transaction Support is disabled by default and has to be explicitly enabled for each RedisTemplate in use by setting setEnableTransactionSupport(true).
+     * This will force binding the RedisConnection in use to the current Thread triggering MULTI.
+     * If the transaction finishes without errors, EXEC is called, otherwise DISCARD.
+     * Once in MULTI, RedisConnection would queue write operations,
+     * all readonly operations, such as KEYS are piped to a fresh (non thread bound) RedisConnection.
+     *
+     * @param redisConnectionFactory
+     * @return
+     */
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
@@ -43,11 +51,13 @@ public class RedisConfig {
         jackson2JsonRedisSerializer.setObjectMapper(om);
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         /**
-         * 这个应该是支持数据库的事务成功才执行的意思。
+         * redis的事务是基于数据库事务的
          */
         redisTemplate.setEnableTransactionSupport(true);
         return redisTemplate;
     }
+
+
 
 
 }

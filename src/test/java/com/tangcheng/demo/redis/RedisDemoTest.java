@@ -1,7 +1,6 @@
 package com.tangcheng.demo.redis;
 
-import com.tangcheng.demo.redis.RedisConfig;
-import com.tangcheng.demo.redis.RedisDemo;
+import com.tangcheng.config.RedisConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

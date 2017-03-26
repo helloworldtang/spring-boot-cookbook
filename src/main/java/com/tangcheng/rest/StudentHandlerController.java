@@ -1,7 +1,7 @@
 package com.tangcheng.rest;
 
-import com.tangcheng.domain.Student;
-import com.tangcheng.domain.StudentError;
+import com.tangcheng.db.entity.Student;
+import com.tangcheng.db.entity.StudentError;
 import com.tangcheng.global.domain.ResultData;
 import com.tangcheng.global.exception.BizException;
 import org.slf4j.Logger;

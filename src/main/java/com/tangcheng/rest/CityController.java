@@ -2,7 +2,7 @@ package com.tangcheng.rest;
 
 import com.tangcheng.db.dao.CityBiz;
 import com.tangcheng.db.entity.City;
-import com.tangcheng.api.MethodLogAnnotation;
+import com.tangcheng.global.aop.MethodLogAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

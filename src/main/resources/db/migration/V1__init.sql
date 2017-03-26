@@ -1,7 +1,7 @@
 -- ----------------------------
 -- Table structure for city
 -- ----------------------------
--- DROP TABLE IF EXISTS `city`;
+DROP TABLE IF EXISTS `city`;
 CREATE TABLE `city` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -19,7 +19,7 @@ INSERT INTO `city` VALUES ('3', 'Sacramento', 'CA');
 -- ----------------------------
 -- Table structure for country
 -- ----------------------------
--- DROP TABLE IF EXISTS `country`;
+DROP TABLE IF EXISTS `country`;
 CREATE TABLE `country` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `countryname` varchar(255) DEFAULT NULL COMMENT '名称',
