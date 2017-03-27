@@ -1,8 +1,10 @@
+DROP TABLE IF EXISTS `users`;
 create table users(
 	username varchar(50) not null primary key,
 	password varchar(50) not null,
 	enabled tinyint(1) not null);
 
+DROP TABLE IF EXISTS `authorities`;
 create table authorities (
 	username varchar(50) not null,
 	authority varchar(50) not null,
