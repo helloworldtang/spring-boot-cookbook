@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -45,4 +46,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll();
 
     }
+
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        //allow Swagger URL to be accessed without authentication
+        web.ignoring().antMatchers( //"/v2/api-docs",//change to /swagger and custom the groupName
+                "/swagger",// Resolve conflicts version number
+                "/swagger-resources/configuration/ui",//用来获取支持的动作
+                "/swagger-resources",//用来获取api-docs的URI
+                "/swagger-resources/configuration/security",//安全选项
+                "/webjars/**",///swagger-ui.html使用的一些资源文件在webjars目录下。eg:http://localhost/webjars/springfox-swagger-ui/images/logo_small.png
+                "/swagger-ui.html",
+                "/h2/**" // h2/query.jsp?jsessionid=f2e1c5f5748414b8b4f8e844f74ef99d.The H2 database provides a browser-based console that Spring Boot can auto-configure for you.
+        );
+    }
+
 }
