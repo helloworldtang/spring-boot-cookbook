@@ -5,7 +5,6 @@ import com.tangcheng.demo.custom.SettingsConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertEquals;
@@ -13,8 +12,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by MyWorld on 2016/8/12.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {SettingsConfig.class})
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringApplicationConfiguration(classes = {SettingsConfig.class})
 public class AuthorSettingsTest {
     @Autowired
     private AuthorSettings authorSettings;

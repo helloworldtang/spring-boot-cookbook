@@ -9,7 +9,7 @@ import javax.validation.constraints.Max;
  * Created by MyWorld on 2016/8/9.
  */
 @Component
-@ConfigurationProperties(prefix = "thread", locations = {"classpath:config/thread.properties"})
+@ConfigurationProperties(prefix = "thread")
 public class ThreadSettings {
 
 
