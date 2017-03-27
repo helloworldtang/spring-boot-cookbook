@@ -14,7 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  */
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-@EnableWebSecurity //As of Spring Security 4.0, @EnableWebMvcSecurity is deprecated. The replacement is @EnableWebSecurity which will determine adding the Spring MVC features based upon the classpath.
+@EnableWebSecurity
+//As of Spring Security 4.0, @EnableWebMvcSecurity is deprecated. The replacement is @EnableWebSecurity which will determine adding the Spring MVC features based upon the classpath.
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -37,10 +38,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/index").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")//Any URL that starts with "/admin/" will be restricted to users who have the role "ROLE_ADMIN". You will notice that since we are invoking the hasRole method we do not need to specify the "ROLE_" prefix.
                 .antMatchers("/db/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_DBA')")
-                .antMatchers("/flyway").permitAll()
+                .antMatchers("/flyway", "/tx/**").permitAll()
                 .anyRequest().authenticated()//Any URL that has not already been matched on only requires that the user be authenticated
                 .and()
-                .formLogin().loginPage("/login")
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/home")
                 .failureUrl("/login?error").permitAll()
                 .and()
                 .logout().permitAll();

@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * Created by MyWorld on 2016/9/16.
  */
 //@Configuration
-@EnableTransactionManagement// 开启注解事务管理，等同于xml配置文件中的 <tx:annotation-driven />
+//@EnableTransactionManagement// 开启注解事务管理，等同于xml配置文件中的 <tx:annotation-driven />
 public class TxConfig {
 
 //    @Autowired

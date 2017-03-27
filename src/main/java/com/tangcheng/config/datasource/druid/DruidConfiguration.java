@@ -19,11 +19,6 @@ public class DruidConfiguration {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(DruidConfiguration.class);
 
-    @Bean
-    public ServletRegistrationBean druidServlet() {
-        return new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
-    }
-
     //这两种init DataSource的方式都可以
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
@@ -36,6 +31,11 @@ public class DruidConfiguration {
             LOGGER.error(e.getMessage(), e);
         }
         return druidDataSource;
+    }
+
+    @Bean
+    public ServletRegistrationBean druidServlet() {
+        return new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
     }
 
     @Bean
