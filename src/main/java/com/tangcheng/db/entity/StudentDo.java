@@ -6,7 +6,7 @@ public class StudentDo {
 
     private String name;
 
-    private Byte age;
+    private Integer age;
 
     private String classes;
 
@@ -41,14 +41,14 @@ public class StudentDo {
     /**
      * @return age
      */
-    public Byte getAge() {
+    public Integer getAge() {
         return age;
     }
 
     /**
      * @param age
      */
-    public void setAge(Byte age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
