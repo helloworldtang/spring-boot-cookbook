@@ -21,15 +21,15 @@ public class TxService implements ITxService {
 
     @Override
     public void addRecord(Boolean hasError) {
-        if (hasError) {
-            throw new IllegalArgumentException("error.roll back");
-        }
         int age = ThreadLocalRandom.current().nextInt(200);
         StudentDo studentDo = new StudentDo();
         studentDo.setName("name" + age);
-        studentDo.setAge((byte) age);
+        studentDo.setAge(age);
         studentDo.setClasses("classes" + age);
         studentBiz.insert(studentDo);
+        if (hasError) {
+            throw new IllegalArgumentException("error.roll back");
+        }
     }
 
     @Override
