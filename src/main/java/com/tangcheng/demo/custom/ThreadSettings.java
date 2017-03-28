@@ -2,12 +2,14 @@ package com.tangcheng.demo.custom;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Max;
 
 /**
  * Created by MyWorld on 2016/8/9.
  */
+@Validated
 @Component
 @ConfigurationProperties(prefix = "thread")
 public class ThreadSettings {
