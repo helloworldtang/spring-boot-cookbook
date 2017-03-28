@@ -5,6 +5,7 @@ import com.tangcheng.db.biz.StudentBiz;
 import com.tangcheng.db.entity.StudentDo;
 import com.tangcheng.global.domain.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,9 @@ public class TxService implements ITxService {
     @Autowired
     private StudentBiz studentBiz;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Override
     public void addRecord(Boolean hasError) {
         int age = ThreadLocalRandom.current().nextInt(200);
@@ -27,6 +31,7 @@ public class TxService implements ITxService {
         studentDo.setAge((byte) age);
         studentDo.setClasses("classes" + age);
         studentBiz.insert(studentDo);
+        redisTemplate.boundValueOps("student:" + studentDo.getId()).set(studentDo);
         if (hasError) {
             throw new IllegalArgumentException("error.roll back");
         }
