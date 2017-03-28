@@ -1,11 +1,7 @@
 package com.tangcheng.db.entity;
 
-import javax.persistence.*;
-
-@Table(name = "student")
 public class StudentDo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     private String name;

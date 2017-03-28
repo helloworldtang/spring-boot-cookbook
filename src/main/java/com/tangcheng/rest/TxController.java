@@ -24,6 +24,11 @@ public class TxController {
     @Autowired
     private ITxService txService;
 
+    @RequestMapping(value = "selectAll", method = RequestMethod.GET)
+    public ResultData<List<StudentDo>> selectAll() {
+        return txService.getAll();
+    }
+
     @RequestMapping(value = "test", method = RequestMethod.POST)
     public ResultData<List<StudentDo>> testTx(@RequestParam(value = "hasError", defaultValue = "false") Boolean hasError) {
         txService.addRecord(hasError);

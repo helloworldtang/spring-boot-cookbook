@@ -5,6 +5,7 @@ import com.tangcheng.db.mapper.CityDoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,8 +20,9 @@ public class CityBiz {
     public List<CityDo> selectCity(String state) {
         CityDo cityDo = new CityDo();
         cityDo.setState(state);
-        cityDoMapper.select(cityDo);
-        return cityDoMapper.select(cityDo);
+//        cityDoMapper.select(cityDo);
+//        return cityDoMapper.select(cityDo);
+        return new ArrayList<>();
     }
 
 

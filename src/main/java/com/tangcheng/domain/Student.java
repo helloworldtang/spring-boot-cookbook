@@ -3,9 +3,7 @@ package com.tangcheng.domain;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.stereotype.Component;
 
-import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
 /**
