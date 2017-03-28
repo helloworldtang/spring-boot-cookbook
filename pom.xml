@@ -174,20 +174,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!--
-           devtools可以实现页面热部署（即页面修改后会立即生效，这个可以直接在application.properties文件中配置spring.thymeleaf.cache=false来实现），
-           实现类文件热部署（类文件修改后不会立即生效），实现对属性文件的热部署。
-           即devtools会监听classpath下的文件变动，并且会立即重启应用（发生在保存时机），注意：因为其采用的虚拟机机制，该项重启是很快的
-           http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-devtools.html
-           http://www.cnblogs.com/java-zhao/p/5502398.html
-         -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional><!--optional=true,依赖不会传递，该项目依赖devtools；之后依赖myboot项目的项目如果想要使用devtools，需要重新引入 &ndash;&gt;-->
-        </dependency>
-
-
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
@@ -210,6 +196,13 @@
                     <mainClass>com.tangcheng.CookBookApplication</mainClass>
                     <executable>true</executable><!--linux下生成的Jar可以像binary文件一样，设置成服务-->
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>springloaded</artifactId>
+                        <version>1.2.6.RELEASE</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
