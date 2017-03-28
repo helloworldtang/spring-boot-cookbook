@@ -28,7 +28,7 @@ public class TxService implements ITxService {
         int age = ThreadLocalRandom.current().nextInt(200);
         StudentDo studentDo = new StudentDo();
         studentDo.setName("name" + age);
-        studentDo.setAge((byte) age);
+        studentDo.setAge(age);
         studentDo.setClasses("classes" + age);
         studentBiz.insert(studentDo);
         redisTemplate.boundValueOps("student:" + studentDo.getId()).set(studentDo);
