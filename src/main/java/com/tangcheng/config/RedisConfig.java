@@ -28,6 +28,14 @@ public class RedisConfig {
         return new JedisConnectionFactory(jedisPoolConfig);
     }
 
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        return objectMapper;
+    }
+
     /**
      * Transaction Support is disabled by default and has to be explicitly enabled for each RedisTemplate in use by setting setEnableTransactionSupport(true).
      * This will force binding the RedisConnection in use to the current Thread triggering MULTI.
@@ -45,10 +53,7 @@ public class RedisConfig {
         redisTemplate.setKeySerializer(new StringRedisSerializer());
 
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
+        jackson2JsonRedisSerializer.setObjectMapper(objectMapper());
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         /**
          * redis的事务是基于数据库事务的
@@ -56,8 +61,6 @@ public class RedisConfig {
         redisTemplate.setEnableTransactionSupport(true);
         return redisTemplate;
     }
-
-
 
 
 }
