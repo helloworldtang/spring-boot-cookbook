@@ -1,7 +1,7 @@
 package com.tangcheng.db.mapper;
 
 import com.tangcheng.db.entity.StudentDo;
-import com.tangcheng.util.MyMapper;
+import com.tangcheng.db.util.MyMapper;
 
 public interface StudentDoMapper extends MyMapper<StudentDo> {
 }

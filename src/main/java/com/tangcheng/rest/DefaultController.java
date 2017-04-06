@@ -23,7 +23,7 @@ public class DefaultController {
     @Autowired
     private ThreadSettings threadSettings;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/config/auto", method = RequestMethod.GET)
     public String index() {
         String result = "author name is " + authorSettings.getName() +
                 ", author age is " + authorSettings.getAge() +

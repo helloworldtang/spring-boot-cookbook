@@ -11,7 +11,7 @@
         <property name="endingDelimiter" value="`"/>
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="com.tangcheng.util.MyMapper"/>
+            <property name="mappers" value="com.tangcheng.db.util.MyMapper"/>
         </plugin>
 
         <commentGenerator>

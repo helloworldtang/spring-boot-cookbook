@@ -11,9 +11,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -26,8 +24,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by tang.cheng on 2016/10/19.
  */
-@Configuration
-@EnableConfigurationProperties(RedisConfig.class)
+//@Configuration
+//@EnableConfigurationProperties(RedisConfig.class)
 public class RestTemplateConfig {
 
     /**
