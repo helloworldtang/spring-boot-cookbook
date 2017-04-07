@@ -30,4 +30,12 @@ public class CityController {
         return cityResponseEntity;
     }
 
+
+    @MethodLogAnnotation(desc = "查找City")
+    @RequestMapping(value = "/city/list", method = RequestMethod.GET)
+    public ResponseEntity<List<CityDo>> selectAll() {
+        List<CityDo> cityList = cityBiz.selectAll();
+        return new ResponseEntity<>(cityList, HttpStatus.OK);
+    }
+
 }

@@ -19,9 +19,11 @@ public class CityBiz {
     public List<CityDo> selectCity(String state) {
         CityDo cityDo = new CityDo();
         cityDo.setState(state);
-        cityDoMapper.select(cityDo);
         return cityDoMapper.select(cityDo);
     }
 
 
+    public List<CityDo> selectAll() {
+        return cityDoMapper.selectAll();
+    }
 }
