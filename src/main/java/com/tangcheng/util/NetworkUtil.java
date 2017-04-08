@@ -16,6 +16,7 @@ public class NetworkUtil {
         try {
             return NetworkUtil.getIpAddress(request);
         } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
             return UNKNOWN;
         }
     }
