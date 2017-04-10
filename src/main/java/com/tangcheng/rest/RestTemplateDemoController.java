@@ -86,7 +86,6 @@ class Result {
     }
 
     public Result(String userId) {
-
         this.userId = userId;
     }
 

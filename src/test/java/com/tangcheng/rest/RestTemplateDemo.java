@@ -30,7 +30,7 @@ public class RestTemplateDemo {
 
     //待测试的服务需要先启动，
     // 否则会提示 Connect to localhost:9999 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: connect
-    String domain = "http://localhost:9999";
+    String domain = "http://localhost:80";
     /**
      * digest:
      * (1)get请求中只有url，使用get打着的api，queryString必须拼到urk中。
@@ -54,25 +54,23 @@ public class RestTemplateDemo {
     //ResponseEntity<T> getForEntity(URI url, Class<T> responseType)
     public void testGetForEntity_URI() {
         String userId = "1";
-        Result expected = new Result(userId);
-
         String url = domain + "/user/" + userId;
 
         ResponseEntity<Result> forEntity = restTemplate.getForEntity(URI.create(url), Result.class);
         Result body = forEntity.getBody();
-        assertThat(body, is(expected));
+        assertThat(body.getUserId(), is(userId));
     }
 
     @Test
     //ResponseEntity<T> getForEntity(String url, Class<T> responseType, Object... urlVariables)
     public void testGetForEntity_Varargs() {
+
         String url = domain + "/user/{userId}";
         String userId = "1";
-        Result expected = new Result(userId);
 
         ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, userId);
         Result body = forEntity.getBody();
-        assertThat(body, is(expected));
+        assertThat(body.getUserId(), is(userId));
     }
 
     @Test
