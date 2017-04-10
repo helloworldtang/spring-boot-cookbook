@@ -10,7 +10,12 @@ import java.net.InetAddress;
 
 public class NetworkUtil {
     private static Logger LOGGER = LoggerFactory.getLogger(NetworkUtil.class);
+
     public static final String UNKNOWN = "unknown";
+
+    public static String getRemoteIp() {
+        return getRemoteIp(RequestHolder.getRequestFacade());
+    }
 
     public static String getRemoteIp(HttpServletRequest request) {
         try {
