@@ -1,5 +1,6 @@
 package com.tangcheng.rest;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,8 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by tang.cheng on 2016/10/19.
  */
+@Api(tags = "user")
 @RestController
-public class RestTemplateDemoController {
+public class UserController {
 
     public static final String AUTH = "auth";
 
