@@ -11,5 +11,7 @@ import java.util.List;
 public interface ITxService {
     void addRecord(Boolean hasError);
 
-    ResultData<List<StudentDo>> getAll();
+    ResultData<List<StudentDo>> selectAll();
+
+    ResultData<List<StudentDo>> selectAll(Boolean hasError, Integer pageId, Integer pageSize);
 }

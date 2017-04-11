@@ -33,8 +33,16 @@ public class TxService implements ITxService {
     }
 
     @Override
-    public ResultData<List<StudentDo>> getAll() {
+    public ResultData<List<StudentDo>> selectAll() {
         List<StudentDo> doList = studentBiz.selectAll();
+        return new ResultData<>(doList);
+    }
+
+    @Override
+    public ResultData<List<StudentDo>> selectAll(Boolean hasError, Integer pageId, Integer pageSize) {
+
+        List<StudentDo> doList = studentBiz.selectAll(pageId, pageSize);
+
         return new ResultData<>(doList);
     }
 }

@@ -2,6 +2,7 @@ package com.tangcheng.db.biz;
 
 import com.tangcheng.db.entity.StudentDo;
 import com.tangcheng.db.mapper.StudentDoMapper;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,9 @@ public class StudentBiz {
         return studentDoMapper.insertUseGeneratedKeys(studentDo);
     }
 
+    public List<StudentDo> selectAll(Integer pageId, Integer pageSize) {
+        RowBounds rowBounds = new RowBounds(pageId, pageSize);
+        StudentDo record = new StudentDo();
+        return studentDoMapper.selectByRowBounds(record, rowBounds);
+    }
 }
