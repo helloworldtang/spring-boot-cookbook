@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangcheng.db.mapper.UserDoMapper">
+  <resultMap id="BaseResultMap" type="com.tangcheng.db.entity.UserDo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+  </resultMap>
+  <!-- 查询包装有role的CustomUserDetails的ResultMap -->
+  <resultMap id="UserDetailsResultMap"
+             type="com.tangcheng.db.entity.CustomUserDetails"
+             extends="BaseResultMap">
+    <!-- 用户信息使用继承 -->
+
+    <!-- role信息 -->
+    <collection property="roles" ofType="com.tangcheng.db.entity.RoleDo">
+      <id column="role_id" property="id" />
+      <result column="name" property="name"/>
+      <result column="type" property="type" />
+    </collection>
+  </resultMap>
+
+  <select id="getUserByName" resultMap="UserDetailsResultMap">
+    SELECT
+    `user`.id,
+    `user`.username,
+    `user`.`password`,
+    `user`.email,
+    role.id role_id,
+    role.`name`,
+    role.type
+    FROM
+    user_role
+    JOIN `user` ON `user`.id = user_role.user_id
+    JOIN role ON role.id = user_role.role_id
+    WHERE
+    `user`.username = #{username}
+  </select>
+
+
+</mapper>

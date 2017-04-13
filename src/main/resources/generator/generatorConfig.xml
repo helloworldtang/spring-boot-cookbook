@@ -31,7 +31,19 @@
         <javaClientGenerator targetPackage="com.tangcheng.db.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-        <table tableName="city" domainObjectName="CityDo" >
+        <table tableName="user" domainObjectName="UserDo" >
+            <!--mysql 配置-->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+            <!--oracle 配置-->
+            <!--<generatedKey column="id" sqlStatement="select SEQ_{1}.nextval from dual" identity="false" type="pre"/>-->
+        </table>
+        <table tableName="role" domainObjectName="RoleDo" >
+            <!--mysql 配置-->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+            <!--oracle 配置-->
+            <!--<generatedKey column="id" sqlStatement="select SEQ_{1}.nextval from dual" identity="false" type="pre"/>-->
+        </table>
+        <table tableName="user_role" domainObjectName="UserRoleDo" >
             <!--mysql 配置-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
             <!--oracle 配置-->
