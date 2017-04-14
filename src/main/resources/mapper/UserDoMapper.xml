@@ -9,17 +9,20 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="account_enabled" jdbcType="BIT" property="accountEnabled" />
+    <result column="account_expired" jdbcType="TIMESTAMP" property="accountExpired" />
+    <result column="credentials_expired" jdbcType="TIMESTAMP" property="credentialsExpired" />
+    <result column="account_locked" jdbcType="BIT" property="accountLocked" />
   </resultMap>
+
   <!-- 查询包装有role的CustomUserDetails的ResultMap -->
-  <resultMap id="UserDetailsResultMap"
-             type="com.tangcheng.db.entity.CustomUserDetails"
-             extends="BaseResultMap">
+  <resultMap extends="BaseResultMap" id="UserDetailsResultMap" type="com.tangcheng.db.entity.CustomUserDetails">
     <!-- 用户信息使用继承 -->
 
     <!-- role信息 -->
-    <collection property="roles" ofType="com.tangcheng.db.entity.RoleDo">
+    <collection ofType="com.tangcheng.db.entity.RoleDo" property="roles">
       <id column="role_id" property="id" />
-      <result column="name" property="name"/>
+      <result column="name" property="name" />
       <result column="type" property="type" />
     </collection>
   </resultMap>
@@ -29,7 +32,10 @@
     `user`.id,
     `user`.username,
     `user`.`password`,
-    `user`.email,
+    `user`.account_enabled,
+    `user`.account_expired,
+    `user`.credentials_expired,
+    `user`.account_locked,
     role.id role_id,
     role.`name`,
     role.type

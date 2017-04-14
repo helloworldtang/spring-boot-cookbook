@@ -24,14 +24,20 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `account_enabled` tinyint(1) NOT NULL DEFAULT 1,
+  `account_expired` datetime NOT NULL,
+  `credentials_expired` datetime NOT NULL,
+  `account_locked` tinyint(1) NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', 'admin', 'hello@admin.com');
-INSERT INTO `user` VALUES ('2', 'user', 'user', 'user@user.com');
+INSERT INTO `user` (id,username,password,email,account_expired,credentials_expired)
+VALUES (1, 'admin', 'admin', 'hello@admin.com',date_add(NOW(), interval 6 MONTH),date_add(NOW(), interval 6 MONTH));
+INSERT INTO `user` (id,username,password,email,account_expired,credentials_expired)
+VALUES (2,'user', 'user', 'user@user.com',date_add(NOW(), interval 6 MONTH),date_add(NOW(), interval 6 MONTH));
 
 -- ----------------------------
 -- Table structure for user_role

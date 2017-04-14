@@ -110,7 +110,10 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.31</version>
         </dependency>
-
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
 
         <!--java.lang.NoClassDefFoundError: org/apache/http/client/HttpClient-->
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->

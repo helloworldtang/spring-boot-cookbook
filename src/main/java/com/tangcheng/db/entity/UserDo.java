@@ -1,6 +1,7 @@
 package com.tangcheng.db.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "user")
 public class UserDo {
@@ -13,6 +14,18 @@ public class UserDo {
     private String password;
 
     private String email;
+
+    @Column(name = "account_enabled")
+    private Boolean accountEnabled;
+
+    @Column(name = "account_expired")
+    private Date accountExpired;
+
+    @Column(name = "credentials_expired")
+    private Date credentialsExpired;
+
+    @Column(name = "account_locked")
+    private Boolean accountLocked;
 
     /**
      * @return id
@@ -68,5 +81,61 @@ public class UserDo {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * @return account_enabled
+     */
+    public Boolean getAccountEnabled() {
+        return accountEnabled;
+    }
+
+    /**
+     * @param accountEnabled
+     */
+    public void setAccountEnabled(Boolean accountEnabled) {
+        this.accountEnabled = accountEnabled;
+    }
+
+    /**
+     * @return account_expired
+     */
+    public Date getAccountExpired() {
+        return accountExpired;
+    }
+
+    /**
+     * @param accountExpired
+     */
+    public void setAccountExpired(Date accountExpired) {
+        this.accountExpired = accountExpired;
+    }
+
+    /**
+     * @return credentials_expired
+     */
+    public Date getCredentialsExpired() {
+        return credentialsExpired;
+    }
+
+    /**
+     * @param credentialsExpired
+     */
+    public void setCredentialsExpired(Date credentialsExpired) {
+        this.credentialsExpired = credentialsExpired;
+    }
+
+    /**
+     * @return account_locked
+     */
+    public Boolean getAccountLocked() {
+        return accountLocked;
+    }
+
+    /**
+     * @param accountLocked
+     */
+    public void setAccountLocked(Boolean accountLocked) {
+        this.accountLocked = accountLocked;
     }
 }

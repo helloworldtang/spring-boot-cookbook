@@ -1,5 +1,6 @@
 package com.tangcheng.db.entity;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by tang.cheng on 2017/4/13.
  */
-public class CustomUserDetails extends UserDo implements UserDetails{
+public class CustomUserDetails extends UserDo implements UserDetails {
     private List<RoleDo> roles;
 
     public List<RoleDo> getRoles() {
@@ -37,21 +38,21 @@ public class CustomUserDetails extends UserDo implements UserDetails{
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return LocalDateTime.now().toDate().compareTo(this.getAccountExpired()) <= 0;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !this.getAccountLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return LocalDateTime.now().toDate().compareTo(this.getCredentialsExpired()) <= 0;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.getAccountEnabled();
     }
 }
