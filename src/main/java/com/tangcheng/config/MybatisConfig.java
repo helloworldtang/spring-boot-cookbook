@@ -163,7 +163,7 @@ public class MybatisConfig {
      *
      * @return
      */
-    @Bean
+//    @Bean
     public PageInterceptor pageInterceptor() {
         /**
          * The MyBatis-Spring-Boot-Starter will detects beans that implements following interface provided by MyBatis.

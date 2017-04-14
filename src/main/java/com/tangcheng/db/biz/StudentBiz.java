@@ -26,7 +26,6 @@ public class StudentBiz {
 
     public List<StudentDo> selectAll(Integer pageId, Integer pageSize) {
         RowBounds rowBounds = new RowBounds(pageId, pageSize);
-        StudentDo record = new StudentDo();
-        return studentDoMapper.selectByRowBounds(record, rowBounds);
+        return studentDoMapper.selectByExampleAndRowBounds(null, rowBounds);
     }
 }
