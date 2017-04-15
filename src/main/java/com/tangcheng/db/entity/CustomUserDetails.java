@@ -3,7 +3,6 @@ package com.tangcheng.db.entity;
 import org.joda.time.LocalDateTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +11,7 @@ import java.util.List;
 /**
  * Created by tang.cheng on 2017/4/13.
  */
-public class CustomUserDetails extends UserDo implements UserDetails {
+public class CustomUserDetails extends UserDo {
     private List<RoleDo> roles;
 
     public List<RoleDo> getRoles() {
@@ -23,8 +22,7 @@ public class CustomUserDetails extends UserDo implements UserDetails {
         this.roles = roles;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> generateAuthorities() {
         //定义权限集合
         List<GrantedAuthority> authorities = new ArrayList<>();
         //当前用户的角色信息集合
@@ -36,23 +34,11 @@ public class CustomUserDetails extends UserDo implements UserDetails {
         return authorities;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
+    public boolean generateAccountNonExpired() {
         return LocalDateTime.now().toDate().compareTo(this.getAccountExpired()) <= 0;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return !this.getAccountLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
+    public boolean generateCredentialsNonExpired() {
         return LocalDateTime.now().toDate().compareTo(this.getCredentialsExpired()) <= 0;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.getAccountEnabled();
     }
 }

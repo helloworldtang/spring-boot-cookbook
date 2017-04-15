@@ -6,6 +6,7 @@ import com.tangcheng.db.entity.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UserBiz userBiz;
 
@@ -25,8 +27,17 @@ public class UserServiceImpl implements UserService {
         CustomUserDetails userDetails = userBiz.getUserByName(username);
         if (userDetails == null) {
             LOGGER.warn("{} not exist.", username);
-            throw new UsernameNotFoundException(username + " not exists!");
+            throw new UsernameNotFoundException(username + " not exists");
         }
-        return userDetails;
+
+        return new User(
+                userDetails.getUsername(),
+                userDetails.getPassword(),
+                userDetails.getAccountEnabled(),
+                userDetails.generateAccountNonExpired(),
+                userDetails.generateCredentialsNonExpired(),
+                !userDetails.getAccountLocked(),
+                userDetails.generateAuthorities());
     }
+
 }
