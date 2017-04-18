@@ -18,5 +18,3 @@ rest result:
 http://localhost:9999/student/-1
 http://localhost:9999/student/1
 
-todo:
-transaction
