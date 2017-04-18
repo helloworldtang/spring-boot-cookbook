@@ -3,6 +3,8 @@ package com.tangcheng.service;
 import com.tangcheng.api.UserService;
 import com.tangcheng.db.biz.UserBiz;
 import com.tangcheng.db.entity.CustomUserDetails;
+import com.tangcheng.global.domain.ResultData;
+import com.tangcheng.global.exception.GlobalCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,36 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserBiz userBiz;
+
+
+    @Override
+    public ResultData<?> addUser(String username, String email, String password) {
+        userBiz.addUser(username, email,password);
+        return new ResultData<>(GlobalCode.SUCCESS);
+    }
+
+    @Override
+    public ResultData<?> getUser(String username) {
+        CustomUserDetails userDetails = userBiz.getUserByName(username);
+        if (userDetails == null) {
+            LOGGER.warn("invalid username:{}", username);
+            return new ResultData<>(GlobalCode.NOT_EXIST);
+        }
+        return new ResultData<>(GlobalCode.SUCCESS, userDetails);
+    }
+
+    @Override
+    public ResultData<?> putUser(String username, String email) {
+        userBiz.putUser(username, email);
+        return new ResultData<>(GlobalCode.SUCCESS);
+    }
+
+    @Override
+    public ResultData<?> delUser(String username) {
+        userBiz.delUser(username);
+        return new ResultData<>(GlobalCode.SUCCESS);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

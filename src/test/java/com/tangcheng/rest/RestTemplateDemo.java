@@ -30,7 +30,7 @@ public class RestTemplateDemo {
 
     //待测试的服务需要先启动，
     // 否则会提示 Connect to localhost:9999 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: connect
-    String domain = "http://localhost:80";
+    String domain = "http://localhost:80/test";
     /**
      * digest:
      * (1)get请求中只有url，使用get打着的api，queryString必须拼到urk中。
@@ -54,7 +54,7 @@ public class RestTemplateDemo {
     //ResponseEntity<T> getForEntity(URI url, Class<T> responseType)
     public void testGetForEntity_URI() {
         String userId = "1";
-        String url = domain + "/user/" + userId;
+        String url = domain + "/" + userId;
 
         ResponseEntity<Result> forEntity = restTemplate.getForEntity(URI.create(url), Result.class);
         Result body = forEntity.getBody();
@@ -65,7 +65,7 @@ public class RestTemplateDemo {
     //ResponseEntity<T> getForEntity(String url, Class<T> responseType, Object... urlVariables)
     public void testGetForEntity_Varargs() {
 
-        String url = domain + "/user/{userId}";
+        String url = domain + "/{userId}";
         String userId = "1";
 
         ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, userId);
@@ -76,7 +76,7 @@ public class RestTemplateDemo {
     @Test
     //ResponseEntity<T> getForEntity(String url, Class<T> responseType, Map<String, ?> urlVariables)
     public void testGetForEntity_Map() {
-        String url = domain + "/user/{userId}";
+        String url = domain + "/{userId}";
         String userId = "1";
         Map<String, String> urlVariables = new HashMap<>();
         /**
@@ -99,7 +99,7 @@ public class RestTemplateDemo {
         int pageSize = 10;
         Result excepted = new Result(userId, pageId, pageSize);
 
-        String url = domain + "/user/{userId}/detail?pageId={pageId}&pageSize={pageSize}";
+        String url = domain + "/{userId}/detail?pageId={pageId}&pageSize={pageSize}";
 
         ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, userId, pageId, pageSize);
         Result actual = forEntity.getBody();
@@ -115,7 +115,7 @@ public class RestTemplateDemo {
         int third = 10;
         Result excepted = new Result(firestParameter, second, third);
 
-        String url = domain + "/user/{userId}/detail?pageId={pageId}&pageSize={pageSize}";
+        String url = domain + "/{userId}/detail?pageId={pageId}&pageSize={pageSize}";
 
         ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, firestParameter, second, third);
         Result actual = forEntity.getBody();
@@ -136,7 +136,7 @@ public class RestTemplateDemo {
         urlVariables.put("pageId", pageId);
         urlVariables.put("pageSize", pageSize);
 
-        String url = domain + "/user/{userId}/detail?pageId={pageId}&pageSize={pageSize}";
+        String url = domain + "/{userId}/detail?pageId={pageId}&pageSize={pageSize}";
         /**
          *
          * 如果不将queryString拼到url中这些参数在服务器端是收到 不到的
@@ -173,7 +173,7 @@ public class RestTemplateDemo {
         uriVariables.put("pageId", pageId);
         uriVariables.put("pageSize", pageSize);
 
-        String url = domain + "/user/{userId}/auth?pageId={pageId}&pageSize={pageSize}";
+        String url = domain + "/{userId}/auth?pageId={pageId}&pageSize={pageSize}";
         MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
         header.add("auth", auth);
         HttpEntity<?> requestEntity = new HttpEntity<>(header);
@@ -187,7 +187,7 @@ public class RestTemplateDemo {
     @Test
     //ResponseEntity<T> postForEntity(String url, Object request, Class<T> responseType, Object... uriVariables)
     public void testPostForEntity_Varargs() {
-        String url = domain + "/user/{userId}";
+        String url = domain + "/{userId}";
         String userId = "1";
         Result expected = new Result(userId);
 
@@ -201,7 +201,7 @@ public class RestTemplateDemo {
     @Test
     //ResponseEntity<T> postForEntity(String url, Object request, Class<T> responseType, Map<String, ?> uriVariables)
     public void testPostForEntity_Map() {
-        String url = domain + "/user/{userId}";
+        String url = domain + "/{userId}";
         String userId = "1";
         Result expected = new Result(userId);
 
@@ -234,7 +234,7 @@ public class RestTemplateDemo {
         Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("userId", userId);
 
-        String url = domain + "/user/{userId}/detail";//userId是uriVariables；?pageId={pageId}&pageSize={pageSize}不是uri,需要放在request请求体中
+        String url = domain + "/{userId}/detail";//userId是uriVariables；?pageId={pageId}&pageSize={pageSize}不是uri,需要放在request请求体中
         //如果给定一个MultiValueMap<String,String>，
         // 那么这个Map中的值将会被FormHttpMessageConverter以"application/x-www-form-urlencoded"的格式写到请求体中
         //java.util.Map中存放的数据，不会放到request请求的请求体中，只能是org.springframework.util.MultiValueMap
@@ -260,7 +260,7 @@ public class RestTemplateDemo {
         Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("userId", userId);
 
-        String url = domain + "/user/{userId}/auth";//userId是uriVariables；?pageId={pageId}&pageSize={pageSize}不是uri,需要放在request请求体中
+        String url = domain + "/{userId}/auth";//userId是uriVariables；?pageId={pageId}&pageSize={pageSize}不是uri,需要放在request请求体中
 
         //Header只能使用MultiValueMap类型
         MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
@@ -293,7 +293,7 @@ public class RestTemplateDemo {
         Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("userId", userId);
 
-        String url = domain + "/user/{userId}/auth";//userId是uriVariables；?pageId={pageId}&pageSize={pageSize}不是uri,需要放在request请求体中
+        String url = domain + "/{userId}/auth";//userId是uriVariables；?pageId={pageId}&pageSize={pageSize}不是uri,需要放在request请求体中
 
         //Header只能使用MultiValueMap类型
         MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
@@ -323,7 +323,7 @@ public class RestTemplateDemo {
         String auth = "secret In Header";
         Result excepted = new Result(userId, pageId, pageSize, auth);
 
-        String url = domain + "/user/" + userId + "/auth";//userId是uriVariables；?pageId={pageId}&pageSize={pageSize}不是uri,需要放在request请求体中
+        String url = domain + "/" + userId + "/auth";//userId是uriVariables；?pageId={pageId}&pageSize={pageSize}不是uri,需要放在request请求体中
 
         //Header只能使用MultiValueMap类型
         MultiValueMap<String, String> header = new LinkedMultiValueMap<>();

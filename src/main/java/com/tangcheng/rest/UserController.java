@@ -1,158 +1,44 @@
 package com.tangcheng.rest;
 
+import com.tangcheng.api.UserService;
+import com.tangcheng.global.domain.ResultData;
 import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
- * Created by tang.cheng on 2016/10/19.
+ * Created by tang.cheng on 2017/4/18.
  */
 @Api(tags = "user")
 @RestController
+@RequestMapping("user")
 public class UserController {
 
-    public static final String AUTH = "auth";
+    @Autowired
+    private UserService userService;
 
-    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
-    public Result getOnlyPathVariable(@PathVariable("userId") String userId) {
-        return new Result(userId);
+    @PostMapping
+    public ResultData<?> addUser(@RequestParam String username,
+                                 @RequestParam String email,
+                                 @RequestParam String password) {
+        return userService.addUser(username, email,password);
     }
 
-    @RequestMapping(value = "/user/{userId}/detail", method = RequestMethod.GET)
-    public Result getPathVariableAndRequestParameter(@PathVariable("userId") String userId,
-                                                     @RequestParam(value = "pageId", required = false) Integer pageId,
-                                                     @RequestParam(value = "pageSize", required = false) Integer pageSize) {
-        return new Result(userId, pageId, pageSize);
-    }
-
-    @RequestMapping(value = "/user/{userId}/auth", method = RequestMethod.GET)
-    public Result getPathVariableAndRequestParameterAndHeader(HttpServletRequest request,
-                                                              @PathVariable("userId") String userId,
-                                                              @RequestParam(value = "pageId", required = false) Integer pageId,
-                                                              @RequestParam(value = "pageSize", required = false) Integer pageSize) {
-        String auth = request.getHeader(AUTH);
-        return new Result(userId, pageId, pageSize, auth);
+    @GetMapping("{username}")
+    public ResultData<?> getUser(@PathVariable String username) {
+        return userService.getUser(username);
     }
 
 
-    @RequestMapping(value = "/user/{userId}", method = RequestMethod.POST)
-    public Result postOnlyPathVariable(@PathVariable("userId") String userId) {
-        return new Result(userId);
+    @PutMapping("{username}")
+    public ResultData<?> modifyUser(@PathVariable String username,
+                                    @RequestParam(value = "email") String email) {
+        return userService.putUser(username, email);
     }
 
-
-    @RequestMapping(value = "/user/{userId}/detail", method = RequestMethod.POST)
-    public Result postPathVariableAndRequestParameter(@PathVariable("userId") String userId,
-                                                      @RequestParam(value = "pageId", required = false) Integer pageId,
-                                                      @RequestParam(value = "pageSize", required = false) Integer pageSize) {
-        return new Result(userId, pageId, pageSize);
+    @DeleteMapping("{username}")
+    public ResultData<?> delUser(@PathVariable String username) {
+        return userService.delUser(username);
     }
 
-
-    @RequestMapping(value = "/user/{userId}/auth", method = RequestMethod.POST)
-    public Result postPathVariableAndRequestParameterAndHeader(HttpServletRequest request,
-                                                               @PathVariable("userId") String userId,
-                                                               @RequestParam(value = "pageId", required = false) Integer pageId,
-                                                               @RequestParam(value = "pageSize", required = false) Integer pageSize) {
-        String auth = request.getHeader(AUTH);
-        return new Result(userId, pageId, pageSize, auth);
-    }
-
-
-}
-
-class Result {
-
-    private String userId;
-    private Integer pageId;
-    private Integer pageSize;
-    private String auth;
-
-    public Result() {
-    }
-
-    public Result(String userId, int pageId, int pageSize, String auth) {
-
-        this.userId = userId;
-        this.pageId = pageId;
-        this.pageSize = pageSize;
-        this.auth = auth;
-    }
-
-    public Result(String userId, Integer pageId, Integer pageSize) {//如果pageId，pageSize如果使用基本类型，传入null时会报java.lang.NullPointerException
-
-        this.userId = userId;
-        this.pageId = pageId;
-        this.pageSize = pageSize;
-    }
-
-    public Result(String userId) {
-        this.userId = userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public Integer getPageId() {
-        return pageId;
-    }
-
-    public void setPageId(Integer pageId) {
-        this.pageId = pageId;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public void setAuth(String auth) {
-        this.auth = auth;
-    }
-
-    public String getAuth() {
-        return auth;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Result result = (Result) o;
-
-        if (userId != null ? !userId.equals(result.userId) : result.userId != null) return false;
-        if (pageId != null ? !pageId.equals(result.pageId) : result.pageId != null) return false;
-        if (pageSize != null ? !pageSize.equals(result.pageSize) : result.pageSize != null) return false;
-        return auth != null ? auth.equals(result.auth) : result.auth == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = userId != null ? userId.hashCode() : 0;
-        result = 31 * result + (pageId != null ? pageId.hashCode() : 0);
-        result = 31 * result + (pageSize != null ? pageSize.hashCode() : 0);
-        result = 31 * result + (auth != null ? auth.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Result{" +
-                "userId='" + userId + '\'' +
-                ", pageId=" + pageId +
-                ", pageSize=" + pageSize +
-                ", auth='" + auth + '\'' +
-                '}';
-    }
 }

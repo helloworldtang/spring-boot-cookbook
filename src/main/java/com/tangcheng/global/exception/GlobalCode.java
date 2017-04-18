@@ -5,7 +5,8 @@ package com.tangcheng.global.exception;
  */
 public enum GlobalCode implements BizError {
     SUCCESS(0, "success"),
-    FAIL(-1, "fail");
+    FAIL(-1, "fail"),
+    NOT_EXIST(-2, "not exist");
     private final int code;
     private final String msg;
 
