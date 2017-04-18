@@ -1,9 +1,8 @@
 package com.tangcheng.rest;
 
-import com.tangcheng.CookBookApplication;
+import com.tangcheng.CookbookApplication;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tangcheng.rest.Result;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +28,7 @@ import static org.hamcrest.Matchers.is;
 解决：替换为SpringBootTest即可*/
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = CookBookApplication.class)
+@SpringBootTest(classes = CookbookApplication.class)
 @WebAppConfiguration
 public class MockMvcDemo {
 

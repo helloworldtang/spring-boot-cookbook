@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.tangcheng</groupId>
-    <artifactId>SpringBootCookbook</artifactId>
+    <artifactId>spring-boot-cookbook</artifactId>
     <version>0.1</version>
     <packaging>jar</packaging>
 
-    <name>Spring Boot Cookbook</name>
+    <name>spring-boot-cookbook</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -21,7 +21,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <druid.version>1.0.24</druid.version>
+        <druid.version>1.0.28</druid.version>
         <springfox.version>2.6.1</springfox.version>
     </properties>
 
@@ -185,7 +185,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.tangcheng.CookBookApplication</mainClass>
+                    <mainClass>com.tangcheng.CookbookApplication</mainClass>
                     <executable>true</executable><!--linux下生成的Jar可以像binary文件一样，设置成服务-->
                 </configuration>
                 <dependencies>

@@ -1,6 +1,5 @@
 package com.tangcheng.rest;
 
-import com.tangcheng.CookBookApplication;
 import com.tangcheng.demo.custom.AuthorSettings;
 import com.tangcheng.demo.custom.ThreadSettings;
 import org.slf4j.Logger;
@@ -21,7 +20,7 @@ import java.util.Date;
  */
 @Controller
 public class DefaultController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CookBookApplication.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultController.class);
 
     @Autowired
     private AuthorSettings authorSettings;

@@ -1,7 +1,6 @@
 package com.tangcheng.demo.custom;
 
-import com.tangcheng.CookBookApplication;
-import com.tangcheng.demo.custom.ThreadSettings;
+import com.tangcheng.CookbookApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import static org.hamcrest.core.Is.is;
  * Created by MyWorld on 2016/8/12.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = CookBookApplication.class)
+@SpringBootTest(classes = CookbookApplication.class)
 public class ThreadSettingsTest {
 
     @Autowired
