@@ -22,6 +22,14 @@ public class DruidConfiguration {
         try {
             /**
              *
+             * Druid的监控统计功能是通过filter-chain扩展实现，如果你要打开监控统计功能，配置StatFilter，
+             * 具体看这里：https://github.com/alibaba/druid/wiki/配置_StatFilter
+             StatFilter的别名是stat，这个别名映射配置信息保存在druid-xxx.jar!/META-INF/druid-filter.properties。
+             在spring中使用别名配置方式如下：
+             <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+             ... ...
+             <property name="filters" value="stat" />
+             </bean>
              属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：
              监控统计用的filter:stat
              日志用的filter:log4j
