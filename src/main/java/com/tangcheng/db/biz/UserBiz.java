@@ -51,12 +51,13 @@ public class UserBiz {
     }
 
     @CachePut(value = "user", key = "#username")
-    public void putUser(String username, String email) {
+    public CustomUserDetails putUser(String username, String email) {
         UserDo record = new UserDo();
         record.setUsername(username);
-        UserDo userDo = userDoMapper.selectOne(record);
-        userDo.setEmail(email);
-        userDoMapper.updateByPrimaryKeySelective(userDo);
+        CustomUserDetails userDetails = getUserByName(username);
+        userDetails.setEmail(email);
+        userDoMapper.updateByPrimaryKeySelective(userDetails);
+        return userDetails;
     }
 
     @CacheEvict(value = "user", key = "#username")
