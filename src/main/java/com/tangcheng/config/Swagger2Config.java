@@ -2,6 +2,7 @@ package com.tangcheng.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.context.request.async.DeferredResult;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -15,6 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * Created by tang.cheng on 2016/9/29.
  */
+@Profile("!prod")
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {
