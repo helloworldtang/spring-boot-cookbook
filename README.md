@@ -3,7 +3,8 @@ http://localhost:8090/change/user?userId=111
 
 http://localhost:9999/druid/index.html  
 
-根据返回值中的location来确定是api json的path
+根据返回值中的location来确定是api json的path  
+
 http://localhost:9999/swagger-resources
 
 http://localhost:9999/swagger-ui.html
