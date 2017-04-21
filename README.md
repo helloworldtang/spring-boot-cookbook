@@ -10,7 +10,8 @@ http://localhost:9999/swagger-resources
 http://localhost:9999/swagger-ui.html
 
 //验证用的   
-http://localhost:9999/swagger-resources/configuration/ui
+http://localhost:9999/swagger-resources/configuration/ui  
+
 http://localhost:9999/swagger-resources/configuration/security
 
 
@@ -18,7 +19,8 @@ http://localhost:9999/city/河北
 
 rest result:  
 
-http://localhost:9999/student/-1
+http://localhost:9999/student/-1  
+
 http://localhost:9999/student/1
 
 
