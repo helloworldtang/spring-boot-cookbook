@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangcheng.app.domain.mapper.UserDoMapper">
+    <resultMap id="BaseResultMap" type="com.tangcheng.app.domain.entity.UserDo">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="account_enabled" jdbcType="BIT" property="accountEnabled"/>
+        <result column="account_expired" jdbcType="TIMESTAMP" property="accountExpired"/>
+        <result column="credentials_expired" jdbcType="TIMESTAMP" property="credentialsExpired"/>
+        <result column="account_locked" jdbcType="BIT" property="accountLocked"/>
+    </resultMap>
+
+    <!-- 查询包装有role的CustomUserDetails的ResultMap -->
+    <resultMap extends="BaseResultMap" id="UserDetailsResultMap" type="com.tangcheng.app.domain.vo.CustomUserDetails">
+        <!-- 用户信息使用继承 -->
+
+        <!-- role信息 -->
+        <collection ofType="com.tangcheng.app.domain.entity.RoleDo" property="roles">
+            <id column="role_id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="type" property="type"/>
+        </collection>
+    </resultMap>
+
+    <select id="getUserByName" resultMap="UserDetailsResultMap">
+    SELECT
+    `user`.id,
+    `user`.username,
+    `user`.password,
+    `user`.email,
+    `user`.account_enabled,
+    `user`.account_expired,
+    `user`.credentials_expired,
+    `user`.account_locked,
+    `user`.account_locked,
+    role.id role_id,
+    role.`name`,
+    role.type
+    FROM
+    user_role
+    JOIN `user` ON `user`.id = user_role.user_id
+    JOIN role ON role.id = user_role.role_id
+    WHERE
+    `user`.username = #{username}
+  </select>
+
+
+</mapper>

@@ -5,8 +5,16 @@
 
     <groupId>com.tangcheng</groupId>
     <artifactId>spring-boot-cookbook</artifactId>
-    <version>0.1</version>
-    <packaging>jar</packaging>
+    <version>1.0.1</version>
+    <modules>
+        <module>app-interface</module>
+        <module>app-service</module>
+        <module>app-domain</module>
+        <module>app-dao</module>
+        <module>app-schedule</module>
+        <module>learning-demo</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>spring-boot-cookbook</name>
     <description>Demo project for Spring Boot</description>
@@ -14,7 +22,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.1.RELEASE</version>
+        <version>1.5.3.RELEASE</version>
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
@@ -24,221 +32,6 @@
         <druid.version>1.0.28</druid.version>
         <springfox.version>2.6.1</springfox.version>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!--aspectjrt.jar是aspectjweaver.jar的子集.aop场景使用-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>${druid.version}</version>
-        </dependency>
-        <!--
-                As you may already know, to use MyBatis with Spring you need at least an SqlSessionFactory and at least one mapper interface.
-                MyBatis-Spring-Boot-Starter will:
-                Autodetect an existing DataSource.
-                Will create and register an instance of a SqlSessionFactoryBean passing that DataSource as an input.
-                Will create and register an instance of a SqlSessionTemplate got out of the SqlSessionFactoryBean.
-                Autoscan your mappers, link them to the SqlSessionTemplate and register them to Spring context so they can be injected into your beans.
-                -->
-        <!--mybatis-->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.3.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper</artifactId>
-            <version>3.4.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>5.0.0</version>
-        </dependency>
-        <!--
-         没有这个dependency报java.lang.NoClassDefFoundError: com/google/common/collect/FluentIterable
-         这个class在 version  19.0 中有。
-         从哪个版本中开始有，没有进一步跟踪
-         https://mvnrepository.com/artifact/com.google.guava/guava
-         -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>19.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>2.2.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.31</version>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
-
-        <!--java.lang.NoClassDefFoundError: org/apache/http/client/HttpClient-->
-        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.5</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-actuator</artifactId>
-        </dependency>
-
-        <!--
-        SpringFox dependencies
-        swagger简单来说就是统一定义了api的语义描述(json,yaml)，并提供ui显示，代码自动生成等等，即建立了rest api生态系统。
-        如何生成这些api数据描述文件，大部分语言都有相关实现。
-        java方面比较好的实现就是springfox
-        Springfox的前身是swagger-springmvc,是一个开源的API doc框架
-        springfox通过annotation来实现api描述，生成api   json描述文件。再交由swagger-ui实现展示。
-        -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox.version}</version>
-        </dependency>
-        <!--
-        Springfox-staticdocs is a module which brings together springfox and swagger2markup
-        Swagger2Markup converts a Swagger JSON or YAML file into several AsciiDoc or GitHub Flavored Markdown documents which can be converted to HTML, PDF and EPUB.
-        The output of Swagger2Markup can be used as an alternative to swagger-ui and can be served as static content.
-        http://springfox.github.io/springfox/docs/current/#configuring-springfox-staticdocs
-        -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-staticdocs</artifactId>
-            <version>${springfox.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>4.1.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.tangcheng.CookbookApplication</mainClass>
-                    <executable>true</executable><!--linux下生成的Jar可以像binary文件一样，设置成服务-->
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>springloaded</artifactId>
-                        <version>1.2.6.RELEASE</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.2</version>
-                <configuration>
-                    <configurationFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>
-                    <overwrite>true</overwrite>
-                    <verbose>true</verbose>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>${mysql.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>tk.mybatis</groupId>
-                        <artifactId>mapper</artifactId>
-                        <version>3.4.0</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <!--            <plugin>
-                            <groupId>org.flywaydb</groupId>
-                            <artifactId>flyway-maven-plugin</artifactId>
-                            <version>4.0.3</version>
-                            <configuration>
-                                <url>jdbc:mysql://192.168.33.88:3306/ggg</url>
-                                <user>root</user>
-                                <password>123456</password>
-                            </configuration>
-                            <dependencies>
-                                <dependency>
-                                    <groupId>mysql</groupId>
-                                    <artifactId>mysql-connector-java</artifactId>
-                                    <version>5.1.38</version>
-                                </dependency>
-                            </dependencies>
-                        </plugin>-->
-        </plugins>
-    </build>
-
     <!-- <repositories>
          <repository>
              <id>spring-snapshots</id>
