@@ -42,8 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll();*/
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/resources/**", "/signup", "/about").permitAll()
-                .antMatchers("/css/**", "/index").permitAll()
+                .antMatchers("/bootstrap/css/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")//Any URL that starts with "/admin/" will be restricted to users who have the role "ROLE_ADMIN". You will notice that since we are invoking the hasRole method we do not need to specify the "ROLE_" prefix.
                 .antMatchers("/db/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_DBA')")
                 .antMatchers("/flyway", "/tx/**", "/user/**").permitAll()
