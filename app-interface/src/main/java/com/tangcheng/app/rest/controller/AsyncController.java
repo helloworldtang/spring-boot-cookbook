@@ -18,6 +18,12 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by MyWorld on 2016/12/5.
+ * Callable和Deferredresult做的是同样的事情——释放容器线程，在另一个线程上异步运行长时间的任务。
+ * 不同的是谁管理执行任务的线程。
+ * Servlet 3中的异步支持为在另一个线程中处理HTTP请求提供了可能性。
+ * 当有一个长时间运行的任务时，这是特别有趣的，因为当另一个线程处理这个请求时，容器线程被释放，并且可以继续为其他请求服务。
+ * <p>
+ * http://www.cnblogs.com/aheizi/p/5659030.html
  */
 @RestController
 public class AsyncController {
@@ -60,7 +66,7 @@ public class AsyncController {
         longTimeAsyncCallService.makeRemoteCallAndUnknownWhenFinish(new LongTermTask() {
             @Override
             public void callback(Object result) {
-                LOGGER.info("业务逻辑 执行完成，执行回调callback。将控制权转到 回调处理线程。{}",Thread.currentThread());
+                LOGGER.info("业务逻辑 执行完成，执行回调callback。将控制权转到 回调处理线程。{}", Thread.currentThread());
                 LOGGER.info("异步调用执行完成,{}", Thread.currentThread());
                 deferredResult.setResult(result.toString());
             }

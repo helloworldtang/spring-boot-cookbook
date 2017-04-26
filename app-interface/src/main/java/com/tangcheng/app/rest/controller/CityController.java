@@ -1,10 +1,9 @@
 package com.tangcheng.app.rest.controller;
 
-import com.tangcheng.app.dao.biz.CityBiz;
 import com.tangcheng.app.domain.entity.CityDo;
 import com.tangcheng.app.rest.aop.MethodLogAnnotation;
+import com.tangcheng.app.service.biz.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,22 +19,19 @@ import java.util.List;
 public class CityController {
 
     @Autowired
-    private CityBiz cityBiz;
+    private CityService cityService;
 
     @MethodLogAnnotation(desc = "查找City")
     @RequestMapping(value = "/city/{state}", method = RequestMethod.GET)
     public ResponseEntity<List<CityDo>> selectState(@PathVariable("state") String state) {
-        List<CityDo> cityList = cityBiz.selectCity(state);
-        ResponseEntity<List<CityDo>> cityResponseEntity = new ResponseEntity<>(cityList, HttpStatus.OK);
-        return cityResponseEntity;
+        return ResponseEntity.ok(cityService.selectCity(state));
     }
 
 
     @MethodLogAnnotation(desc = "查找City")
     @RequestMapping(value = "/city/list", method = RequestMethod.GET)
     public ResponseEntity<List<CityDo>> selectAll() {
-        List<CityDo> cityList = cityBiz.selectAll();
-        return new ResponseEntity<>(cityList, HttpStatus.OK);
+        return ResponseEntity.ok(cityService.selectAll());
     }
 
 }

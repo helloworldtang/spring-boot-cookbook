@@ -2,7 +2,7 @@ package com.tangcheng.app.rest.controller;
 
 import com.tangcheng.app.domain.entity.StudentDo;
 import com.tangcheng.app.domain.vo.ResultData;
-import com.tangcheng.app.service.biz.ITxService;
+import com.tangcheng.app.service.biz.TxService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class TxController {
     public static final Logger LOGGER = LoggerFactory.getLogger(TxController.class);
 
     @Autowired
-    private ITxService txService;
+    private TxService txService;
 
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     public ResultData<List<StudentDo>> insert(@RequestParam(value = "hasError", defaultValue = "false") Boolean hasError) {
