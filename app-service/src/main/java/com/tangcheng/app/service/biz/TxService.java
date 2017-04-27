@@ -9,9 +9,9 @@ import java.util.List;
  * Created by tangcheng on 3/26/2017.
  */
 public interface TxService {
-    void addRecord(Boolean hasError);
+    void saveStudent(Boolean hasError);
 
-    ResultData<List<StudentDo>> selectAll();
+    ResultData<List<StudentDo>> listAllStudents();
 
-    ResultData<List<StudentDo>> selectAll(Boolean hasError, Integer pageId, Integer pageSize);
+    ResultData<List<StudentDo>> listAllStudents(Boolean hasError, Integer pageId, Integer pageSize);
 }

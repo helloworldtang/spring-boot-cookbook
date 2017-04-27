@@ -9,9 +9,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService{
     ResultData<?> getUser(String username);
 
-    ResultData<?> putUser(String username, String email);
+    ResultData<?> updateUser(String username, String email);
 
-    ResultData<?> delUser(String username);
+    ResultData<?> removeUser(String username);
 
-    ResultData<?> addUser(String username, String email, String password);
+    ResultData<?> saveUser(String username, String email, String password);
 }

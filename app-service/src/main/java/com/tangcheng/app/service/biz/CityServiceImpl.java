@@ -16,15 +16,15 @@ public class CityServiceImpl implements CityService {
     private CityBiz cityBiz;
 
     @Override
-    public List<CityDo> selectCity(String state) {
-        return cityBiz.selectCity(state);
+    public List<CityDo> getCity(String state) {
+        return cityBiz.getCity(state);
     }
 
     @Override
-    public List<CityDo> selectAll() {
-        List<CityDo> cityDos = cityBiz.selectAll();
-        CityDo cityDo = cityDos.get(0);
+    public List<CityDo> listAll() {
+        List<CityDo> cityDoList = cityBiz.listAll();
+        CityDo cityDo = cityDoList.get(0);
         System.out.println(cityDo);
-        return cityDos;
+        return cityDoList;
     }
 }

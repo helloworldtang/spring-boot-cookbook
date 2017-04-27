@@ -1,8 +1,8 @@
 package com.tangcheng.app.service.biz;
 
 import com.tangcheng.app.dao.biz.UserBiz;
-import com.tangcheng.app.domain.vo.CustomUserDetails;
 import com.tangcheng.app.domain.errorcode.GlobalCode;
+import com.tangcheng.app.domain.vo.CustomUserDetails;
 import com.tangcheng.app.domain.vo.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,16 +23,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserBiz userBiz;
 
-
     @Override
-    public ResultData<?> addUser(String username, String email, String password) {
-        userBiz.addUser(username, email,password);
+    public ResultData<?> saveUser(String username, String email, String password) {
+        userBiz.saveUser(username, email, password);
         return new ResultData<>(GlobalCode.SUCCESS);
     }
 
     @Override
     public ResultData<?> getUser(String username) {
-        CustomUserDetails userDetails = userBiz.getUserByName(username);
+        CustomUserDetails userDetails = userBiz.getUser(username);
         if (userDetails == null) {
             LOGGER.warn("invalid username:{}", username);
             return new ResultData<>(GlobalCode.NOT_EXIST);
@@ -41,21 +40,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResultData<?> putUser(String username, String email) {
-        userBiz.putUser(username, email);
+    public ResultData<?> updateUser(String username, String email) {
+        userBiz.updateUser(username, email);
         return new ResultData<>(GlobalCode.SUCCESS);
     }
 
     @Override
-    public ResultData<?> delUser(String username) {
-        userBiz.delUser(username);
+    public ResultData<?> removeUser(String username) {
+        userBiz.removeUser(username);
         return new ResultData<>(GlobalCode.SUCCESS);
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        CustomUserDetails userDetails = userBiz.getUserByName(username);
+        CustomUserDetails userDetails = userBiz.getUser(username);
         if (userDetails == null) {
             LOGGER.warn("{} not exist.", username);
             throw new UsernameNotFoundException(username + " not exists");

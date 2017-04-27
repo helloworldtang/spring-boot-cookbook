@@ -17,9 +17,9 @@ import java.util.concurrent.ThreadLocalRandom;
  * Created by tangcheng on 3/25/2017.
  */
 @RestController
-public class StudentHandlerController {
+public class StudentController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StudentHandlerController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
     @RequestMapping(value = "/student/{id}", method = RequestMethod.GET)
     public ResultData<?> getStudent(@PathVariable("id") Long id) {

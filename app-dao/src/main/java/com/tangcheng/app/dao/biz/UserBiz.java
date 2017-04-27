@@ -27,12 +27,12 @@ public class UserBiz {
     private UserRoleDoMapper userRoleDoMapper;
 
     @Cacheable(value = "user", key = "#username")
-    public CustomUserDetails getUserByName(String username) {
+    public CustomUserDetails getUser(String username) {
         return userDoMapper.getUserByName(username);
     }
 
     @Cacheable(value = "user", key = "#username")
-    public CustomUserDetails addUser(String username, String email, String password) {
+    public CustomUserDetails saveUser(String username, String email, String password) {
         UserDo userDo = new UserDo();
         userDo.setUsername(username);
         userDo.setPassword(password);
@@ -51,17 +51,17 @@ public class UserBiz {
     }
 
     @CachePut(value = "user", key = "#username")
-    public CustomUserDetails putUser(String username, String email) {
+    public CustomUserDetails updateUser(String username, String email) {
         UserDo record = new UserDo();
         record.setUsername(username);
-        CustomUserDetails userDetails = getUserByName(username);
+        CustomUserDetails userDetails = getUser(username);
         userDetails.setEmail(email);
         userDoMapper.updateByPrimaryKeySelective(userDetails);
         return userDetails;
     }
 
     @CacheEvict(value = "user", key = "#username")
-    public void delUser(String username) {
+    public void removeUser(String username) {
         UserDo record = new UserDo();
         record.setUsername(username);
         userDoMapper.delete(record);

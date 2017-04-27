@@ -24,6 +24,7 @@ public class TestRedisTemplateOperation {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 

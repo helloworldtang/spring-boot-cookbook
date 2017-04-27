@@ -16,14 +16,14 @@ public class CityBiz {
     @Autowired
     private CityDoMapper cityDoMapper;
 
-    public List<CityDo> selectCity(String state) {
+    public List<CityDo> getCity(String state) {
         CityDo cityDo = new CityDo();
         cityDo.setState(state);
         return cityDoMapper.select(cityDo);
     }
 
 
-    public List<CityDo> selectAll() {
+    public List<CityDo> listAll() {
         return cityDoMapper.selectAll();
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by tang.cheng on 2017/4/26.
  */
 public interface CityService {
-    List<CityDo> selectCity(String state);
+    List<CityDo> getCity(String state);
 
-    List<CityDo> selectAll();
+    List<CityDo> listAll();
 }

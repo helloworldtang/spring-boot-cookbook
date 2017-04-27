@@ -25,17 +25,17 @@ public class TxController {
     private TxService txService;
 
     @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public ResultData<List<StudentDo>> insert(@RequestParam(value = "hasError", defaultValue = "false") Boolean hasError) {
-        txService.addRecord(hasError);
-        return txService.selectAll();
+    public ResultData<List<StudentDo>> saveStudent(@RequestParam(value = "hasError", defaultValue = "false") Boolean hasError) {
+        txService.saveStudent(hasError);
+        return txService.listAllStudents();
     }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public ResultData<List<StudentDo>> testTx(@RequestParam(value = "hasError", defaultValue = "false") Boolean hasError,
-                                              @RequestParam(value = "pageId", defaultValue = "0") Integer pageId,
-                                              @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+    public ResultData<List<StudentDo>> listStudents(@RequestParam(value = "hasError", defaultValue = "false") Boolean hasError,
+                                                    @RequestParam(value = "pageId", defaultValue = "0") Integer pageId,
+                                                    @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
 
-        return txService.selectAll(hasError,pageId,pageSize);
+        return txService.listAllStudents(hasError,pageId,pageSize);
     }
 
 }

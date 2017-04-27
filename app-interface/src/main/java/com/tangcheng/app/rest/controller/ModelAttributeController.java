@@ -19,7 +19,8 @@ public class ModelAttributeController {
      * 在Spring MVC里，@ModelAttribute通常使用在Controller方法的参数注解中，用于解释model entity，
      * 但同时，也可以放在方法注解里。
      * <p>
-     * 如果把@ModelAttribute放在方法的注解上时，代表的是：该Controller的所有方法在调用前，先执行此@ModelAttribute方法。
+     * 如果把@ModelAttribute放在方法的注解上时，代表的是：
+     * 该Controller的所有方法在调用前，先执行此@ModelAttribute方法。
      */
     @ModelAttribute
     public void modelAttribute() {

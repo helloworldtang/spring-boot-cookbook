@@ -18,10 +18,10 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResultData<?> addUser(@RequestParam String username,
-                                 @RequestParam String email,
-                                 @RequestParam String password) {
-        return userService.addUser(username, email,password);
+    public ResultData<?> saveUser(@RequestParam String username,
+                                  @RequestParam String email,
+                                  @RequestParam String password) {
+        return userService.saveUser(username, email,password);
     }
 
     @GetMapping("{username}")
@@ -31,14 +31,14 @@ public class UserController {
 
 
     @PutMapping("{username}")
-    public ResultData<?> modifyUser(@PathVariable String username,
+    public ResultData<?> updateUser(@PathVariable String username,
                                     @RequestParam(value = "email") String email) {
-        return userService.putUser(username, email);
+        return userService.updateUser(username, email);
     }
 
     @DeleteMapping("{username}")
-    public ResultData<?> delUser(@PathVariable String username) {
-        return userService.delUser(username);
+    public ResultData<?> removeUser(@PathVariable String username) {
+        return userService.removeUser(username);
     }
 
 }

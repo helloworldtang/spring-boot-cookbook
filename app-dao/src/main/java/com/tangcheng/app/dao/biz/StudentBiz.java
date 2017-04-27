@@ -16,15 +16,15 @@ public class StudentBiz {
     @Autowired
     private StudentDoMapper studentDoMapper;
 
-    public List<StudentDo> selectAll() {
+    public List<StudentDo> listAllStudents() {
         return studentDoMapper.selectAll();
     }
 
-    public int insert(StudentDo studentDo) {
+    public int saveStudent(StudentDo studentDo) {
         return studentDoMapper.insertUseGeneratedKeys(studentDo);
     }
 
-    public List<StudentDo> selectAll(Integer pageId, Integer pageSize) {
+    public List<StudentDo> listAllStudents(Integer pageId, Integer pageSize) {
         RowBounds rowBounds = new RowBounds(pageId, pageSize);
         return studentDoMapper.selectByExampleAndRowBounds(null, rowBounds);
     }
