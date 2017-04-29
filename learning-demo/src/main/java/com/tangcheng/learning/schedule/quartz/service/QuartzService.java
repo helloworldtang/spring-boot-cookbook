@@ -1,12 +1,10 @@
-package com.tangcheng.learning.schedule.quartz;
+package com.tangcheng.learning.schedule.quartz.service;
 
+import com.tangcheng.learning.schedule.quartz.job.HelloJob;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 
 import static org.quartz.JobBuilder.newJob;
@@ -17,23 +15,14 @@ import static org.quartz.TriggerBuilder.newTrigger;
  * Created by MyWorld on 2016/9/12.
  */
 @Service
-@ConditionalOnExpression("'${quartz.enabled}'=='true'")//根据条件决定是否实例化这个Bean，只能用在Bean上
-public class QuartzMain implements CommandLineRunner {
+public class QuartzService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(QuartzMain.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(QuartzService.class);
+
     @Autowired
-    private SchedulerFactoryBean schedulerFactoryBean;
-
-
-    @Override
-    public void run(String... args) throws Exception {
-        start();
-    }
+    private Scheduler scheduler;
 
     public void start() throws SchedulerException {
-
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        scheduler.start();
         try {
             // define the job and tie it to our HelloJob class
             JobDetail job = newJob(HelloJob.class)

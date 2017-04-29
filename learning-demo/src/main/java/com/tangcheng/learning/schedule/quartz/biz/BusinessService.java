@@ -1,4 +1,4 @@
-package com.tangcheng.learning.schedule.quartz.service;
+package com.tangcheng.learning.schedule.quartz.biz;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

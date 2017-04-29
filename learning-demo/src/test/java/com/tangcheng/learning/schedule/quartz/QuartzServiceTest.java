@@ -1,8 +1,7 @@
 package com.tangcheng.learning.schedule.quartz;
 
-import com.tangcheng.learning.schedule.quartz.QuartzConfig;
-import com.tangcheng.learning.schedule.quartz.QuartzMain;
-import org.junit.Ignore;
+import com.tangcheng.learning.schedule.quartz.config.QuartzConfig;
+import com.tangcheng.learning.schedule.quartz.service.QuartzService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +15,13 @@ import java.util.concurrent.TimeUnit;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QuartzConfig.class})
-@Ignore//Test ignored. Process finished with exit code 0
-public class QuartzMainTest {
+public class QuartzServiceTest {
     @Autowired
-    private QuartzMain quartzMain;
+    private QuartzService quartzService;
 
     @Test
     public void start() throws Exception {
-        quartzMain.start();
+        quartzService.start();
         TimeUnit.MINUTES.sleep(1);
     }
 

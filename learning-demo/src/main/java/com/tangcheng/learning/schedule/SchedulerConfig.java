@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * Created by MyWorld on 2016/8/13.
  */
 @Configuration
-@ComponentScan("com.demo.schedule")
+@ComponentScan("com.tangcheng.learning.schedule")
 @EnableScheduling
 public class SchedulerConfig {
 }

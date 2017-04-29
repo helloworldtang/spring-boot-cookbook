@@ -4,7 +4,9 @@ import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.scheduling.quartz.AdaptableJobFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MyJobFactory extends AdaptableJobFactory {
 
     //这个对象Spring会帮我们自动注入进来,也属于Spring技术范畴.

@@ -1,6 +1,6 @@
-package com.tangcheng.learning.schedule.quartz;
+package com.tangcheng.learning.schedule.quartz.job;
 
-import com.tangcheng.learning.schedule.quartz.service.IBusinessService;
+import com.tangcheng.learning.schedule.quartz.biz.IBusinessService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
