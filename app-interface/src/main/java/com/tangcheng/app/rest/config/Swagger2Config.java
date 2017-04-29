@@ -41,7 +41,7 @@ public class Swagger2Config {
      * http://springfox.github.io/springfox/docs/current/#introduction
      */
     @Bean
-    public Docket createRestApi() {
+    public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)//Docket, Springfox’s, primary api configuration mechanism is initialized for swagger specification 2.0
                 .groupName("cookbook")//分组，在html页面展示时有用。启用group选项会更改api json的访问路径。可以在/swagger-resources中location字段中找到
                 .select()//select() returns an instance of ApiSelectorBuilder to give fine grained control over the endpoints exposed via swagger.
@@ -65,11 +65,11 @@ public class Swagger2Config {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Spring Boot中使用Swagger2构建RESTful APIs")
-                .description("Spring boot cookbook")
-                .termsOfServiceUrl("https://github.com/helloworldtang/SpringBootCookbook")//服务条款
-                .version("0.1")//本次发布的版本
-                .contact(new Contact("Tang.Cheng", "https://github.com/helloworldtang/SpringBootCookbook", "helloworld.tang@qq.com"))
+                .title("Spring Boot cookbook")
+                .description("side project")
+                .termsOfServiceUrl("https://github.com/helloworldtang/spring-boot-cookbook")//服务条款
+                .version("1.0.1")//本次发布的版本
+                .contact(new Contact("Tang.Cheng", "https://github.com/helloworldtang/spring-boot-cookbook", "helloworld.tang@qq.com"))
                 .build();
     }
 }
