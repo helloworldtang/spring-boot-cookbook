@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
  * Created by MyWorld on 2016/9/12.
  */
 @Service
-public class BusinessService implements IBusinessService {
+public class EchoBiz implements IEchoBiz {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BusinessService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EchoBiz.class);
 
     @Override
     public void doBusiness() {

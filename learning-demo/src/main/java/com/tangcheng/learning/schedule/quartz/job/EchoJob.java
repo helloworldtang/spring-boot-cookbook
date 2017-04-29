@@ -1,6 +1,6 @@
 package com.tangcheng.learning.schedule.quartz.job;
 
-import com.tangcheng.learning.schedule.quartz.biz.IBusinessService;
+import com.tangcheng.learning.schedule.quartz.biz.IEchoBiz;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -9,19 +9,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
-
 /**
  * Created by MyWorld on 2016/9/12.
  */
 @Component
-public class HelloJob implements Job, Serializable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(HelloJob.class);
+public class EchoJob implements Job {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EchoJob.class);
     @Autowired
-    private IBusinessService businessService;
+    private IEchoBiz echoBiz;
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        businessService.doBusiness();
+        echoBiz.doBusiness();
         LOGGER.info("{}, Hello!  HelloJob is executing.", jobExecutionContext.getJobDetail().getKey());
     }
 

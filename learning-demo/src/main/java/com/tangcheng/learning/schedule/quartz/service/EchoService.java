@@ -1,6 +1,6 @@
 package com.tangcheng.learning.schedule.quartz.service;
 
-import com.tangcheng.learning.schedule.quartz.job.HelloJob;
+import com.tangcheng.learning.schedule.quartz.job.EchoJob;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +15,9 @@ import static org.quartz.TriggerBuilder.newTrigger;
  * Created by MyWorld on 2016/9/12.
  */
 @Service
-public class QuartzService {
+public class EchoService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(QuartzService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EchoService.class);
 
     @Autowired
     private Scheduler scheduler;
@@ -25,7 +25,7 @@ public class QuartzService {
     public void start() throws SchedulerException {
         try {
             // define the job and tie it to our HelloJob class
-            JobDetail job = newJob(HelloJob.class)
+            JobDetail job = newJob(EchoJob.class)
                     .withIdentity("myJob", "myGroup")
                     .build();
 
