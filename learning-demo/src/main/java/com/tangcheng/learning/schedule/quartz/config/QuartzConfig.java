@@ -18,8 +18,7 @@ public class QuartzConfig {
 
     @Bean
     public Scheduler scheduler(JobFactory jobFactory) throws SchedulerException {
-        SchedulerFactory factory = new StdSchedulerFactory();
-        Scheduler scheduler = factory.getScheduler();
+        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.setJobFactory(jobFactory);
         scheduler.start();
         return scheduler;
