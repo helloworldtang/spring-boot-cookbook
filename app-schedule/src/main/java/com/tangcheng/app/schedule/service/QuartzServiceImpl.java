@@ -124,7 +124,6 @@ public class QuartzServiceImpl implements QuartzService {
             return;
         }
         scheduler.pauseTrigger(triggerKey);
-        scheduler.pauseJob(JobKey.jobKey(name, group));
     }
 
 
