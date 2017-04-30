@@ -1,6 +1,6 @@
 package com.tangcheng.app.dao.biz;
 
-import com.tangcheng.app.domain.entity.StudentDo;
+import com.tangcheng.app.domain.entity.StudentDO;
 import com.tangcheng.app.domain.mapper.StudentDoMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +16,21 @@ public class StudentBiz {
     @Autowired
     private StudentDoMapper studentDoMapper;
 
-    public List<StudentDo> listAllStudents() {
+    public List<StudentDO> listAll() {
         return studentDoMapper.selectAll();
     }
 
-    public int saveStudent(StudentDo studentDo) {
-        return studentDoMapper.insertUseGeneratedKeys(studentDo);
+    public int saveStudent(StudentDO studentDO) {
+        return studentDoMapper.insertUseGeneratedKeys(studentDO);
     }
 
-    public List<StudentDo> listAllStudents(Integer pageId, Integer pageSize) {
+    public List<StudentDO> listAll(Integer pageId, Integer pageSize) {
         RowBounds rowBounds = new RowBounds(pageId, pageSize);
         return studentDoMapper.selectByExampleAndRowBounds(null, rowBounds);
     }
+
+    public StudentDO getOne(Long id) {
+        return studentDoMapper.selectByPrimaryKey(id);
+    }
+
 }

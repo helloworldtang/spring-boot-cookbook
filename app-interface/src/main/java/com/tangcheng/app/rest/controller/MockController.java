@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by tang.cheng on 2016/10/19.
  */
-@Api(tags = "test")
+@Api(tags = "mock",description = "mock request")
 @RestController
 @RequestMapping("test")
-public class RestTemplateTestController {
+public class MockController {
 
     public static final String AUTH = "auth";
 

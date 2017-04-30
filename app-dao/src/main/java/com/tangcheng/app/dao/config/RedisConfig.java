@@ -3,6 +3,7 @@ package com.tangcheng.app.dao.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -18,15 +19,8 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration
 public class RedisConfig {
 
-    @Bean
-    public JedisPoolConfig jedisPoolConfig() {
-        return new JedisPoolConfig();
-    }
-
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory(JedisPoolConfig jedisPoolConfig) {
-        return new JedisConnectionFactory(jedisPoolConfig);
-    }
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -43,11 +37,10 @@ public class RedisConfig {
      * Once in MULTI, RedisConnection would queue write operations,
      * all readonly operations, such as KEYS are piped to a fresh (non thread bound) RedisConnection.
      *
-     * @param redisConnectionFactory
      * @return
      */
     @Bean
-    public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+    public RedisTemplate redisTemplate() {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
