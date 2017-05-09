@@ -45,7 +45,7 @@ public class GlobalExHandler {
         for (FieldError fieldError : e.getFieldErrors()) {
             result.append(fieldError.getField()).append(":").
                     append(fieldError.getDefaultMessage()).
-                    append(System.getProperty("line.separator"));
+                    append(System.lineSeparator());
         }
         return ResponseEntity.badRequest().body(result.toString());
     }
