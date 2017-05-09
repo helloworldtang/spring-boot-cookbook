@@ -45,7 +45,7 @@ public class QuartzServiceImpl implements QuartzService {
                     vo.setDescription(jobDetail.getDescription());
                     vo.setStatus(triggerState.name());
                     vo.setDescription(jobDetail.getDescription());
-                    vo.setCreateTime(trigger.getDescription());
+                    vo.setStartTime(DateFormatUtils.format(trigger.getStartTime(), "yyyy-MM-dd HH:mm:ss sss"));
                     if (trigger instanceof CronTrigger) {
                         vo.setCronExpression(((CronTrigger) trigger).getCronExpression());
                     } else if (trigger instanceof SimpleTrigger) {

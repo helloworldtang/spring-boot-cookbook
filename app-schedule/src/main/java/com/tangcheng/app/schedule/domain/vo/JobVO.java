@@ -11,7 +11,7 @@ public class JobVO implements Serializable {
     private String description;
     private String status;
     private String cronExpression;
-    private String createTime;
+    private String startTime;
 
     public String getName() {
         return name;
@@ -53,11 +53,11 @@ public class JobVO implements Serializable {
         this.cronExpression = cronExpression;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 }
