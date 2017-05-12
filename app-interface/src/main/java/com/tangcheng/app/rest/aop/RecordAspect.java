@@ -36,7 +36,7 @@ public class RecordAspect {
     @Around("methodLog()")
     public Object record(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest httpServletRequest = RequestHolder.getRequestFacade();
-        String remoteIp = NetworkUtil.getRemoteIp(httpServletRequest);
+        String remoteIp = NetworkUtil.getRemoteIp();
         LOGGER.info("{},{},{},{}", remoteIp, httpServletRequest.getMethod(), httpServletRequest.getRequestURI(), httpServletRequest.getRequestURL());
 
 
