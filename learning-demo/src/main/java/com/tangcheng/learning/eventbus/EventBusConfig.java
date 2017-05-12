@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by tang.cheng on 2016/8/17.
  */
 @Configuration
-@ComponentScan("com.demo.eventbus")
+@ComponentScan("com.tangcheng.learning.eventbus")
 public class EventBusConfig {
 
     @Bean
