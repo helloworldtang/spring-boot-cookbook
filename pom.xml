@@ -13,6 +13,7 @@
         <module>app-dao</module>
         <module>app-schedule</module>
         <module>learning-demo</module>
+        <module>app-authorization-server</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -32,6 +33,13 @@
         <druid.version>1.0.28</druid.version>
         <springfox.version>2.6.1</springfox.version>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <!-- <repositories>
          <repository>
              <id>spring-snapshots</id>
