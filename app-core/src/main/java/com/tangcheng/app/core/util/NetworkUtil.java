@@ -26,57 +26,58 @@ public class NetworkUtil {
         }
     }
 
+    /**
+     * 对trace/debug/info级别的日志输出，必须使用条件输出形式或者使用占位符的方式
+     * LOGGER.info("symbol:"+symbol);
+     * 日志级别是WARN，上述日志不会打印，但是会执行字符串拼接操作，
+     * 如果symbol是对象，会执行toString()方法，浪费系统资源，执行了上述操作，最终日志却没有打印
+     *
+     * @param request
+     * @return
+     * @throws IOException
+     */
     private static String getIpAddress(HttpServletRequest request) throws IOException {
-        String ipAddress = request.getHeader("X-Forwarded-For");
+        String ip = request.getHeader("X-Forwarded-For");
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getIpAddress(HttpServletRequest) - X-Forwarded-For - String ipAddress:{}", ipAddress);
-        }
+        LOGGER.debug("X-Forwarded-For {}", ip);
 
-        if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
-            if (ipAddress == null || ipAddress.length() == 0 || UNKNOWN.equalsIgnoreCase(ipAddress)) {
-                ipAddress = request.getHeader("Proxy-Client-IP");
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("getIpAddress(HttpServletRequest) - Proxy-Client-IP - String ipAddress:{}", ipAddress);
-                }
+        if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getHeader("Proxy-Client-IP");
+                LOGGER.debug("Proxy-Client-IP {}", ip);
             }
-            if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
-                ipAddress = request.getHeader("WL-Proxy-Client-IP");
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("getIpAddress(HttpServletRequest) - WL-Proxy-Client-IP - String ipAddress:{}", ipAddress);
-                }
+            if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getHeader("WL-Proxy-Client-IP");
+                LOGGER.debug("WL-Proxy-Client-IP {}", ip);
             }
-            if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
-                ipAddress = request.getHeader("HTTP_CLIENT_IP");
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.info("getIpAddress(HttpServletRequest) - HTTP_CLIENT_IP - String ipAddress:{}", ipAddress);
-                }
+            if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getHeader("HTTP_CLIENT_IP");
+                LOGGER.info("HTTP_CLIENT_IP {}", ip);
             }
-            if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
-                ipAddress = request.getHeader("HTTP_X_FORWARDED_FOR");
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("getIpAddress(HttpServletRequest) - HTTP_X_FORWARDED_FOR - String ipAddress:{}", ipAddress);
-                }
+            if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+                LOGGER.debug("HTTP_X_FORWARDED_FOR {}", ip);
             }
-            if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
-                ipAddress = request.getRemoteAddr();
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("getIpAddress(HttpServletRequest) - getRemoteAddr - String ipAddress:{}", ipAddress);
-                }
+            if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getRemoteAddr();
+                LOGGER.debug("getRemoteAddr {}", ip);
             }
-        } else if (ipAddress.contains(",")) {
-            String[] ips = ipAddress.split(",");
+        } else if (ip.contains(",")) {
+            String[] ips = ip.split(",");
             for (int index = ips.length - 1; index >= 0; index--) {
                 if (!(UNKNOWN.equalsIgnoreCase(ips[index]))) {
-                    ipAddress = ips[index];
+                    ip = ips[index];
                     break;
                 }
             }
         }
-        if (ipAddress.equals("0:0:0:0:0:0:0:1")) {//win7下使用localhost访问时没有经过路由
+        if (ip.equals("0:0:0:0:0:0:0:1")) {//win7下使用localhost访问时没有经过路由
             return InetAddress.getLocalHost().getHostAddress();
         }
-        return ipAddress;
+        if (StringUtils.isBlank(ip)) {
+            return UNKNOWN;
+        }
+        return ip;
     }
 
 }  
