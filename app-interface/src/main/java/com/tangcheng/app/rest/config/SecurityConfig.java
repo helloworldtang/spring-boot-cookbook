@@ -1,6 +1,6 @@
 package com.tangcheng.app.rest.config;
 
-import com.tangcheng.app.business.biz.UserBiz;
+import com.tangcheng.app.rest.filter.LoginAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
  * Created by tang.cheng on 2016/12/12.
@@ -21,12 +24,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserBiz userBiz;
+    private UserDetailsService userDetailsService;
 
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userBiz);
+        auth.userDetailsService(userDetailsService);
 //        auth.inMemoryAuthentication()
 //                .withUser("admin").password("admin").roles("ADMIN", "USER")
 //                .and()
@@ -37,18 +40,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/bootstrap/css/**").permitAll()
+                .antMatchers("/bootstrap/**", "/js/**", "/login", "/verification.jpg").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")//Any URL that starts with "/admin/" will be restricted to users who have the role "ROLE_ADMIN". You will notice that since we are invoking the hasRole method we do not need to specify the "ROLE_" prefix.
                 .antMatchers("/db/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_DBA')")
                 .antMatchers("/flyway", "/tx/**", "/user/**").permitAll()
-                .anyRequest().authenticated()//Any URL that has not already been matched on only requires that the user be authenticated
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/home")
-                .failureUrl("/login?error").permitAll()
+                .anyRequest().fullyAuthenticated()//Any URL that has not already been matched on only requires that the user be authenticated
                 .and()
                 .logout().permitAll();
+
+        LoginAuthenticationFilter filter = new LoginAuthenticationFilter();
+        filter.setAuthenticationManager(authenticationManager());
+
+        http.addFilterBefore(filter, BasicAuthenticationFilter.class)
+                .exceptionHandling()
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
 
     }
 

@@ -2,32 +2,47 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login</title>
-    <link rel="stylesheet" th:href="@{bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body onload="document.form.username.focus();">
 <div class="container">
-    <div class="navbar">
-        <div class="navbar-inner">
-            <a class="brand" href="http://www.thymeleaf.org"> Thymeleaf -
-                Plain </a>
-            <ul class="nav">
-                <li><a th:href="@{/}" href="home.html"> Home </a></li>
-            </ul>
+    <div class="row">
+        <div class="span4 offset4 well">
+            <legend>Please Sign In</legend>
+            <p th:if="${param.logout}" class="alert">You have been logged out!</p>
+            <p th:if="${param.error}" class="alert alert-error">Username and password not matched, please try again!</p>
+            <p th:if="${param.verification}" class="alert alert-error">Captcha not matched, please try again!</p>
+
+            <form name="form" th:action="@{/login}" action="/login" method="POST">
+                <input type="text" id="username" class="span4" name="username" placeholder="Username"/>
+                <input type="password" id="password" class="span4" name="password" placeholder="Password"/>
+                <label for="verification">
+                    <input type="text" name="verification" id="verification" maxlength="4" class="span4"
+                           style="width: 72%"
+                           placeholder="Security code"/>
+                    <img th:src="@{/verification.jpg}" id="verificationImage"
+                         style="margin-left:-5px;margin-top:-8px;width: 74px; height: 29px;"/>
+                </label>
+                <button type="submit" name="submit" class="btn btn-info btn-block">Sign in</button>
+            </form>
         </div>
     </div>
-    <div class="content">
-        <p th:if="${param.logout}" class="alert">You have been logged out</p>
-        <p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
-        <h2>Login with Username and Password</h2>
-        <form name="form" th:action="@{/login}" method="POST">
-            <fieldset>
-                <input type="text" name="username" value="" placeholder="Username"/>
-                <input type="password" name="password" placeholder="Password"/>
-            </fieldset>
-            <input type="submit" id="login" value="Login"
-                   class="btn btn-primary"/>
-        </form>
-    </div>
 </div>
+
+<script th:src="@{/js/jquery-3.2.1.js}"></script>
+<script type="text/javascript">
+    $(function () {  //生成验证码
+        $('#verificationImage').click(function () {
+            $(this).hide().attr('src', '/verification.jpg?' + Math.floor(Math.random() * 10000)).fadeIn();
+        });
+    });
+
+    function changeCode() {  //刷新
+        $('#verificationImage').hide().attr('src', '/verification.jpg?' + Math.floor(Math.random() * 10000)).fadeIn();
+        event.cancelBubble = true;
+    }
+</script>
+
+
 </body>
 </html>
