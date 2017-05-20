@@ -1,4 +1,4 @@
-package com.tangcheng.app.dao.biz;
+package com.tangcheng.app.dao.repository;
 
 import com.tangcheng.app.domain.vo.CustomUserDetails;
 import com.tangcheng.app.domain.entity.UserDo;
@@ -18,7 +18,7 @@ import java.util.Date;
  * Created by tang.cheng on 2017/4/13.
  */
 @Repository
-public class UserBiz {
+public class UserRepository {
 
     @Autowired
     private UserDoMapper userDoMapper;

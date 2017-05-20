@@ -1,4 +1,4 @@
-package com.tangcheng.app.rest.aop;
+package com.tangcheng.app.core.aop;
 
 import java.lang.annotation.*;
 

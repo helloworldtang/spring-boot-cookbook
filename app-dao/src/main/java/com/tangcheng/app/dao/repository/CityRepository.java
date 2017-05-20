@@ -1,4 +1,4 @@
-package com.tangcheng.app.dao.biz;
+package com.tangcheng.app.dao.repository;
 
 import com.tangcheng.app.domain.entity.CityDo;
 import com.tangcheng.app.domain.mapper.CityDoMapper;
@@ -11,7 +11,7 @@ import java.util.List;
  * Created by tang.cheng on 2016/12/1.
  */
 @Repository
-public class CityBiz {
+public class CityRepository {
 
     @Autowired
     private CityDoMapper cityDoMapper;

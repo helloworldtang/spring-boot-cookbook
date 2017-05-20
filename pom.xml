@@ -16,6 +16,8 @@
         <module>app-authorization-server</module>
         <module>app-sso-client</module>
         <module>app-resource-server</module>
+        <module>app-core</module>
+        <module>app-business</module>
     </modules>
     <packaging>pom</packaging>
 

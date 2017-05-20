@@ -1,12 +1,11 @@
 package com.tangcheng.app.service.biz;
 
 import com.tangcheng.app.domain.vo.ResultData;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * Created by tang.cheng on 2017/4/13.
  */
-public interface UserService extends UserDetailsService{
+public interface UserService {
     ResultData<?> getUser(String username);
 
     ResultData<?> updateUser(String username, String email);

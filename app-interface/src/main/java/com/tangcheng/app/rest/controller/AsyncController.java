@@ -1,6 +1,6 @@
 package com.tangcheng.app.rest.controller;
 
-import com.tangcheng.app.dao.util.RequestHolder;
+import com.tangcheng.app.core.util.RequestHolder;
 import com.tangcheng.app.service.biz.LongTermTask;
 import com.tangcheng.app.service.biz.LongTimeAsyncCallService;
 import org.slf4j.Logger;

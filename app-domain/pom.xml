@@ -11,16 +11,15 @@
 
     <artifactId>app-domain</artifactId>
     <dependencies>
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.tangcheng</groupId>
+            <artifactId>app-core</artifactId>
+            <version>1.0.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+
+
+
         <!--
                 As you may already know, to use MyBatis with Spring you need at least an SqlSessionFactory and at least one mapper interface.
                 MyBatis-Spring-Boot-Starter will:
@@ -65,11 +64,7 @@
             <version>1.2.31</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.5</version>
-        </dependency>
+
 
         <!--
         没有这个dependency报java.lang.NoClassDefFoundError: com/google/common/collect/FluentIterable
@@ -120,11 +115,7 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
 
     </dependencies>
     <build>

@@ -1,6 +1,6 @@
 package com.tangcheng.app.service.biz;
 
-import com.tangcheng.app.dao.biz.StudentBiz;
+import com.tangcheng.app.dao.repository.StudentRepository;
 import com.tangcheng.app.domain.entity.StudentDO;
 import com.tangcheng.app.domain.vo.ResultData;
 import com.tangcheng.app.service.util.PageTool;
@@ -20,14 +20,14 @@ public class StudentServiceImpl implements StudentService {
 
     public static final String STUDENT_LIST = "student:list";
     @Autowired
-    private StudentBiz studentBiz;
+    private StudentRepository studentRepository;
 
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
 
     @Override
     public void saveStudent(StudentDO studentDO, Boolean hasError) {
-        studentBiz.saveStudent(studentDO);
+        studentRepository.saveStudent(studentDO);
         if (redisTemplate.hasKey(STUDENT_LIST)) {
             redisTemplate.boundListOps(STUDENT_LIST).leftPush(studentDO);
         }
@@ -45,7 +45,7 @@ public class StudentServiceImpl implements StudentService {
         if (redisTemplate.hasKey(STUDENT_LIST)) {
             doList= boundListOps.range(fromIndex, toIndex-1);
         } else {
-            List<StudentDO> all = studentBiz.listAll();
+            List<StudentDO> all = studentRepository.listAll();
             for (StudentDO studentDO : all) {
                 boundListOps.leftPush(studentDO);
             }
@@ -60,7 +60,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDO getOne(Long id) {
-        return studentBiz.getOne(id);
+        return studentRepository.getOne(id);
     }
 
 }

@@ -11,6 +11,8 @@ http://localhost:9999/swagger-ui.html
 http://localhost:9999/swagger-resources/configuration/ui  
 http://localhost:9999/swagger-resources/configuration/security
 
+
+mvn clean install -Dmaven.test.skip=true      
 todo:  
 You can look at http://localhost:8080/flyway to review the list of scripts.
 

@@ -1,4 +1,4 @@
-package com.tangcheng.app.service.config;
+package com.tangcheng.app.business.config;
 
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.Registry;

@@ -1,4 +1,4 @@
-package com.tangcheng.app.dao.biz;
+package com.tangcheng.app.dao.repository;
 
 import com.tangcheng.app.domain.entity.StudentDO;
 import com.tangcheng.app.domain.mapper.StudentDoMapper;
@@ -12,7 +12,7 @@ import java.util.List;
  * Created by tangcheng on 3/26/2017.
  */
 @Repository
-public class StudentBiz {
+public class StudentRepository {
     @Autowired
     private StudentDoMapper studentDoMapper;
 

@@ -9,34 +9,19 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>app-dao</artifactId>
-
+    <artifactId>app-business</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.tangcheng</groupId>
-            <artifactId>app-domain</artifactId>
+            <artifactId>app-dao</artifactId>
             <version>1.0.1</version>
         </dependency>
-
-
+        <!--java.lang.NoClassDefFoundError: org/apache/http/client/HttpClient-->
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>4.1.2</version>
-        </dependency>
-
     </dependencies>
 
 </project>

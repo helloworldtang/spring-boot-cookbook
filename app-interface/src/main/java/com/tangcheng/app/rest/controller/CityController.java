@@ -1,7 +1,7 @@
 package com.tangcheng.app.rest.controller;
 
+import com.tangcheng.app.core.aop.MethodLogAnnotation;
 import com.tangcheng.app.domain.entity.CityDo;
-import com.tangcheng.app.rest.aop.MethodLogAnnotation;
 import com.tangcheng.app.service.biz.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

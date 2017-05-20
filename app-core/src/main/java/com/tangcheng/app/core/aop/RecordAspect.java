@@ -1,7 +1,7 @@
-package com.tangcheng.app.rest.aop;
+package com.tangcheng.app.core.aop;
 
-import com.tangcheng.app.dao.util.NetworkUtil;
-import com.tangcheng.app.dao.util.RequestHolder;
+import com.tangcheng.app.core.util.NetworkUtil;
+import com.tangcheng.app.core.util.RequestHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

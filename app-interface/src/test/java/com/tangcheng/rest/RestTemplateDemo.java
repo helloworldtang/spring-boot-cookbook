@@ -1,7 +1,7 @@
 package com.tangcheng.rest;
 
+import com.tangcheng.app.business.config.RestTemplateConfig;
 import com.tangcheng.app.domain.query.Result;
-import com.tangcheng.app.service.config.RestTemplateConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
