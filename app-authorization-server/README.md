@@ -7,7 +7,11 @@ scope.openid选项中选择"approve"
 返回的redirect_uri会多返回一个参数code，即授权许可码   
 https://www.baidu.com/?code=Zv1kwD    
 
-4、Post请求：
+4、
+拿到code以后，就可以调用   
+POST/GET http://acme:acme-secret@localhost:8080/uaa/oauth/token?redirect_uri=http://baidu.com&grant_type=authorization_code&code=tdBO1v     
+或
+Post请求：
 http://localhost:9999/uaa/oauth/token?redirect_uri=http://baidu.com&grant_type=authorization_code&code=tdBO1v  
 参数code的值来自第一次请求，code只能使用一次   
 使用postman发送请求，   
