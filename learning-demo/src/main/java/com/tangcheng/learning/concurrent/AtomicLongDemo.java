@@ -10,8 +10,9 @@ public class AtomicLongDemo {
     public static void main(String[] args) {
         AtomicLong seedUniquifier = new AtomicLong(10);
         /**
-         * expected是用来校验是否完成赋值操作，是用来确定返回true或false的
-         * 如果返回false，则说明赋值操作失败。seedUniquifier的值不会被此次操作改变
+         * expected是用来校验是否可以进行赋值操作的。
+         * 如果expected和seedUniquifier的值相同，则说明可以进行赋值操作，即进行赋值并且返回true
+         * 如果返回false，则说明seedUniquifier的值已经被更改，不具备赋值的条件，当然seedUniquifier的值不会被此次操作改变。
          * 譬如下面的示例：
          * false
          10
