@@ -13,7 +13,7 @@
 <dependencies>
     <dependency>
         <groupId>com.tangcheng</groupId>
-        <artifactId>app-business</artifactId>
+        <artifactId>app-manager</artifactId>
         <version>1.0.1</version>
     </dependency>
 

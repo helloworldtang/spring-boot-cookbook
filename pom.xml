@@ -17,7 +17,7 @@
         <module>app-sso-client</module>
         <module>app-resource-server</module>
         <module>app-core</module>
-        <module>app-business</module>
+        <module>app-manager</module>
     </modules>
     <packaging>pom</packaging>
 

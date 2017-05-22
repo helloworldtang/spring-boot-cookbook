@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>app-business</artifactId>
+    <artifactId>app-manager</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.tangcheng</groupId>
