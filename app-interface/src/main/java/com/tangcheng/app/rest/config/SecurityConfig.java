@@ -29,7 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService)
+                .and()
+                .eraseCredentials(false);
 //        auth.inMemoryAuthentication()
 //                .withUser("admin").password("admin").roles("ADMIN", "USER")
 //                .and()
@@ -40,11 +42,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/bootstrap/**", "/js/**", "/login", "/verification.jpg").permitAll()
+                .antMatchers("/css/**", "/js/**", "/login", "/verification.jpg").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")//Any URL that starts with "/admin/" will be restricted to users who have the role "ROLE_ADMIN". You will notice that since we are invoking the hasRole method we do not need to specify the "ROLE_" prefix.
                 .antMatchers("/db/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_DBA')")
                 .antMatchers("/flyway", "/tx/**", "/user/**").permitAll()
                 .anyRequest().fullyAuthenticated()//Any URL that has not already been matched on only requires that the user be authenticated
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/home")
                 .and()
                 .logout().permitAll();
 
