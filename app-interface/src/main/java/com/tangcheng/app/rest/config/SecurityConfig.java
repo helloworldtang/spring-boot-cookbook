@@ -29,9 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .and()
-                .eraseCredentials(false);
+        auth.userDetailsService(userDetailsService);
 //        auth.inMemoryAuthentication()
 //                .withUser("admin").password("admin").roles("ADMIN", "USER")
 //                .and()
@@ -52,7 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .defaultSuccessUrl("/home")
                 .and()
-                .logout().permitAll();
+                .rememberMe()//登陆请求必须包含一个名为remember-me的参数
+                .tokenValiditySeconds(2419200)//four week 2419200s
+                .key("cookbookKey")//存储在cookies中包含用户名，密码，过期时间和一个私钥---在写入cookie前都进行了MD5 hash
+                .and()
+                .logout()
+                .logoutSuccessUrl("/");
 
         LoginAuthenticationFilter filter = new LoginAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManager());

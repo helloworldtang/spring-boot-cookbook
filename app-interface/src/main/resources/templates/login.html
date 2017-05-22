@@ -17,12 +17,14 @@
                 <input type="text" id="username" class="span4" name="username" placeholder="Username"/>
                 <input type="password" id="password" class="span4" name="password" placeholder="Password"/>
                 <label for="verification">
-                    <input type="text" name="verification" id="verification" maxlength="4" class="span4"
+                    <input type="text" id="verification" class="span4" name="verification" maxlength="4"
                            style="width: 72%"
                            placeholder="Security code"/>
                     <img th:src="@{/verification.jpg}" id="verificationImage"
                          style="margin-left:-5px;margin-top:-8px;width: 74px; height: 29px;"/>
                 </label>
+                <input type="checkbox" id="remember-me" th:class="checkbox" name="remember-me"/>
+                <label for="remember-me" th:class="inline">Remember me</label>
                 <button type="submit" name="submit" class="btn btn-info btn-block">Sign in</button>
             </form>
         </div>
