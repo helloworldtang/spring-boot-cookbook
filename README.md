@@ -14,7 +14,6 @@ http://localhost:9999/swagger-resources/configuration/security
 
 mvn clean install -Dmaven.test.skip=true      
 
-You can look at http://localhost:8080/flyway to review the list of scripts.
 
-todo:
+todo:    
 remember-me：具体是指那种场景呢？
