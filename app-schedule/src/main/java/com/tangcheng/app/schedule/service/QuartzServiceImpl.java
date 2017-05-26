@@ -29,7 +29,6 @@ public class QuartzServiceImpl implements QuartzService {
 
     @Override
     public List<JobVO> listAll() throws SchedulerException {
-
         List<String> jobGroupNames = scheduler.getJobGroupNames();
         List<JobVO> voList = new ArrayList<>(jobGroupNames.size());
         for (String jobGroupName : jobGroupNames) {
@@ -37,6 +36,15 @@ public class QuartzServiceImpl implements QuartzService {
             for (JobKey jobKey : jobKeys) {
                 List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
                 for (Trigger trigger : triggers) {
+                    /**
+                     state的值代表该任务触发器的状态：
+                     STATE_BLOCKED   4 // 运行
+                     STATE_COMPLETE  2  //完成那一刻，不过一般不用这个判断Job状态
+                     STATE_ERROR     3  // 错误
+                     STATE_NONE  -1      //未知
+                     STATE_NORMAL    0   //正常无任务，用这个判断Job是否在运行
+                     STATE_PAUSED    1   //暂停状态
+                     */
                     Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
                     JobDetail jobDetail = scheduler.getJobDetail(jobKey);
                     JobVO vo = new JobVO();
