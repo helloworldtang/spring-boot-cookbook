@@ -5,6 +5,9 @@ import com.tangcheng.app.rest.filter.RewriteServletPathFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
+
+import javax.servlet.Filter;
 
 /**
  * Created by MyWorld on 2016/9/25.
@@ -38,4 +41,10 @@ public class FilterConfig {
         filterRegistrationBean.setOrder(3);
         return filterRegistrationBean;
     }
+
+    @Bean
+    public Filter etagFilter() {
+        return new ShallowEtagHeaderFilter();
+    }
+
 }

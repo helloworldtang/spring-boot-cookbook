@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/js/**", "/login", "/verification.jpg").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")//Any URL that starts with "/admin/" will be restricted to users who have the role "ROLE_ADMIN". You will notice that since we are invoking the hasRole method we do not need to specify the "ROLE_" prefix.
                 .antMatchers("/db/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_DBA')")
-                .antMatchers("/flyway", "/tx/**", "/user/**").permitAll()
+                .antMatchers("/flyway", "/tx/**", "/user/**", "/etag/**").permitAll()
                 .anyRequest().fullyAuthenticated()//Any URL that has not already been matched on only requires that the user be authenticated
                 .and()
                 .formLogin()
@@ -55,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .key("cookbookKey")//存储在cookies中包含用户名，密码，过期时间和一个私钥---在写入cookie前都进行了MD5 hash
                 .and()
                 .logout()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/login");
+        http.headers().cacheControl().disable();
 
         LoginAuthenticationFilter filter = new LoginAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManager());
