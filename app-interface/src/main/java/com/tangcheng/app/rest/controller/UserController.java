@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by tang.cheng on 2017/4/18.
  */
-@Api(tags = "user")
+@Api(tags = "User Information", description = "User Information Management")
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -21,7 +21,7 @@ public class UserController {
     public ResultData<?> saveUser(@RequestParam String username,
                                   @RequestParam String email,
                                   @RequestParam String password) {
-        return userService.saveUser(username, email,password);
+        return userService.saveUser(username, email, password);
     }
 
     @GetMapping("{username}")

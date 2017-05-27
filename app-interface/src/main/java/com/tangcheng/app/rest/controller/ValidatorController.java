@@ -1,15 +1,13 @@
 package com.tangcheng.app.rest.controller;
 
 import com.tangcheng.app.domain.query.Student;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,8 +21,10 @@ import javax.validation.Valid;
  * <p>
  * hibernate validator 5.2.4 Final是JSR 349 Bean Validation 1.1的具体实现。
  */
+@Api(tags = "validator learning", description = "Input information check demo")
 @RestController
-public class HibernateValidatorController {
+@RequestMapping("validator")
+public class ValidatorController {
 
 
     /**
@@ -32,13 +32,13 @@ public class HibernateValidatorController {
      * org.springframework.validation.annotation.Validated
      * <p>
      * <p>
-     * ModelAttribute 是Spring mvc的注解，这里Swagger可以解析这个注解，获得User的属性描述--good
+     * ModelAttribute 是Spring mvc的注解，这里Swagger可以解析这个注解，获得User的属性描述
      *
      * @param student
      * @return
      */
-    @RequestMapping(value = "Validated", method = RequestMethod.GET)
-    public Student testValidatorWithValidated(@Validated @ModelAttribute Student student) {
+    @RequestMapping(value = "validated", method = RequestMethod.GET)
+    public Student validatedScene(@Validated @ModelAttribute Student student) {
         return student;
     }
 
@@ -48,8 +48,8 @@ public class HibernateValidatorController {
      * @param student
      * @return
      */
-    @RequestMapping(value = "noValid", method = RequestMethod.GET)
-    public Student testValidatorWithoutAnnotation(@ModelAttribute Student student) {
+    @GetMapping
+    public Student noAnnotationScene(@ModelAttribute Student student) {
         return student;
     }
 
@@ -66,8 +66,8 @@ public class HibernateValidatorController {
             @ApiImplicitParam(name = "age", defaultValue = "20", value = "年龄", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "classes", defaultValue = "Freshman Year", value = "班级", required = true, dataType = "string", paramType = "query")
     })
-    @RequestMapping(value = "Valid", method = RequestMethod.GET)
-    public ResponseEntity<Student> testValidatorWithValid(@Valid @ModelAttribute Student student) {
+    @RequestMapping(value = "valid", method = RequestMethod.GET)
+    public ResponseEntity<Student> validScene(@Valid @ModelAttribute Student student) {
         return ResponseEntity.ok(student);
     }
 

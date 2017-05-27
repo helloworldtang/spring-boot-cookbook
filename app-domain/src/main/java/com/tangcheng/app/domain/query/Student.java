@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 /**
  * Created by tang.cheng on 2016/12/27.
@@ -15,7 +16,7 @@ public class Student {
     private Long id;
     //在需要校验的字段上指定约束条件
     @ApiModelProperty(example = "Tom", value = "TomValue")
-    @NotBlank
+    @Size(min = 2, max = 10)
     private String name;
 
     @ApiModelProperty(example = "10", value = "20")

@@ -6,8 +6,12 @@ import com.alibaba.fastjson.support.spring.FastJsonpHttpMessageConverter4;
 import com.alibaba.fastjson.support.spring.FastJsonpResponseBodyAdvice;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 /**
  * Created by tang.cheng on 2016/12/12.
@@ -53,6 +57,24 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         });
         converter4.setFastJsonConfig(fastJsonConfig);
         return converter4;
+    }
+
+    @Bean
+    public LocaleResolver localResolver() {
+        return new SessionLocaleResolver();
+    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor changeInterceptor = new LocaleChangeInterceptor();
+        changeInterceptor.setParamName("lang");
+        return changeInterceptor;
+    }
+
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
     }
 
 
