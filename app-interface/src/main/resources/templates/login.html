@@ -11,7 +11,7 @@
             <legend>Please Sign In</legend>
             <p th:if="${param.logout}" class="alert">You have been logged out!</p>
             <p th:if="${param.error}" class="alert alert-error">Username and password not matched, please try again!</p>
-            <p th:if="${param.verification}" class="alert alert-error">Captcha not matched, please try again!</p>
+            <p th:if="${param.code}" class="alert alert-error">Security code not matched, please try again!</p>
 
             <form name="form" th:action="@{/login}" action="/login" method="POST">
                 <input type="text" id="username" class="span4" name="username" placeholder="Username"/>

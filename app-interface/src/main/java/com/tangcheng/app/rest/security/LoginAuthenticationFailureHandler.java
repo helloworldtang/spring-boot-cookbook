@@ -14,8 +14,8 @@ import java.io.IOException;
  */
 public class LoginAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     public static final String PASS_ERROR_URL = "/login?error";
-    public static final String KAPTCHA_ERROR_URL = "/login?verification";
-    public static final String EXPIRE_URL = "/login?expire";
+    public static final String CODE_ERROR_URL = "/login?code";
+    public static final String EXPIRED_URL = "/login?expire";
     public static final String DISABLED_URL = "/login?disabled";
     public static final String LOCKED_URL = "/login?locked";
 
@@ -23,7 +23,7 @@ public class LoginAuthenticationFailureHandler extends SimpleUrlAuthenticationFa
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
         if (exception instanceof CaptchaException) {
-            getRedirectStrategy().sendRedirect(request, response, KAPTCHA_ERROR_URL);
+            getRedirectStrategy().sendRedirect(request, response, CODE_ERROR_URL);
         } else {
             getRedirectStrategy().sendRedirect(request, response, PASS_ERROR_URL);
         }
