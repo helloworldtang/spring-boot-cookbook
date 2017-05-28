@@ -30,4 +30,27 @@ http.headers().cacheControl().disable();
 第二次请求是要带上第一次请求的ETag值，注意ETag是有双引号包裹的      
 如果没有变化，第二次请求服务器不会返回值并且HttpStatus会变为304(没有变化)    
 
+##ssl:     
+keytool -genkey -alias springboot-cookbook -keyalg RSA -keystore ./tomcat.keystore   
+Enter keystore password:   
+Re-enter new password:   
+What is your first and last name?   
+  [Unknown]:  springboot-cookbook   
+What is the name of your organizational unit?   
+  [Unknown]:  6kesong   
+What is the name of your organization?   
+  [Unknown]:  6kesong   
+What is the name of your City or Locality?   
+  [Unknown]:  sh   
+What is the name of your State or Province?   
+  [Unknown]:  sh   
+What is the two-letter country code for this unit?   
+  [Unknown]:  cn   
+Is CN=springboot-cookbook, OU=6kesong, O=6kesong, L=sh, ST=sh, C=cn correct?   
+  [no]:  yes   
+Enter key password for <springboot-cookbook>   
+        (RETURN if same as keystore password):   
+Re-enter new password:   
+
+
 

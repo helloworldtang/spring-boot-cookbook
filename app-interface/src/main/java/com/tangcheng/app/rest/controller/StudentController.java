@@ -19,7 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by tangcheng on 3/26/2017.
  */
-@Api(tags = "learning transaction",description = "learning 基于db和redis的事务")
+@Api(tags = "learning transaction", description = "learning 基于db和redis的事务")
 @Transactional
 @RestController
 @RequestMapping(value = "tx/student")
@@ -37,7 +37,7 @@ public class StudentController {
         studentDO.setName("name" + age);
         studentDO.setAge(age);
         studentDO.setClasses("classes" + age);
-        studentService.saveStudent(studentDO,hasError);
+        studentService.saveStudent(studentDO, hasError);
         return new ResultData<>(GlobalCode.SUCCESS);
     }
 
@@ -46,10 +46,10 @@ public class StudentController {
                                             @RequestParam(value = "pageId", defaultValue = "0") Integer pageId,
                                             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
 
-        return studentService.listAll(hasError,pageId,pageSize);
+        return studentService.listAll(hasError, pageId, pageSize);
     }
 
-    @GetMapping(value = "/student/{id}")
+    @GetMapping(value = "{id}")
     public ResultData<StudentDO> getStudent(@PathVariable("id") Long id) {
         if (id < 1) {
             LOGGER.warn("invalid id:{}", id);

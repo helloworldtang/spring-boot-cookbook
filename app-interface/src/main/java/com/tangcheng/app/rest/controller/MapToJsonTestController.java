@@ -15,6 +15,7 @@ import static com.google.common.collect.Lists.newArrayList;
  * Created by tang.cheng on 2017/1/17.
  */
 @RestController
+@RequestMapping("test")
 public class MapToJsonTestController {
 
     /**
@@ -44,7 +45,7 @@ public class MapToJsonTestController {
      *
      * @return
      */
-    @RequestMapping(value = "/test/json", method = RequestMethod.GET)
+    @RequestMapping(value = "json", method = RequestMethod.GET)
     public ResponseEntity<Test> test() {
         Test test = new Test();
         String[] array = {"array1", "array2", "array3", "array4"};

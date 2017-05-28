@@ -16,4 +16,5 @@ mvn clean install -Dmaven.test.skip=true
 
 
 todo:    
-remember-me：具体是指那种场景呢？
+remember-me：具体是指那种场景呢？    
+http.requireChannel().anyRequest().requireSecure().and()   
