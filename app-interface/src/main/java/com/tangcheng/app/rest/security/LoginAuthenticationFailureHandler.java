@@ -16,6 +16,8 @@ public class LoginAuthenticationFailureHandler extends SimpleUrlAuthenticationFa
     public static final String PASS_ERROR_URL = "/login?error";
     public static final String KAPTCHA_ERROR_URL = "/login?verification";
     public static final String EXPIRE_URL = "/login?expire";
+    public static final String DISABLED_URL = "/login?disabled";
+    public static final String LOCKED_URL = "/login?locked";
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
