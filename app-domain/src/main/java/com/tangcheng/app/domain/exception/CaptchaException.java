@@ -5,9 +5,9 @@ import org.springframework.security.core.AuthenticationException;
 /**
  * Created by tangcheng on 5/21/2017.
  */
-public class VerifyCodeException extends AuthenticationException {
+public class CaptchaException extends AuthenticationException {
 
-    public VerifyCodeException(String msg) {
+    public CaptchaException(String msg) {
         super(msg);
     }
 

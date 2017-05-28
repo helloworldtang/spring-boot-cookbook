@@ -1,9 +1,7 @@
 package com.tangcheng.app.rest.filter;
 
 import com.google.code.kaptcha.Constants;
-import com.tangcheng.app.rest.security.LoginAuthenticationFailureHandler;
-import com.tangcheng.app.domain.exception.VerifyCodeException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import com.tangcheng.app.domain.exception.CaptchaException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -18,8 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     public LoginAuthenticationFilter() {
-        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login", "POST"));
-        this.setAuthenticationFailureHandler(new LoginAuthenticationFailureHandler());
+        AntPathRequestMatcher requestMatcher = new AntPathRequestMatcher("/login", "POST");
+        this.setRequiresAuthenticationRequestMatcher(requestMatcher);
+        this.setAuthenticationManager(getAuthenticationManager());
+//        this.setAuthenticationFailureHandler(new LoginAuthenticationFailureHandler());
     }
 
     @Override
@@ -28,16 +28,8 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
         String captcha = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
 
         if (!captcha.contentEquals(verification)) {
-            throw new VerifyCodeException("verify code not matched!");
+            throw new CaptchaException("captcha code not matched!");
         }
-
-        String username = obtainUsername(request);
-        String password = obtainPassword(request);
-
-        UsernamePasswordAuthenticationToken authRequest
-                = new UsernamePasswordAuthenticationToken(username, password);
-
-        setDetails(request, authRequest);
-        return this.getAuthenticationManager().authenticate(authRequest);
+        return super.attemptAuthentication(request, response);
     }
 }

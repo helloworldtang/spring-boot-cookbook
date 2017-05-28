@@ -1,18 +1,27 @@
 package com.tangcheng.app.rest.config;
 
+import com.tangcheng.app.domain.exception.CaptchaException;
 import com.tangcheng.app.rest.filter.LoginAuthenticationFilter;
+import com.tangcheng.app.rest.security.LoginAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.security.auth.login.AccountExpiredException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by tang.cheng on 2016/12/12.
@@ -38,6 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        LoginAuthenticationFilter loginAuthenticationFilter = new LoginAuthenticationFilter();
+        loginAuthenticationFilter.setAuthenticationManager(authenticationManager());
+        loginAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
+
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/login", "/verification.jpg").permitAll()
@@ -46,27 +59,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/flyway", "/tx/**", "/user/**", "/etag/**").permitAll()
                 .anyRequest().fullyAuthenticated()//Any URL that has not already been matched on only requires that the user be authenticated
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/home")
+                .addFilterBefore(loginAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin().loginPage("/login").defaultSuccessUrl("/home")
                 .and()
                 .rememberMe()//登陆请求必须包含一个名为remember-me的参数
                 .tokenValiditySeconds(2419200)//four week 2419200s
                 .key("cookbookKey")//存储在cookies中包含用户名，密码，过期时间和一个私钥---在写入cookie前都进行了MD5 hash
                 .and()
-                .logout()
-                .logoutSuccessUrl("/login");
-        http.headers().cacheControl().disable();
-
-        LoginAuthenticationFilter filter = new LoginAuthenticationFilter();
-        filter.setAuthenticationManager(authenticationManager());
-
-        http.addFilterBefore(filter, BasicAuthenticationFilter.class)
-                .exceptionHandling()
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
-
+                .logout().logoutSuccessUrl("/login")
+                .and()
+                .headers().cacheControl().disable()
+        ;
     }
 
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        ExceptionMappingAuthenticationFailureHandler failureHandler = new ExceptionMappingAuthenticationFailureHandler();
+        Map<String, String> failureUrlMap = new HashMap<>();
+        failureUrlMap.put(AccountExpiredException.class.getName(), LoginAuthenticationFailureHandler.EXPIRE_URL);
+        failureUrlMap.put(BadCredentialsException.class.getName(), LoginAuthenticationFailureHandler.PASS_ERROR_URL);
+        failureUrlMap.put(CaptchaException.class.getName(), LoginAuthenticationFailureHandler.KAPTCHA_ERROR_URL);
+        failureHandler.setExceptionMappings(failureUrlMap);
+        return failureHandler;
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
