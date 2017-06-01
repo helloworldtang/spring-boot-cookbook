@@ -16,5 +16,7 @@ mvn clean install -Dmaven.test.skip=true
 
 
 todo:    
-remember-me：具体是指那种场景呢？    
-http.requireChannel().anyRequest().requireSecure().and()   
+remember-me：具体是指那种场景呢？
+http.requireChannel().anyRequest().requireSecure().and()
+让Connector跳转时如果和server.port相同会报冲突
+https也使用80端口,就是这种https://www.baidu.com/
