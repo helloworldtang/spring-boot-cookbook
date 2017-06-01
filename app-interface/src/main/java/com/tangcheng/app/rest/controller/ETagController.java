@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by tangcheng on 5/26/2017.
  */
-@Api(tags = "ETag Demo",description = "watch HttpStatus")
+@Api(tags = "ETag Demo", description = "watch HttpStatus")
 @RestController
 @RequestMapping("/etag")
 public class ETagController {
@@ -21,6 +21,8 @@ public class ETagController {
 
     @GetMapping("list")
     public ResponseEntity<?> list() {
+        System.out.println("ETag");
+        System.err.println("ETag");
         return ResponseEntity.ok(eTagService.list());
     }
 
