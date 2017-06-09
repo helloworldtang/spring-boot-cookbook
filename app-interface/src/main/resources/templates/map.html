@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>map</title>
+</head>
+<body>
+<div id="main" style="width:1024px;height: 867px;margin:0 auto">
+    <!-- 这里以后是地图 -->
+</div>
+</body>
+<script src="../static/js/map/echarts.min.js" th:src="@{/js/map/echarts.min.js}"></script>
+<script src="../static/js/map/china.js" th:src="@{/js/map/china.js}"></script>
+<script src="../static/js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        var mapChart = echarts.init(document.getElementById("main"));
+        mapChart.showLoading();
+        $.getJSON("/location/data.json", function (data) {
+            //显示chart加载动画
+            var option = {
+                title: {
+                    text: '地图散点图',
+                    subtext: '地图散点图',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: ['car']
+                },
+                visualMap: {
+                    min: 0,
+                    max: data['max'],
+                    left: 'left',
+                    top: 'bottom',
+                    text: ['高', '低'],           // 文本，默认为数值文本
+                    calculable: true
+                },
+                toolbox: {
+                    show: true,
+                    orient: 'vertical',
+                    left: 'right',
+                    top: 'center',
+                    feature: {
+                        dataView: {readOnly: false},
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                series: [
+                    {
+                        name: 'car',
+                        type: 'map',
+                        mapType: 'china',
+                        roam: false,
+                        label: {
+                            normal: {
+                                show: true
+                            },
+                            emphasis: {
+                                show: true
+                            }
+                        },
+                        data: data['detail']
+                    }
+                ]
+            };
+            mapChart.hideLoading();
+            mapChart.setOption(option);
+        });
+
+    });
+
+
+</script>
+</html>
