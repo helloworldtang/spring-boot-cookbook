@@ -20,12 +20,6 @@ import javax.net.ssl.HttpsURLConnection;
 @Configuration
 public class SslConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SslConfig.class);
-
-    static {
-        LOGGER.info("下面这行代码将禁用SSL中的主机名检查。只在开发期间使用");
-        HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> true);
-    }
 
     @Bean
     public EmbeddedServletContainerFactory servletContainer() {
