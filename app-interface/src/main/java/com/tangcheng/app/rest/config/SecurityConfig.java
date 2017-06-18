@@ -28,6 +28,7 @@ import java.util.Map;
 /**
  * Created by tang.cheng on 2016/12/12.
  */
+@SuppressWarnings("SpringJavaAutowiringInspection")
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 @EnableWebSecurity
