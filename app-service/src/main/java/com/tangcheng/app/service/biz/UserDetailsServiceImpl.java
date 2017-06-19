@@ -1,6 +1,5 @@
 package com.tangcheng.app.service.biz;
 
-import com.tangcheng.app.business.biz.UserBiz;
 import com.tangcheng.app.dao.repository.UserRepository;
 import com.tangcheng.app.domain.vo.CustomUserDetails;
 import org.slf4j.Logger;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserBiz.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
