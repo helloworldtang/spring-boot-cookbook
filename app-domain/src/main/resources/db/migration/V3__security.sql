@@ -1,19 +1,4 @@
--- ----------------------------
--- Table structure for user_role
--- ----------------------------
-DROP TABLE IF EXISTS `user_role`;
-CREATE TABLE `user_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of user_role
--- ----------------------------
-INSERT INTO `user_role` VALUES ('1', '1', '1');
-INSERT INTO `user_role` VALUES ('2', '2', '2');
 
 -- ----------------------------
 -- Table structure for role
@@ -56,3 +41,19 @@ VALUES (1, 'admin', 'admin', 'hello@admin.com',date_add(NOW(), interval 6 MONTH)
 INSERT INTO `user` (id,username,password,email,account_expired,credentials_expired)
 VALUES (2,'user', 'user', 'user@user.com',date_add(NOW(), interval 6 MONTH),date_add(NOW(), interval 6 MONTH));
 
+-- ----------------------------
+-- Table structure for user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_role
+-- ----------------------------
+INSERT INTO `user_role` VALUES ('1', '1', '1');
+INSERT INTO `user_role` VALUES ('2', '2', '2');
