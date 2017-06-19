@@ -1,5 +1,7 @@
 package com.tangcheng.app.service.biz;
 
+import com.tangcheng.app.domain.vo.MapVO;
+
 /**
  * spring-boot-cookbook
  *
@@ -7,5 +9,5 @@ package com.tangcheng.app.service.biz;
  * @version : 2017-06-09  19:55
  */
 public interface LocationService {
-    String getLocationData();
+    MapVO getLocationData();
 }

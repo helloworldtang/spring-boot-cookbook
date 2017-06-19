@@ -1,5 +1,6 @@
 package com.tangcheng.app.web;
 
+import com.tangcheng.app.domain.vo.MapVO;
 import com.tangcheng.app.service.biz.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class LocationController {
 
     @GetMapping("data.json")
     @ResponseBody
-    public String getLocationData() {
+    public MapVO getLocationData() {
         return locationService.getLocationData();
     }
 

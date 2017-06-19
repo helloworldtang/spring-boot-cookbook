@@ -1,17 +1,23 @@
 package com.tangcheng.app.rest.config;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonpHttpMessageConverter4;
 import com.alibaba.fastjson.support.spring.FastJsonpResponseBodyAdvice;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tang.cheng on 2016/12/12.
@@ -44,8 +50,20 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public FastJsonpHttpMessageConverter4 fastJsonpHttpMessageConverter4() {
+//        http://www.cnblogs.com/sunp823/p/5601397.html
+//        http://blog.csdn.net/my_god_sky/article/details/53385246
         FastJsonpHttpMessageConverter4 converter4 = new FastJsonpHttpMessageConverter4();
+        List<MediaType> supportedMediaTypes = new ArrayList<>();
+        supportedMediaTypes.add(MediaType.APPLICATION_JSON);
+        supportedMediaTypes.add(MediaType.TEXT_HTML);
+        converter4.setSupportedMediaTypes(supportedMediaTypes);
+        converter4.setDefaultCharset(Charset.forName("utf-8"));
+
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.QuoteFieldNames,
+                SerializerFeature.WriteEnumUsingToString,
+                SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteDateUseDateFormat);
         fastJsonConfig.setSerializeFilters(new ValueFilter() {
             @Override
             public Object process(Object o, String s, Object source) {

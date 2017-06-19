@@ -1,6 +1,5 @@
 package com.tangcheng.app.service.biz;
 
-import com.alibaba.fastjson.JSON;
 import com.tangcheng.app.domain.vo.GeoVO;
 import com.tangcheng.app.domain.vo.MapVO;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -62,7 +61,7 @@ public class LocationServiceImpl implements LocationService {
 
 
     @Override
-    public String getLocationData() {
+    public MapVO getLocationData() {
         List<GeoVO> geoVOs = new ArrayList<>();
         Map<String, Long> tmpData = new HashMap<>();
         tmpData.put("上海", 100L);
@@ -87,6 +86,11 @@ public class LocationServiceImpl implements LocationService {
         MapVO mapVO = new MapVO();
         mapVO.setMax(max);
         mapVO.setDetail(geoVOs);
-        return JSON.toJSONString(mapVO);
+        return mapVO;
+    }
+
+    public static void main(String[] args) {
+        LocationServiceImpl locationService=new LocationServiceImpl();
+        System.out.println(locationService.getLocationData());
     }
 }
