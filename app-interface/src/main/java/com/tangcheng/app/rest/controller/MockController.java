@@ -1,6 +1,7 @@
 package com.tangcheng.app.rest.controller;
 
 import com.tangcheng.app.domain.query.Result;
+import com.tangcheng.app.domain.query.TestRequest;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +62,10 @@ public class MockController {
         return new Result(userId, pageId, pageSize, auth);
     }
 
+    @RequestMapping(value = "/addHead/{name}",method = RequestMethod.GET)
+    public TestRequest addExtraHeadInfo(TestRequest request) {
+        return request;
+    }
 
 }
 

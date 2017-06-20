@@ -4,6 +4,8 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Date;
 
 /**
@@ -30,14 +33,29 @@ public class DefaultController {
     private Producer captchaProducer;
 
     @RequestMapping(value = {"/home", "/"}, method = RequestMethod.GET)
-    public ModelAndView home() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public ModelAndView home(Principal principal) {
+        LOGGER.info("isRememberMeAuthenticated:{}",isRememberMeAuthenticated());
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("title", "Login success!");
-        modelAndView.addObject("message", userDetails.getUsername());
+        modelAndView.addObject("message", principal.getName());
         modelAndView.addObject("date", new Date());
         return modelAndView;
     }
+
+
+    /**
+     * 判断用户是否从Remember Me Cookie自动登录
+     * @return
+     */
+    private boolean isRememberMeAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return false;
+        }
+        return RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
+    }
+
+
 
     @RequestMapping("verification.jpg")
     public String verification(HttpServletResponse response, HttpServletRequest request) throws IOException {

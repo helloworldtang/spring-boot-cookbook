@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title th:text="${title}">Title</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css">
@@ -15,7 +17,19 @@
         </div>
     </div>
     <h1 th:text="${title}"></h1>
+    <div sec:authorize="isAuthenticated()">
+        Hello <span sec:authentication="name" >isAuthenticated</span>
+    </div>
+    <div sec:authorize="isRememberMe()">
+        Hello<span sec:authentication="name" >isRememberMe</span>
+    </div>
+    <div sec:authorize-url="/admin">
+       <br />
+        <a th:href="@{/home.html}">authorize-url</a>
+    </div>
+
     <div th:text=" 'welcome:'+ ${message}+'!'"></div>
+
     <div id="created" th:text="${#dates.format(date)}"></div>
     <form th:action="@{/logout}" method="post">
         <input type="submit" value="Sign Out"/>
