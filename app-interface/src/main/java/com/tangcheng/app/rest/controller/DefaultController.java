@@ -2,6 +2,7 @@ package com.tangcheng.app.rest.controller;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import com.tangcheng.app.domain.vo.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
@@ -39,6 +40,11 @@ public class DefaultController {
         modelAndView.addObject("title", "Login success!");
         modelAndView.addObject("message", principal.getName());
         modelAndView.addObject("date", new Date());
+
+        Person person=new Person();
+        person.setName("SinglePeople");
+        person.setAge(10);
+        modelAndView.addObject("singlePerson", person);
         return modelAndView;
     }
 
