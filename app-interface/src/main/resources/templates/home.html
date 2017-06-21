@@ -2,21 +2,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
+<head th:lang="zh">
     <title th:text="${title}">Title</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css">
 </head>
+
 <body>
 <div class="container">
-    <div class="navbar">
-        <div class="navbar-inner">
-            <a class="brand" href="http://www.thymeleaf.org"> Thymeleaf - Plain </a>
-            <ul class="nav">
-                <li><a th:href="@{/}" href="home.html"> Home </a></li>
-            </ul>
-        </div>
-    </div>
+
     <h1 th:text="${title}"></h1>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title" th:text="'welcome:'+ ${message}+'!'">访问Model</h3>
+        </div>
+        <div class="panel-body">
+            <span th:text="${#dates.format(date)}"></span>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+
+    <div sec:authorize="isAuthenticated()" th:if="${principal}" th:object="${principal}">
+        <p>已有用户登录</p>
+        <p>登录的用户为: <span sec:authentication="name"></span></p>
+        <p>用户权限为: <span th:text="*{userAuthentication.authorities}"></span></p>
+
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <p>未有用户登录</p>
+    </div>
+    <div sec:authorize="hasRole('ADMIN')">
+        我是管理员
+    </div>
+    <p>登录的用户为: <span sec:authentication="username"></span></p>
+
+
     <div sec:authorize="isAuthenticated()">
         Hello <span sec:authentication="name">isAuthenticated</span>
     </div>
@@ -28,14 +50,6 @@
         <a th:href="@{/home.html}">authorize-url</a>
     </div>
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">访问Model</h3>
-        </div>
-        <div class="panel-body">
-            <span th:text="${message}"></span>
-        </div>
-    </div>
 
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -46,7 +60,11 @@
                 <li class="list-group-item" th:each="person:${peopleList}">
                     <span th:text="${person.name}"></span>
                     <span th:text="${person.age}"></span>
-                    <button class="btn" th:onclick="'getName(\''+${person.name}+'\');'">LogName</button>
+                    <br/>
+                    <button class="btn btn-primary" th:onclick="'getName(\''+${person.name}+${person.age}+'\');'">
+                        console.log(name)
+                        console.log(age)
+                    </button>
                 </li>
             </ul>
         </div>
@@ -100,12 +118,6 @@
     </div>
 
 
-    <div th:text=" 'welcome:'+ ${message}+'!'"></div>
-
-    <div id="created" th:text="${#dates.format(date)}"></div>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
 </div>
 </body>
 <script th:src="@{js/jquery-3.2.1.min.js}" src="../static/js/jquery-3.2.1.min.js"></script>

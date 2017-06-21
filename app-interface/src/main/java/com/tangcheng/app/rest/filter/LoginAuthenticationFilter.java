@@ -24,7 +24,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String verification = request.getParameter("verification");
+        String verification = request.getParameter("code");
         String captcha = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
 
         if (!captcha.contentEquals(verification)) {

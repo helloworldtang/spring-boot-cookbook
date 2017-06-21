@@ -17,9 +17,6 @@
             <version>1.0.1</version>
         </dependency>
 
-
-
-
         <!--
                 As you may already know, to use MyBatis with Spring you need at least an SqlSessionFactory and at least one mapper interface.
                 MyBatis-Spring-Boot-Starter will:

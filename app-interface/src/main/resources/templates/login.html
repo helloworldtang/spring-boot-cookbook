@@ -1,51 +1,68 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+>
 <head th:lang="zh">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="login">
+    <meta name="author" content="tangcheng">
+
     <title th:text="#{login.title}">Login</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/signin.css}" href="../static/css/signin.css">
 </head>
-<body onload="document.form.username.focus();">
+<body>
 <div class="container">
-    <div class="row">
-        <div class="span4 offset4 well">
-            <legend>Please Sign In</legend>
-            <p th:if="${param.logout}" class="alert">You have been logged out!</p>
-            <p th:if="${param.error}" class="alert alert-error">Username and password not matched, please try again!</p>
-            <p th:if="${param.code}" class="alert alert-error">Security code not matched, please try again!</p>
-
-            <form name="form" th:action="@{/login}" action="/login" method="POST">
-                <input type="text" id="username" class="span4" name="username" placeholder="Username"/>
-                <input type="password" id="password" class="span4" name="password" placeholder="Password"/>
-                <label for="verification">
-                    <input type="text" id="verification" class="span4" name="verification" maxlength="4"
-                           style="width: 72%"
-                           placeholder="Security code"/>
-                    <img th:src="@{/verification.jpg}" id="verificationImage"
-                         style="margin-left:-5px;margin-top:-8px;width: 74px; height: 29px;"/>
-                </label>
-                <input type="checkbox" id="remember-me" th:class="checkbox" name="remember-me"/>
-                <label for="remember-me" th:class="inline">Remember me</label>
-                <button type="submit" name="submit" class="btn btn-info btn-block">Sign in</button>
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            </form>
-        </div>
+    <!--${param.x} 返回requeast的参数x（可以为复合值）-->
+    <div th:if="${param.logout}" class="container text-center alert-success">You have been logged out!</div>
+    <div th:if="${param.error}" class="container text-center  alert-warning">
+        Username and password not matched, please try again!
     </div>
-</div>
+    <div th:if="${param.code}" class="container text-center  alert-warning">
+        captcha code not matched, please try again!
+    </div>
 
-<script th:src="@{/js/jquery-3.2.1.min.js}" src="../static/js/jquery-3.2.1.min.js"></script>
+    <form class="form-signin" th:action="@{/login}" action="/login" method="POST">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="text" id="username" class="form-control" name="username"
+               placeholder="Username" required/>
+        <input type="password" id="password" class="form-control" name="password"
+               placeholder="Password" required/>
+        <div class="form-group form-horizontal">
+            <div class="row">
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="code" placeholder="Security code" required/>
+                </div>
+                <div class="col-md-4">
+                    <img class="img-responsive" src="/captcha.jpg" id="captcha"/>
+                </div>
+
+            </div>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me">Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+</div>
+<!-- /container -->
+
+</body>
+<script th:src=" @{/js/jquery-3.2.1.min.js}" src="../static/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
-    $(function () {  //生成验证码
-        $('#verificationImage').click(function () {
-            $(this).hide().attr('src', '/verification.jpg?' + Math.floor(Math.random() * 10000)).fadeIn();
+    $(function () { //生成验证码
+        $('#captcha').click(function () {
+            $(this).hide().attr('src', '/captcha.jpg?' + Math.floor(Math.random() * 10000)).fadeIn();
         });
     });
 
-    function changeCode() {  //刷新
-        $('#verificationImage').hide().attr('src', '/verification.jpg?' + Math.floor(Math.random() * 10000)).fadeIn();
+    function changeCode() { //刷新
+        $('#captcha').hide().attr('src', '/captcha.jpg?' + Math.floor(Math.random() * 10000)).fadeIn();
         event.cancelBubble = true;
     }
 </script>
-
-
-</body>
 </html>

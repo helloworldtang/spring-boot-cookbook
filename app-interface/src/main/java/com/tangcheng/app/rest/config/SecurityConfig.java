@@ -55,9 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         loginAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
 
         http.authorizeRequests()
-                .antMatchers("/favicon.ico","/css/**", "/js/**", "/login", "/verification.jpg").permitAll()
+                .antMatchers("/favicon.ico", "/css/**", "/js/**", "/login", "/captcha.jpg").permitAll()
                 .antMatchers("/user/**").hasRole("ADMIN")//Any URL that starts with "/admin/" will be restricted to users who have the role "ROLE_ADMIN". You will notice that since we are invoking the hasRole method we do not need to specify the "ROLE_" prefix.
-                .antMatchers("/db/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_DBA')")
+                .antMatchers("/db/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/flyway", "/tx/**", "/user/**", "/etag/**").permitAll()
                 .anyRequest().fullyAuthenticated()//Any URL that has not already been matched on only requires that the user be authenticated
                 .and()
