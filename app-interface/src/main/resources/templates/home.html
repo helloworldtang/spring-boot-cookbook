@@ -39,6 +39,10 @@
     <p>登录的用户为: <span sec:authentication="username"></span></p>
 
 
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+        Logout：#authorization.expression('isAuthenticated()'
+    </div>
+
     <div sec:authorize="isAuthenticated()">
         Hello <span sec:authentication="name">isAuthenticated</span>
     </div>
