@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--https://github.com/thymeleaf/thymeleaf-extras-springsecurity-->
 <head th:lang="zh">
     <title th:text="${title}">Title</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css">
@@ -38,10 +39,6 @@
     </div>
     <p>登录的用户为: <span sec:authentication="username"></span></p>
 
-
-    <div th:if="${#authorization.expression('isAuthenticated()')}">
-        Logout：#authorization.expression('isAuthenticated()'
-    </div>
 
     <div sec:authorize="isAuthenticated()">
         Hello <span sec:authentication="name">isAuthenticated</span>
