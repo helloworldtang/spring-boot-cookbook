@@ -10,116 +10,147 @@
 
 <body>
 <div class="container">
+    <header>
+        <h1 th:text="${title}"></h1>
+        <nav>
+            <ul>
+                <li>栏目1</li>
+                <li>栏目2</li>
+                <li>栏目3</li>
+                <li>栏目4</li>
+            </ul>
+        </nav>
+    </header>
 
-    <h1 th:text="${title}"></h1>
+    <section>
+        <article>
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title" th:text="'welcome:'+ ${message}+'!'">访问Model</h3>
-        </div>
-        <div class="panel-body">
-            <span th:text="${#dates.format(date)}"></span>
-        </div>
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-    </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="'welcome:'+ ${message}+'!'">访问Model</h3>
+                </div>
+                <div class="panel-body">
+                    <span th:text="${#dates.format(date)}"></span>
+                </div>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Sign Out"/>
+                </form>
+            </div>
 
-    <div sec:authorize="isAuthenticated()" th:if="${principal}" th:object="${principal}">
-        <p>已有用户登录</p>
-        <p>登录的用户为: <span sec:authentication="name"></span></p>
-        <p>用户权限为: <span th:text="*{userAuthentication.authorities}"></span></p>
+            <div sec:authorize="isAuthenticated()" th:if="${principal}" th:object="${principal}">
+                <p>已有用户登录</p>
+                <p>登录的用户为: <span sec:authentication="name"></span></p>
+                <p>用户权限为: <span th:text="*{userAuthentication.authorities}"></span></p>
 
-    </div>
-    <div sec:authorize="isAnonymous()">
-        <p>未有用户登录</p>
-    </div>
-    <div sec:authorize="hasRole('ADMIN')">
-        我是管理员
-    </div>
-    <p>登录的用户为: <span sec:authentication="username"></span></p>
+            </div>
+            <div sec:authorize="isAnonymous()">
+                <p>未有用户登录</p>
+            </div>
+            <div sec:authorize="hasRole('ADMIN')">
+                我是管理员
+            </div>
+            <p>登录的用户为: <span sec:authentication="username"></span></p>
 
+        </article>
 
-    <div sec:authorize="isAuthenticated()">
-        Hello <span sec:authentication="name">isAuthenticated</span>
-    </div>
-    <div sec:authorize="isRememberMe()">
-        Hello<span sec:authentication="name">isRememberMe</span>
-    </div>
-    <div sec:authorize-url="/admin">
-        <br/>
-        <a th:href="@{/home.html}">authorize-url</a>
-    </div>
+        <article>
 
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">列表</h3>
-        </div>
-        <div class="panel-body">
+            <div sec:authorize="isAuthenticated()">
+                Hello <span sec:authentication="name">isAuthenticated</span>
+            </div>
+            <div sec:authorize="isRememberMe()">
+                Hello<span sec:authentication="name">isRememberMe</span>
+            </div>
+            <div sec:authorize-url="/admin">
+                <br/>
+                <a th:href="@{/home.html}">authorize-url</a>
+            </div>
+        </article>
+
+        <article>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">列表</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="person:${peopleList}">
+                            <span th:text="${person.name}"></span>
+                            <span th:text="${person.age}"></span>
+                            <br/>
+                            <button class="btn btn-primary"
+                                    th:onclick="'getName(\''+${person.name}+${person.age}+'\');'">
+                                console.log(name)
+                                console.log(age)
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </article>
+
+        <article>
+            <!--Thymeleaf支持>,<,>=,<=,==,!=作为比较条件，同时也支持将SpringEL表达式用于条件中-->
+            <div th:if="${not #lists.isEmpty(modelList)}">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">列表</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item" th:each="model:${modelList}">
+                                <span th:text="${model.name}"></span>
+                                <span th:text="${model.age}"></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
             <ul class="list-group">
-                <li class="list-group-item" th:each="person:${peopleList}">
-                    <span th:text="${person.name}"></span>
-                    <span th:text="${person.age}"></span>
-                    <br/>
-                    <button class="btn btn-primary" th:onclick="'getName(\''+${person.name}+${person.age}+'\');'">
-                        console.log(name)
-                        console.log(age)
-                    </button>
+
+                <li class="list-group-item">
+                    <span class="badge">dddd</span>
+                    Hello Li
+                </li>
+
+                <li class="list-group-item">
+                    <span>222</span>
+                    Hello Li222
                 </li>
             </ul>
-        </div>
+        </article>
+        <article>
 
-    </div>
-
-    <!--Thymeleaf支持>,<,>=,<=,==,!=作为比较条件，同时也支持将SpringEL表达式用于条件中-->
-    <div th:if="${not #lists.isEmpty(modelList)}">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">列表</h3>
+            <div class="list-group">
+                <a href="#" class="list-group-item active">1111</a>
+                <a href="#" class="list-group-item ">
+                    <h4 class="list-group-item-heading">
+                        List group item heading
+                    </h4>
+                    <p class="list-group-item-text">
+                        list-group-item-text
+                    </p>
+                </a>
+                <a href="#" class="list-group-item ">3333</a>
+                <a href="#" class="list-group-item ">4444</a>
             </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    <li class="list-group-item" th:each="model:${modelList}">
-                        <span th:text="${model.name}"></span>
-                        <span th:text="${model.age}"></span>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-    </div>
-
-    <ul class="list-group">
-
-        <li class="list-group-item">
-            <span class="badge">dddd</span>
-            Hello Li
-        </li>
-
-        <li class="list-group-item">
-            <span>222</span>
-            Hello Li222
-        </li>
-    </ul>
-
-
-    <div class="list-group">
-        <a href="#" class="list-group-item active">1111</a>
-        <a href="#" class="list-group-item ">
-            <h4 class="list-group-item-heading">
-                List group item heading
-            </h4>
-            <p class="list-group-item-text">
-                list-group-item-text
-            </p>
-        </a>
-        <a href="#" class="list-group-item ">3333</a>
-        <a href="#" class="list-group-item ">4444</a>
-    </div>
+        </article>
+    </section>
 
 
 </div>
+<aside>
+    <h2>相关信息</h2>
+    <p>相关信息detail</p>
+</aside>
+<footer>
+    版权所有
+</footer>
 </body>
 <script th:src="@{js/jquery-3.2.1.min.js}" src="../static/js/jquery-3.2.1.min.js"></script>
 <script th:inline="javascript">

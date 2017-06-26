@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <meta id="csrf_token" th:content="${_csrf}?${_csrf.token}"/>
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/dist/third/font-awesome.min.css}"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{/dist/third/ionicons.min.css}"/>
+
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}"/>
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" th:href="@{/dist/css/skins/_all-skins.min.css}"/>
+    <title>Layout page</title>
+
+    <style>
+        #son2 li.two {
+            display: none;
+        }
+
+        #son2:hover li.two {
+            display: block;
+        }
+    </style>
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini ">
+<div class="wrapper">
+    <!-- Logo -->
+    <a th:href="@{/}" class="logo">
+        <span class="logo-mini"><b>XXX</b>管理平台</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>XXX-</b>管理平台</span>
+    </a>
+
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul id="son2" class="nav navbar-nav">
+
+                <!-- User Account: style can be found in dropdown.less -->
+                <li class="one">
+                    <a th:href="@{/user/profile}">
+                        <span class="glyphicon glyphicon-user"></span> &nbsp;&nbsp;<span
+                            th:text="${user}?${user.username}"></span>
+                    </a>
+                </li>
+                <li class="two">
+                    <a th:href="@{/user/logout}">
+                        <span class="glyphicon glyphicon-user"></span> &nbsp;&nbsp;&nbsp;<span th:text="注销"></span>&nbsp;
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+    <!--nav end-->
+
+    <!--main-sidebar begin-->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+
+                <!--Multilevel-->
+                <li th:if="${not #lists.isEmpty(navs)}" class="treeview active" th:each="nav:${navs}">
+                    <a th:href="@{${nav.url}?:'#'}">
+                        <span th:text="${nav.label}">label</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu" th:each="second:${nav.childNodes}">
+                        <li th:name="${second.id}" th:data="${currentMenu}"
+                            th:class="(${second.id}==${currentMenu})?'active':''"><a href="#"
+                                                                                     th:href="@{${second.url}}"><i
+                                class="fa fa-circle-o"></i> <span
+                                th:text="${second.label}">label</span></a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <!--main-sidebar end-->
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content begin -->
+        <section class="content" layout:fragment="content">
+            <p>
+                Layout page content
+            </p>
+        </section>
+        <!--Main content end-->
+    </div>
+    <!--content-wrapper end-->
+
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 0.1.0
+        </div>
+        <strong>
+            Copyright &copy; 2017-2027
+            <a href="#">tangcheng</a>
+        </strong>
+        All rights reserved.
+    </footer>
+
+</div>
+
+</body>
+</html>

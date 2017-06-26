@@ -27,9 +27,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.3.RELEASE</version>
-        <relativePath/>
-        <!-- lookup parent from repository -->
+        <version>1.5.4.RELEASE</version>
     </parent>
 
     <properties>
@@ -44,24 +42,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <!-- <repositories>
-         <repository>
-             <id>spring-snapshots</id>
-             <name>Spring Snapshots</name>
-             <url>https://repo.spring.io/snapshot</url>
-             <snapshots>
-                 <enabled>true</enabled>
-             </snapshots>
-         </repository>
-         <repository>
-             <id>spring-milestones</id>
-             <name>Spring Milestones</name>
-             <url>https://repo.spring.io/milestone</url>
-             <snapshots>
-                 <enabled>false</enabled>
-             </snapshots>
-         </repository>
-     </repositories>-->
+
     <profiles>
         <profile>
             <!-- 生产环境 -->
@@ -81,7 +62,7 @@
             </activation>
         </profile>
         <profile>
-            <!-- 测试环境 -->
+            <!-- 准生产环境 -->
             <id>test</id>
             <properties>
                 <profiles.active>test</profiles.active>
