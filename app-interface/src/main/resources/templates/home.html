@@ -5,13 +5,16 @@
 <!--https://github.com/thymeleaf/thymeleaf-extras-springsecurity-->
 <head th:lang="zh">
     <title th:text="${title}">Title</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap.min.css}"
+          href="../static/css/bootstrap.min.css">
 </head>
 
 <body>
 <div class="container">
     <header>
         <h1 th:text="${title}"></h1>
+        <a class="glyphicon glyphicon-log-out" style="cursor: pointer;" onclick="logout()">Logout</a>
         <nav>
             <ul>
                 <li>栏目1</li>
@@ -32,7 +35,7 @@
                 <div class="panel-body">
                     <span th:text="${#dates.format(date)}"></span>
                 </div>
-                <form th:action="@{/logout}" method="post">
+                <form id="logoutId" th:action="@{/logout}" method="post">
                     <input type="submit" value="Sign Out"/>
                 </form>
             </div>
@@ -159,6 +162,12 @@
 
     function getName(name) {
         console.log("getName:" + name)
+    }
+
+    function logout() {
+        //Adding CSRF will update the LogoutFilter to only use HTTP POST.
+//        http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/htmlsingle/#csrf-logout
+        $("#logoutId").submit();
     }
 
 </script>
