@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+    <link rel="stylesheet"
+          href="../../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}">
+    <style type="text/css">
+        div.errors {
+            background-color: #ffcccc;
+            border: 2px solid red;
+        }
+
+        label.error {
+            color: red;
+        }
+
+        input.error {
+            background-color: #ffcccc;
+        }
+    </style>
+</head>
+<body>
+
+<section>
+    <article>
+        <h3 th:text="#{register.title}"></h3>
+        <form method="post" th:action="@{${url}}" th:object="${user}">
+            <div class="errors" th:if="${#fields.hasErrors('*')}">
+                <ul>
+                    <li th:each="err:${#fields.errors('*')}"
+                        th:text="${err}">
+                        Input is incorrect
+                    </li>
+                </ul>
+            </div>
+
+            <label for="firstName" th:class="${#fields.hasErrors('firstName')}?'error'">First Name</label>:
+            <input id="firstName" type="text" th:field="*{firstName}"
+                   th:class="${#fields.hasErrors('firstName')}?'error'"><br>
+
+            <label for="lastName" th:class="${#fields.hasErrors('lastName')}?'error'">Last Name</label>:
+            <input id="lastName" type="text"
+                   th:field="*{lastName}"
+                   th:class="${#fields.hasErrors('lastName')}?'error'"><br>
+
+            <label for="email" th:class="${#fields.hasErrors('email')}?'error'">Email</label>:
+            <input id="email" type="text"
+                   th:field="*{email}"
+                   th:class="${#fields.hasErrors('email')}?'error'"><br>
+
+            <label for="username" th:class="${#fields.hasErrors('username')}?'error'">Username</label>:
+            <input id="username" type="text"
+                   th:field="*{username}"
+                   th:class="${#fields.hasErrors('username')}?'error'"><br>
+
+            <label for="password" th:class="${#fields.hasErrors('password')}?'error'">Password</label>:
+            <input id="password" type="password"
+                   th:field="*{password}"
+                   th:class="${#fields.hasErrors('password')}?'error'"><br>
+            <input type="submit" class="">
+        </form>
+    </article>
+</section>
+
+</body>
+</html>

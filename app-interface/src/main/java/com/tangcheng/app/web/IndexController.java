@@ -30,8 +30,8 @@ import static com.google.common.collect.Lists.newArrayList;
  * Created by MyWorld on 2016/9/25.
  */
 @Controller
-public class DefaultController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultController.class);
+public class IndexController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
     @Resource
     private Producer captchaProducer;
@@ -39,7 +39,7 @@ public class DefaultController {
     @RequestMapping(value = {"/home", "/"}, method = RequestMethod.GET)
     public ModelAndView home(Principal principal) {
         LOGGER.info("isRememberMeAuthenticated:{}", isRememberMeAuthenticated());
-        ModelAndView modelAndView = new ModelAndView("home");
+        ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("title", "Login success!");
         modelAndView.addObject("message", principal.getName());
         modelAndView.addObject("date", new Date());

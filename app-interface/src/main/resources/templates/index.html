@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!--https://github.com/thymeleaf/thymeleaf-extras-springsecurity-->
 <head th:lang="zh">
-    <title th:text="${title}">Title</title>
+    <title th:text="#{index.title}">Title</title>
     <link rel="stylesheet"
           th:href="@{/css/bootstrap.min.css}"
           href="../static/css/bootstrap.min.css">
@@ -14,11 +14,23 @@
 <div class="container">
     <header>
         <h1 th:text="${title}"></h1>
-        <a class="glyphicon glyphicon-log-out" style="cursor: pointer;" onclick="logout()">Logout</a>
+
         <nav>
             <ul>
-                <li>栏目1</li>
-                <li>栏目2</li>
+                <li>
+                    <a class="glyphicon glyphicon-log-out"
+                       style="cursor: pointer;"
+                       onclick="logout()">
+                        Logout
+                    </a>
+                </li>
+                <li>
+                    <a class="glyphicon glyphicon-registration-mark"
+                       style="cursor: pointer"
+                       th:href="@{/admin/user}">
+                        Register
+                    </a>
+                </li>
                 <li>栏目3</li>
                 <li>栏目4</li>
             </ul>
@@ -67,7 +79,7 @@
             </div>
             <div sec:authorize-url="/admin">
                 <br/>
-                <a th:href="@{/home.html}">authorize-url</a>
+                <a th:href="@{/templates/index.html}">authorize-url</a>
             </div>
         </article>
 
