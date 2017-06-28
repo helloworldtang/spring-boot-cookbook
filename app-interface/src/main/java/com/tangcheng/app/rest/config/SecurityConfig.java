@@ -68,7 +68,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(2419200)//four week 2419200s，默认是两周
                 .key("cookbookKey")//存储在cookies中包含用户名，密码，过期时间和一个私钥---在写入cookie前都进行了MD5 hash
                 .and()
-                .logout().clearAuthentication(true).logoutSuccessUrl("/login")
+                .logout().invalidateHttpSession(true)//用户的HTTP session将会在退出时被失效。在一些场景下，这是必要的（如用户拥有一个购物车时）
+                .clearAuthentication(true)
+                .logoutSuccessUrl("/login")//用户在退出后将要被重定向到的URL。默认为/。将会通过HttpServletResponse.redirect来处理。
                 .and()
                 .headers().cacheControl().disable()
         ;
