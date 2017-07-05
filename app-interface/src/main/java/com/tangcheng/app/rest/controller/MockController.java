@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Api(tags = "mock",description = "mock request")
 @RestController
-@RequestMapping("test")
+@RequestMapping("test/mock")
 public class MockController {
 
     public static final String AUTH = "auth";

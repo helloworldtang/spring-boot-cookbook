@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by tangcheng on 3/25/2017.
  */
 @RestController
-@RequestMapping("test")
+@RequestMapping("test/mvc")
 public class ModelAttributeController {
     public static final Logger LOGGER = LoggerFactory.getLogger(ModelAttributeController.class);
 

@@ -4,6 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!--https://github.com/thymeleaf/thymeleaf-extras-springsecurity-->
 <head th:lang="zh">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
     <title th:text="#{index.title}">Title</title>
     <link rel="stylesheet"
           th:href="@{/css/bootstrap.min.css}"
@@ -39,7 +44,6 @@
 
     <section>
         <article>
-
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title" th:text="'welcome:'+ ${message}+'!'">访问Model</h3>
@@ -50,6 +54,13 @@
                 <form id="logoutId" th:action="@{/logout}" method="post">
                     <input type="submit" value="Sign Out"/>
                 </form>
+            </div>
+
+            <div class="pull-right" style="border: medium fuchsia;">
+                <h3>pull-right 整体右浮动 （Bootstrap），即这个外层的div整体向右浮动</h3>
+                <button class="btn btn-xs" type="button">line1</button>
+                <button class="btn btn-xs" type="button">line2</button>
+                <button class="btn btn-xs" type="button">line3</button>
             </div>
 
             <div sec:authorize="isAuthenticated()" th:if="${principal}" th:object="${principal}">
