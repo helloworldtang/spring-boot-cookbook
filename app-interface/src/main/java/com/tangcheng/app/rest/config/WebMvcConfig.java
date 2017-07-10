@@ -28,6 +28,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+//        https://spring.io/guides/gs/securing-web/
         registry.addViewController("/login").setViewName("login");
     }
 
