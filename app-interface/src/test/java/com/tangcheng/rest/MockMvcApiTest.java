@@ -31,14 +31,14 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = InterfaceApplication.class)
 @WebAppConfiguration
-public class MockMvcDemo {
+public class MockMvcApiTest {
 
     @Autowired
     WebApplicationContext webApplicationContext;
 
 
-    MockMvc mockMvc;
-    String expectedJson;
+    private MockMvc mockMvc;
+    private String expectedJson;
 
 
     @Before
