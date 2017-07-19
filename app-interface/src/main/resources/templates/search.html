@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!--<meta name="_csrf_parameter" th:content="${_csrf.parameterName}" content="_csrf.parameterName"/>-->
+    <!--<meta name="_csrf" th:content="${_csrf.token}" content="_csrf.token"/>-->
+    <title>SEARCH</title>
+    <!-- Bootstrap -->
+    <link href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet"
+          media="screen">
+    <link href="../static/css/bootstrap-datetimepicker.min.css"
+          th:href="@{/css/bootstrap-datetimepicker.min.css}"
+          rel="stylesheet"
+          media="screen">
+
+    <style type="text/css">
+        .labelWidth {
+            width: 80px;
+            text-align: left;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function logOut() {
+            $("#logOut").submit();
+        }
+    </script>
+
+
+</head>
+<body class="home-template">
+<header class="container">
+    <h3 class="text-center">SEARCH</h3>
+
+    <nav class="container">
+
+        <a class="glyphicon glyphicon-log-out pull-right"
+           style="cursor: pointer;"
+           onclick="logOut()">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+<section style="margin-top: 2%;">
+    <div class="container">
+        <form class="form-group" method="post" th:action="@{/search}">
+            <div class="row form-group">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <label for="beginTime" class="labelWidth">Begin Time</label>
+                      </span>
+                        <input id="beginTime" name="beginTime"
+                               type="text" class="form-control datetimepicker"
+                               placeholder="Not mandatory.Click to choose begin time"/>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+
+                <div class="col-lg-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <label for="endTime" class="labelWidth">End   Time</label>
+                      </span>
+                        <input id="endTime" name="endTime"
+                               type="text" class="form-control"
+                               placeholder="Not mandatory.Click to choose end time">
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+
+
+            </div><!-- /.row -->
+
+            <div class="row form-group">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                          <span class="input-group-addon">
+                            <label for="id" class="labelWidth glyphicon glyphicon-star">ID</label>
+                          </span>
+                        <input id="id" name="id"
+                               type="text" class="form-control"
+                               aria-label="ID"
+                               placeholder="Mandatory.Please input id"
+                               required>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-6">
+                    <div class="input-group">
+                          <span class="input-group-addon">
+                            <label for="type" class="labelWidth">TYPE</label>
+                          </span>
+                        <select id="type"
+                                name="type"
+                                class="form-control">
+                            <option value="">ALL</option>
+                            <option value="0">TYPE0</option>
+                            <option value="1">TYPE1</option>
+                        </select>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div>
+
+            <button id="submit" type="submit" class="btn btn-lg btn-primary pull-right">
+                <span class="glyphicon glyphicon-search" aria-hidden="true">&nbsp;</span>SEARCH&nbsp;
+            </button>
+        </form>
+        <table id="dataTable" th:if="${result}" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>TYPE</th>
+                <th>CREATED TIME</th>
+                <th>FILE(Valid for 1 hour)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty(result)}" class="text-center">
+                <td colspan="4" class="container alert alert-success ">No qualified data</td>
+            </tr>
+            <tr th:each="item:${result}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.type}"></td>
+                <td th:text="${#dates.format(item.time,'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td><a target='_blank' th:href="@{${item.url}}">download</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <form id="logOut" th:action="@{/logout}" method="post"></form>
+
+</section>
+<script type="text/javascript" src="../static/js/jquery-3.2.1.min.js"
+        th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script type="text/javascript" src="../static/js/bootstrap.min.js"
+        th:src="@{/js/bootstrap.min.js}"></script>
+<!--<script type="text/javascript" src="../static/js/moment.min.js"
+        th:src="@{/js/moment.min.js}"></script>-->
+<script type="text/javascript" src="../static/js/bootstrap-datetimepicker.min.js"
+        th:src="@{/js/bootstrap-datetimepicker.min.js}"
+        charset="UTF-8"></script>
+<script type="text/javascript">
+
+    $(function () {
+        var beginTime = $("#beginTime");
+        var endTime = $("#endTime");
+        beginTime.datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        });
+        endTime.datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        });
+        beginTime.datetimepicker('setMinutesDisabled');
+        endTime.datetimepicker('setMinutesDisabled');
+
+        beginTime.datetimepicker().on('changeDate', function (ev) {
+            endTime.datetimepicker('setStartDate', formatDateToYYYY_MM_DD(ev.date))
+            console.log("begin formatDateToYYYY_MM_DD:" + formatDateToYYYY_MM_DD(ev.date))
+            console.log("begin value of:" + ev.date.valueOf())
+        });
+
+        endTime.datetimepicker().on('changeDate', function (ev) {
+            beginTime.datetimepicker('setEndDate', formatDateToYYYY_MM_DD(ev.date))
+            console.log("end formatDateToYYYY_MM_DD:" + formatDateToYYYY_MM_DD(ev.date))
+            console.log("end value of:" + ev.date.valueOf())
+        });
+
+    });
+</script>
+
+</body>
+</html>
