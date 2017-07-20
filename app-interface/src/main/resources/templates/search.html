@@ -30,6 +30,10 @@
         function logOut() {
             $("#logOut").submit();
         }
+        function formatDateToYYYY_MM_DD(currentDate) {
+            return currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate()
+        }
+
     </script>
 
 
@@ -56,7 +60,7 @@
                 <div class="col-lg-6">
                     <div class="input-group">
                       <span class="input-group-addon">
-                        <label for="beginTime" class="labelWidth">Begin Time</label>
+                        <label for="beginTime" class="labelWidth">Begin&nbsp;Time</label>
                       </span>
                         <input id="beginTime" name="beginTime"
                                type="text" class="form-control datetimepicker"
@@ -67,10 +71,10 @@
                 <div class="col-lg-6">
                     <div class="input-group">
                       <span class="input-group-addon">
-                        <label for="endTime" class="labelWidth">End   Time</label>
+                        <label for="endTime" class="labelWidth">End&nbsp;&nbsp;&nbsp;Time</label>
                       </span>
                         <input id="endTime" name="endTime"
-                               type="text" class="form-control"
+                               type="text" class="form-control datetimepicker"
                                placeholder="Not mandatory.Click to choose end time">
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
