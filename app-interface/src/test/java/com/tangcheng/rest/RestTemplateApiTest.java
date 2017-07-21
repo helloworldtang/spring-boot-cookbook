@@ -77,6 +77,7 @@ public class RestTemplateApiTest {
     @Test
     //ResponseEntity<T> getForEntity(String url, Class<T> responseType, Map<String, ?> urlVariables)
     public void testGetForEntity_Map() {
+        //如果请求的URL是这种形式/id{userId},则用户1实际请求的url是这样的/id1
         String url = domain + "/{userId}";
         String userId = "1";
         Map<String, String> urlVariables = new HashMap<>();
