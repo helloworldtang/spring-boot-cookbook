@@ -27,7 +27,7 @@ import static org.hamcrest.core.Is.is;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RestTemplateConfig.class)
-public class RestTemplateDemo {
+public class RestTemplateApiTest {
 
     //待测试的服务需要先启动，
     // 否则会提示 Connect to localhost:9999 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: connect
@@ -77,6 +77,7 @@ public class RestTemplateDemo {
     @Test
     //ResponseEntity<T> getForEntity(String url, Class<T> responseType, Map<String, ?> urlVariables)
     public void testGetForEntity_Map() {
+        //如果请求的URL是这种形式/id{userId},则用户1实际请求的url是这样的/id1
         String url = domain + "/{userId}";
         String userId = "1";
         Map<String, String> urlVariables = new HashMap<>();
@@ -98,13 +99,7 @@ public class RestTemplateDemo {
         String userId = "1";
         int pageId = 0;
         int pageSize = 10;
-        Result excepted = new Result(userId, pageId, pageSize);
-
-        String url = domain + "/{userId}/detail?pageId={pageId}&pageSize={pageSize}";
-
-        ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, userId, pageId, pageSize);
-        Result actual = forEntity.getBody();
-        assertThat(actual, is(excepted));
+        getForEntityWithRequestParam(userId, pageId, pageSize);
     }
 
     @Test
@@ -112,14 +107,16 @@ public class RestTemplateDemo {
         //因为get请求没有请求体，RequestParam只能拼到url字符串中
 
         //使用可变参数往url中传入数据，不要求 变量名 与 url中的变量名 必须一致，只要顺序依次写入就可以了
-        String firestParameter = "1";
+        String firstParameter = "1";
         int second = 0;
         int third = 10;
-        Result excepted = new Result(firestParameter, second, third);
+        getForEntityWithRequestParam(firstParameter, second, third);
+    }
 
+    private void getForEntityWithRequestParam(String userId, int pageId, int pageSize) {
+        Result excepted = new Result(userId, pageId, pageSize);
         String url = domain + "/{userId}/detail?pageId={pageId}&pageSize={pageSize}";
-
-        ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, firestParameter, second, third);
+        ResponseEntity<Result> forEntity = restTemplate.getForEntity(url, Result.class, userId, pageId, pageSize);
         Result actual = forEntity.getBody();
         assertThat(actual, is(excepted));
     }

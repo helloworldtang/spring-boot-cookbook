@@ -34,7 +34,7 @@ public class UploadController {
     }
 
     @PostMapping//new annotation since 4.3
-    public String upload(@RequestParam("file")MultipartFile file,
+    public String upload(@RequestParam("file") MultipartFile file,
                          RedirectAttributes redirectAttributes) {
         String globalMsg = "globalMsg";
         if (file.isEmpty()) {
@@ -46,11 +46,12 @@ public class UploadController {
             String filename = file.getOriginalFilename();
             Path path = Paths.get("/tmp/", filename);
             Files.write(path, bytes);
+            file.transferTo(Paths.get("/tmp/", "bak_" + filename).toFile());
             String savePath = path.toFile().getAbsolutePath();
             LOGGER.info(savePath);
-            redirectAttributes.addFlashAttribute(globalMsg, "success to upload "+ filename+",\n save to "+savePath);
+            redirectAttributes.addFlashAttribute(globalMsg, "success to upload " + filename + ",\n save to " + savePath);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(),e);
+            LOGGER.error(e.getMessage(), e);
             redirectAttributes.addFlashAttribute(globalMsg, e.getMessage());
         }
 
