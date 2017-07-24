@@ -130,7 +130,7 @@
             </tr>
             <tr th:each="item:${result}">
                 <td th:text="${item.id}"></td>
-                <td th:text="${item.type}"></td>
+                <td th:text="${item.type eq 0 ?'type0':'type1'}"></td>
                 <td th:text="${#dates.format(item.time,'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td><a target='_blank' th:href="@{${item.url}}">download</a></td>
             </tr>

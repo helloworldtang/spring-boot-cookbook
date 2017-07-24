@@ -30,7 +30,7 @@ public class SearchServiceImpl implements SearchService {
         List<SearchVO> voList = new ArrayList<>();
         SearchVO searchVO = new SearchVO();
         searchVO.setId(1L);
-        searchVO.setType((byte) 1);
+        searchVO.setType((byte) 0);
         searchVO.setUrl("http://pstatic.geekbang.org/pdf/595f443ecade9.pdf?e=1499773825&token=eHNJKRTldoRsUX0uCP9M3icEhpbyh3VF9Nrk5UPM:6i052AiZCMT-lyd5QmUTDBJj7mM=");
         LocalDateTime localDateTime = now.with(TemporalAdjusters.firstDayOfMonth());
         Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
