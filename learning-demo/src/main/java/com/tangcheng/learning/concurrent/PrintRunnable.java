@@ -54,7 +54,7 @@ public class PrintRunnable implements Runnable {
                 // flag为1的会在7(3+3+flag)时结束，结束前会signalALl,
                 // flag为2的会在8(3+3+flag)时结束，结束前signalAll(lock相关的对象都操作完了)
                 int exitFlag = 3 * 2 + flag;
-                int current = globalFlag.get();
+                int current = globalFlag.get();//这一步很关键，如果不保留当前值，执行getAndIncrement后,就不能按预期break
                 globalFlag.getAndIncrement();
                 if (current == exitFlag) break;
             } catch (InterruptedException e) {
@@ -62,9 +62,9 @@ public class PrintRunnable implements Runnable {
             } finally {
                 lock.unlock();
             }
-
         }
         LOGGER.info("end");
-
     }
+
+
 }  
