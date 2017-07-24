@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 
 public class ThreadLocalDemo {
 
-    static ThreadLocal<Integer> seqNum = ThreadLocal.withInitial(() -> 0);
+    private static ThreadLocal<Integer> seqNum = ThreadLocal.withInitial(() -> 0);
 
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newCachedThreadPool();

@@ -30,9 +30,9 @@ public class PrintInOrder implements Runnable {
         lock.lock();
         try {
             for (int i = 0; i < size; i++) {
-                LOGGER.info("seq:{}", i);
                 try {
                     conditionAwait.await();
+                    LOGGER.info("seq:{}", i);
                     conditionSignal.signalAll();
                 } catch (InterruptedException e) {
                     LOGGER.error(e.getMessage(), e);
