@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -27,9 +26,6 @@ public class DistributedLockRedis {
 
     @Autowired
     private RedisTemplate<String, Long> redisTemplate;
-
-    @Autowired
-    private Jedis jedis;
 
     /**
      * 由于Redis是单线程模型，命令操作原子性，所以利用这个特性可以很容易的实现分布式锁。
