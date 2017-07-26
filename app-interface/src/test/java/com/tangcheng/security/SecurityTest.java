@@ -1,5 +1,6 @@
 package com.tangcheng.security;
 
+import com.tangcheng.app.InterfaceApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by tang.cheng on 2016/12/12.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = InterfaceApplication.class)
 @DirtiesContext
 public class SecurityTest {
     @Autowired
