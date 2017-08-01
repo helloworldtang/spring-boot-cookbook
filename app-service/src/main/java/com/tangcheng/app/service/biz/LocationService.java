@@ -1,6 +1,9 @@
 package com.tangcheng.app.service.biz;
 
+import com.tangcheng.app.domain.vo.GpsVO;
 import com.tangcheng.app.domain.vo.MapVO;
+
+import java.util.List;
 
 /**
  * spring-boot-cookbook
@@ -10,4 +13,6 @@ import com.tangcheng.app.domain.vo.MapVO;
  */
 public interface LocationService {
     MapVO getLocationData();
+
+    List<GpsVO> getGpsData();
 }

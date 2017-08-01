@@ -1,5 +1,6 @@
 package com.tangcheng.app.web;
 
+import com.tangcheng.app.domain.vo.GpsVO;
 import com.tangcheng.app.domain.vo.MapVO;
 import com.tangcheng.app.service.biz.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * spring-boot-cookbook
@@ -31,5 +34,19 @@ public class LocationController {
     public String listMap() {
         return "map";
     }
+
+
+    @GetMapping("amap.html")
+    public String listGPSTrack() {
+        return "amap";
+    }
+
+
+    @GetMapping("amapGps.json")
+    @ResponseBody
+    public List<GpsVO> amapData() {
+        return locationService.getGpsData();
+    }
+
 
 }

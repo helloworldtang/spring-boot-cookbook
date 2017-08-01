@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GPS track record</title>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+    <script src="https://webapi.amap.com/maps?v=1.3&key=您申请的key值"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+<div id="container" style="width:800px;height: 600px;margin:0 auto"></div>
+<div>
+    <a href="https://lbs.amap.com/api/javascript-api/example/marker/replaying-historical-running-data">Document</a>
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+    $(function () {
+        var lineArr = [];
+        $.getJSON("/location/amapGps.json", function (data) {
+            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+                lineArr.push([data[i].longitude, data[i].latitude])
+            }
+
+            var map = new AMap.Map("container", {
+                resizeEnable: true,
+                center: lineArr[parseInt(lineArr.length / 2)],
+                zoom: 37
+            });
+
+            function refresh(enName) {
+                map.setMapStyle('amap://styles/' + enName);
+            }
+
+            var beginMark = new AMap.Marker({
+                map: map,
+                position: lineArr[0],
+                icon: "/image/begin.png",
+                offset: new AMap.Pixel(-26, -13),
+                autoRotation: true
+            });
+
+            var endMark = new AMap.Marker({
+                map: map,
+                position: lineArr[lineArr.length - 1],
+                icon: "/image/end.png",
+                offset: new AMap.Pixel(-26, -13),
+                autoRotation: true
+            });
+
+
+            // 绘制轨迹
+            var polyline = new AMap.Polyline({
+                map: map,
+                path: lineArr,
+                strokeColor: "#15c542",  //线颜色
+                // strokeOpacity: 1,     //线透明度
+                strokeWeight: 3,      //线宽
+                // strokeStyle: "solid"  //线样式
+            });
+        });
+
+    });
+</script>
+</html>
