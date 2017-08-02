@@ -19,7 +19,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.session.ExpiringSession;
+import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.session.security.SpringSessionBackedSessionRegistry;
+import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import javax.security.auth.login.AccountExpiredException;
 import java.util.HashMap;
@@ -34,6 +39,9 @@ import java.util.Map;
 @EnableWebSecurity
 //As of Spring Security 4.0, @EnableWebMvcSecurity is deprecated. The replacement is @EnableWebSecurity which will determine adding the Spring MVC features based upon the classpath.
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    FindByIndexNameSessionRepository<ExpiringSession> sessionRepository;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -58,13 +66,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/favicon.ico", "/css/**", "/js/**", "/captcha.jpg").permitAll()
                 .antMatchers("/user/**").hasRole("ADMIN")//Any URL that starts with "/admin/" will be restricted to users who have the role "ROLE_ADMIN". You will notice that since we are invoking the hasRole method we do not need to specify the "ROLE_" prefix.
                 .antMatchers("/db/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/flyway", "/tx/**", "/user/**", "/etag/**","/test/**").permitAll()
+                .antMatchers("/flyway", "/tx/**", "/user/**", "/etag/**", "/test/**").permitAll()
                 .anyRequest().fullyAuthenticated()//Any URL that has not already been matched on only requires that the user be authenticated
                 .and()
                 .addFilterBefore(loginAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin().permitAll().loginPage("/login").defaultSuccessUrl("/home")
                 .and()
                 .rememberMe()//登陆请求必须包含一个名为remember-me的参数
+                .rememberMeServices(rememberMeServices())
                 .tokenValiditySeconds(2419200)//four week 2419200s，默认是两周
                 .key("cookbookKey")//存储在cookies中包含用户名，密码，过期时间和一个私钥---在写入cookie前都进行了MD5 hash
                 .and()
@@ -73,7 +82,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")//用户在退出后将要被重定向到的URL。默认为/。将会通过HttpServletResponse.redirect来处理。
                 .and()
                 .headers().cacheControl().disable()
+                .and()
+                .sessionManagement()
+                .maximumSessions(2)
+                .sessionRegistry(sessionRegistry())
         ;
+    }
+
+    @Bean
+    RememberMeServices rememberMeServices() {
+        //https://docs.spring.io/spring-session/docs/1.3.1.RELEASE/reference/html5/#spring-security-rememberme
+        SpringSessionRememberMeServices rememberMeServices =
+                new SpringSessionRememberMeServices();
+        // optionally customize
+        rememberMeServices.setAlwaysRemember(true);
+        return rememberMeServices;
+    }
+
+    @Bean
+    SpringSessionBackedSessionRegistry sessionRegistry() {
+        return new SpringSessionBackedSessionRegistry(this.sessionRepository);
     }
 
     @Bean
