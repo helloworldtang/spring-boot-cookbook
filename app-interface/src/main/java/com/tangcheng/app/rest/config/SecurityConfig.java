@@ -6,7 +6,6 @@ import com.tangcheng.app.rest.security.LoginAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -21,9 +20,6 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.session.ExpiringSession;
-import org.springframework.session.FindByIndexNameSessionRepository;
-import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import javax.security.auth.login.AccountExpiredException;
@@ -34,14 +30,13 @@ import java.util.Map;
  * Created by tang.cheng on 2016/12/12.
  */
 @SuppressWarnings("SpringJavaAutowiringInspection")
-@Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 @EnableWebSecurity
 //As of Spring Security 4.0, @EnableWebMvcSecurity is deprecated. The replacement is @EnableWebSecurity which will determine adding the Spring MVC features based upon the classpath.
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    FindByIndexNameSessionRepository<ExpiringSession> sessionRepository;
+//    @Autowired
+//    FindByIndexNameSessionRepository<ExpiringSession> findByIndexNameSessionRepository;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -82,27 +77,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")//用户在退出后将要被重定向到的URL。默认为/。将会通过HttpServletResponse.redirect来处理。
                 .and()
                 .headers().cacheControl().disable()
-                .and()
-                .sessionManagement()
-                .maximumSessions(2)
-                .sessionRegistry(sessionRegistry())
+//                .and()
+//                .sessionManagement()
+//                .maximumSessions(2)
+//                .sessionRegistry(sessionRegistry())
         ;
     }
 
     @Bean
     RememberMeServices rememberMeServices() {
         //https://docs.spring.io/spring-session/docs/1.3.1.RELEASE/reference/html5/#spring-security-rememberme
-        SpringSessionRememberMeServices rememberMeServices =
-                new SpringSessionRememberMeServices();
+        SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
         // optionally customize
         rememberMeServices.setAlwaysRemember(true);
         return rememberMeServices;
     }
 
-    @Bean
-    SpringSessionBackedSessionRegistry sessionRegistry() {
-        return new SpringSessionBackedSessionRegistry(this.sessionRepository);
-    }
+//    @Bean
+//    SpringSessionBackedSessionRegistry sessionRegistry() {
+//        return new SpringSessionBackedSessionRegistry(this.findByIndexNameSessionRepository);
+//    }
 
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() {
