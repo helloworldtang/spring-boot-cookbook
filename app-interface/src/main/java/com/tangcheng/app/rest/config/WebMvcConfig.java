@@ -3,11 +3,10 @@ package com.tangcheng.app.rest.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.alibaba.fastjson.support.spring.FastJsonpHttpMessageConverter4;
-import com.alibaba.fastjson.support.spring.FastJsonpResponseBodyAdvice;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -16,8 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,35 +50,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
                 .setUseTrailingSlashMatch(true);
     }
 
-    /**
-     * org.springframework.beans.factory.UnsatisfiedDependencyException:
-     * Error creating bean with name 'fastJsonpResponseBodyAdvice' defined in URL [jar:file:/C:/repository/com/alibaba/fastjson/1.2.28/fastjson-1.2.28.jar!/com/alibaba/fastjson/support/spring/FastJsonpResponseBodyAdvice.class]:
-     * Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type [[Ljava.lang.String;] found for dependency [java.lang.String[]]:
-     * expected at least 1 bean which qualifies as autowire candidate for this dependency.
-     * Dependency annotations: {}; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException:
-     * No qualifying bean of type [[Ljava.lang.String;] found for dependency [java.lang.String[]]:
-     * expected at least 1 bean which qualifies as autowire candidate for this dependency. Dependency annotations: {}
-     * at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:749)
-     * 解决办法：https://github.com/alibaba/fastjson/wiki/FastJsonpHttpMessageConverter4_CN
-     *
-     * @return
-     */
-    @Bean
-    public FastJsonpResponseBodyAdvice fastJsonpResponseBodyAdvice() {
-        return new FastJsonpResponseBodyAdvice("callback", "jsonp");
-    }
-
-    @Bean
-    public FastJsonpHttpMessageConverter4 fastJsonpHttpMessageConverter4() {
-//        http://www.cnblogs.com/sunp823/p/5601397.html
-//        http://blog.csdn.net/my_god_sky/article/details/53385246
-        FastJsonpHttpMessageConverter4 converter4 = new FastJsonpHttpMessageConverter4();
-        List<MediaType> supportedMediaTypes = new ArrayList<>();
-        supportedMediaTypes.add(MediaType.APPLICATION_JSON);
-        supportedMediaTypes.add(MediaType.TEXT_HTML);
-        converter4.setSupportedMediaTypes(supportedMediaTypes);
-        converter4.setDefaultCharset(Charset.forName("utf-8"));
-
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        FastJsonHttpMessageConverter httpMessageConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(SerializerFeature.QuoteFieldNames,
                 SerializerFeature.WriteEnumUsingToString,
@@ -96,8 +67,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
                 return source;
             }
         });
-        converter4.setFastJsonConfig(fastJsonConfig);
-        return converter4;
+        httpMessageConverter.setFastJsonConfig(fastJsonConfig);
+        converters.add(httpMessageConverter);
     }
 
     @Bean

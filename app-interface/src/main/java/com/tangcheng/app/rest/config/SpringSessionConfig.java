@@ -22,5 +22,16 @@ public class SpringSessionConfig {
 //        return new RedisOperationsSessionRepository(redisConnectionFactory);
 //    }
 
+    /**
+     * 注入RedisHttpSessionConfiguration中的defaultRedisSerializer属性，
+     * 替换原来jdk默认的serializer
+     *
+     * @return
+     */
+//    @Bean("springSessionDefaultRedisSerializer")
+//    public GenericFastJsonRedisSerializer redisSessionSerializer() {
+//        return new GenericFastJsonRedisSerializer();
+//    }
+
 
 }
