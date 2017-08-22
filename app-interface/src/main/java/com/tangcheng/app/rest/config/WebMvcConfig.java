@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,6 +64,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
             public Object process(Object o, String s, Object source) {
                 if (source == null) {
                     return "";
+                }
+                if (source instanceof Date) {
+                    return ((Date) source).getTime();
                 }
                 return source;
             }
