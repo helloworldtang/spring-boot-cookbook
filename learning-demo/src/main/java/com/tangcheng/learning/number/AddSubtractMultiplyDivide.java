@@ -24,22 +24,30 @@ public class AddSubtractMultiplyDivide {
         System.out.println("====================LINE====================");
 
 
-        BigDecimal addend = new BigDecimal(0.06);
-        BigDecimal augend = new BigDecimal(0.01);
+        //BigDecimal中传入的double类型的数据，要为String类型，不然得到在BigDecimal仍然是不准确的double数据
+//        BigDecimal addend = new BigDecimal(0.06);
+//        BigDecimal augend = new BigDecimal(0.01);
+        BigDecimal addend = new BigDecimal("0.06");
+        BigDecimal augend = new BigDecimal("0.01");
         BigDecimal result = addend.add(augend);
         System.out.println(q1 + result.doubleValue() + "==" + percent.format(v));
 
-        BigDecimal minuend = new BigDecimal(1.0);
-        BigDecimal subtrahend = new BigDecimal(0.42);
+//        BigDecimal minuend = new BigDecimal(1.0);
+//        BigDecimal subtrahend = new BigDecimal(0.42);
+        BigDecimal minuend = new BigDecimal("1.0");
+        BigDecimal subtrahend = new BigDecimal("0.42");
         result = minuend.subtract(subtrahend);
         System.out.println(q2 + result.doubleValue());
 
-        BigDecimal multiplicand = new BigDecimal(4.015);
+//        BigDecimal multiplicand = new BigDecimal(4.015);
+//        BigDecimal multiplicator = new BigDecimal(100);
+        BigDecimal multiplicand = new BigDecimal("4.015");
         BigDecimal multiplicator = new BigDecimal(100);
         result = multiplicand.multiply(multiplicator);
         System.out.println(q3 + result.doubleValue());
 
-        BigDecimal dividend = new BigDecimal(303.1);
+//        BigDecimal dividend = new BigDecimal(303.1);
+        BigDecimal dividend = new BigDecimal("303.1");
         BigDecimal divisor = new BigDecimal(1000);
         int scale = 10;
         result = dividend.divide(divisor, scale, RoundingMode.HALF_UP);
