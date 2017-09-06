@@ -46,4 +46,16 @@ public class RequestHolder {
     }
 
 
+    public static String getLastAccessUrl() {
+        HttpServletRequest httpServletRequest = getRequestFacade();
+        String requestURI = httpServletRequest.getRequestURI();
+        String queryString = httpServletRequest.getQueryString();
+        if (queryString == null) {
+            return requestURI;
+        }
+        return requestURI + "?" + queryString;
+
+    }
+
+
 }
