@@ -10,9 +10,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -72,6 +70,21 @@ public class FastJsonTest {
         Result<User> userResult = JSON.parseObject(js, new TypeReference<Result<User>>() {
         });
         System.out.println(userResult);
+    }
+
+
+    @Test
+    public void serialMapToJson() {
+        Map<Long, String> source = new HashMap<>();
+        for (long i = 0; i < 10; i++) {
+            source.put(i, "key" + i);
+        }
+
+        /**
+         * {0:"key0",1:"key1",2:"key2",3:"key3",4:"key4",5:"key5",6:"key6",7:"key7",8:"key8",9:"key9"}
+         */
+        String result = JSON.toJSONString(source, true);
+        System.out.println(result);
     }
 
 
