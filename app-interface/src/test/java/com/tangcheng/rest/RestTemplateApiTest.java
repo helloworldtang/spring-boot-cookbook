@@ -1,14 +1,12 @@
 package com.tangcheng.rest;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tangcheng.app.business.config.RestTemplateConfig;
 import com.tangcheng.app.domain.query.Result;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.LinkedMultiValueMap;
@@ -276,6 +274,28 @@ public class RestTemplateApiTest {
         ResponseEntity<Result> forEntity = restTemplate.postForEntity(url, request, Result.class, uriVariables);
         Result actual = forEntity.getBody();
         assertThat(actual, is(excepted));
+    }
+
+
+    @Test
+    public void testPostJsonData() {
+//        https://gxnotes.com/article/61287.html
+        // create request body
+        JSONObject request = new JSONObject();
+        request.put("username", "name");
+        request.put("password", "pwd");
+
+        // set headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<String>(request.toString(), headers);
+
+        // send request and parse result
+        ResponseEntity<String> loginResponse = restTemplate.exchange("", HttpMethod.POST, entity, String.class);
+        if (loginResponse.getStatusCode() == HttpStatus.OK) {
+        } else if (loginResponse.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            // nono... bad credentials
+        }
     }
 
 
