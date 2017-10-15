@@ -1,7 +1,8 @@
 package com.tangcheng.app.rest.config;
 
-import com.tangcheng.app.domain.exception.BizException;
+import com.tangcheng.app.core.util.RequestHolder;
 import com.tangcheng.app.domain.errorcode.GlobalCode;
+import com.tangcheng.app.domain.exception.BizException;
 import com.tangcheng.app.domain.vo.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class GlobalExHandler {
      */
     @ExceptionHandler(BizException.class)
     public ResultData<?> handleAllException(BizException bizEx) {
-        LOGGER.error(bizEx.getMessage(), bizEx);
+        LOGGER.error(bizEx.getMessage(), RequestHolder.getLastAccessUrl());
         return new ResultData<>(bizEx.getBizError());
     }
 

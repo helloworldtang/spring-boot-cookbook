@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,10 +38,10 @@ public class CustomUserDetails extends UserDo {
     }
 
     public boolean generateAccountNonExpired() {
-        return LocalDateTime.now().toDate().compareTo(this.getAccountExpired()) <= 0;
+        return new Date().before(this.getAccountExpired());
     }
 
     public boolean generateCredentialsNonExpired() {
-        return LocalDateTime.now().toDate().compareTo(this.getCredentialsExpired()) <= 0;
+        return new Date().before(this.getAccountExpired());
     }
 }
