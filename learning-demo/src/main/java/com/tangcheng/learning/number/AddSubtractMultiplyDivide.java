@@ -24,7 +24,7 @@ public class AddSubtractMultiplyDivide {
         System.out.println("====================LINE====================");
 
 
-        //BigDecimal中传入的double类型的数据，要为String类型，不然得到在BigDecimal仍然是不准确的double数据
+        //****BigDecimal中传入的double类型的数据，要为String类型，不然得到在BigDecimal仍然是不准确的double数据****
 //        BigDecimal addend = new BigDecimal(0.06);
 //        BigDecimal augend = new BigDecimal(0.01);
         BigDecimal addend = new BigDecimal("0.06");
