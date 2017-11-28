@@ -16,8 +16,15 @@ import java.util.Map;
 @Controller
 public class TableController {
 
+    /**
+     * https://stackoverflow.com/questions/35999679/thymeleaf-table-issues-with-rowspan-1-order-n-articles
+     *
+     * @param model
+     * @return
+     */
     @GetMapping("/table/rowspan")
     public String tableRoleRowSpan(Model model) {
+
         List<Map<String, Object>> list = new ArrayList<>();
         Map<String, String> detail = new HashMap<>();
         detail.put("line1", "line1Value");
