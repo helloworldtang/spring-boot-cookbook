@@ -6,6 +6,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * http://www.importnew.com/25286.html
+ *
  * @author tangcheng
  * 2017/11/30
  */
