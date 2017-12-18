@@ -4,19 +4,17 @@ import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.util.SocketUtils;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by tangcheng on 5/28/2017.
  */
+@Profile("prod")
 @Configuration
 public class SslConfig {
 
