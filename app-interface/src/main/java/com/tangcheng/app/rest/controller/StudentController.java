@@ -38,7 +38,7 @@ public class StudentController {
         studentDO.setAge(age);
         studentDO.setClasses("classes" + age);
         studentService.saveStudent(studentDO, hasError);
-        return new ResultData<>(GlobalCode.SUCCESS);
+        return ResultData.builder().build();
     }
 
     @GetMapping("list")
@@ -56,7 +56,7 @@ public class StudentController {
             throw new BizException(StudentError.NotExist);
         }
         StudentDO studentDO = studentService.getOne(id);
-        return new ResultData<>(studentDO);
+        return ResultData.<StudentDO>builder().detail(studentDO).build();
     }
 
 }

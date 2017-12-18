@@ -35,7 +35,7 @@ public class GlobalExHandler {
     @ExceptionHandler(BizException.class)
     public ResultData<?> handleAllException(BizException bizEx) {
         LOGGER.error(bizEx.getMessage(), RequestHolder.getLastAccessUrl());
-        return new ResultData<>(bizEx.getBizError());
+        return ResultData.builder().detail(bizEx).build();
     }
 
 
@@ -62,9 +62,9 @@ public class GlobalExHandler {
     public ResultData<String> throwable(Exception e) {
         LOGGER.error(e.getMessage(), e);
         if (e instanceof SQLException || e instanceof DataAccessException) {
-            return new ResultData<>(GlobalCode.FAIL, "服务器好像开小差了，等会再试下:-) ");
+            return ResultData.<String>builder().bizError(GlobalCode.FAIL.setMsg("服务器好像开小差了，等会再试下:-) ")).build();
         }
-        return new ResultData<>(GlobalCode.FAIL, e.getMessage());
+        return ResultData.<String>builder().bizError(GlobalCode.FAIL.setMsg(e.getMessage())).build();
     }
 
 }

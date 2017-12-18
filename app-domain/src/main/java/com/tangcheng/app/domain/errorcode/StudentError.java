@@ -15,18 +15,26 @@ public enum StudentError implements BizError {
     Duplication(20001, "Duplication");
 
     private final int code;
-    private final String msg;
+    private String msg;
 
     StudentError(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
+    @Override
     public Integer getCode() {
         return code;
     }
 
+    @Override
     public String getMsg() {
         return msg;
+    }
+
+    @Override
+    public BizError setMsg(String msg) {
+        this.msg = msg;
+        return this;
     }
 }

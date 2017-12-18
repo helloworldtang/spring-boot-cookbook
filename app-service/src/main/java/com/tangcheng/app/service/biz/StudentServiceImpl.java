@@ -55,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
         if (hasError) {
             throw new IllegalArgumentException("error.roll back");
         }
-        return new ResultData<>(doList);
+        return ResultData.<List<StudentDO>>builder().detail(doList).build();
     }
 
     @Override
