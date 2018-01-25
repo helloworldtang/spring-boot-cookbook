@@ -16,7 +16,7 @@ import java.util.concurrent.Executor;
  * Created by MyWorld on 2016/8/11.
  */
 @Configuration
-@ComponentScan("com.demo.thread")
+@ComponentScan("com.tangcheng")
 @EnableAsync
 public class TaskExecutorConfig implements AsyncConfigurer {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskExecutorConfig.class);
