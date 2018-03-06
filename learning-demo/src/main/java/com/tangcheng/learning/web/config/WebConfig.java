@@ -31,6 +31,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * [nio-8080-exec-1] c.t.l.web.interceptor.MyInterceptor3     : >>>MyInterceptor3>>>>>>>afterCompletion.在整个请求结束之后被调用，也就是在DispatcherServlet 渲染了对应的视图之后执行（主要是用于进行资源清理工作）
      * [nio-8080-exec-1] c.t.l.web.interceptor.MyInterceptor2     : >>>MyInterceptor2>>>>>>>afterCompletion.在整个请求结束之后被调用，也就是在DispatcherServlet 渲染了对应的视图之后执行（主要是用于进行资源清理工作）
      * [nio-8080-exec-1] c.t.l.web.interceptor.MyInterceptor1     : >>>MyInterceptor1>>>>>>>afterCompletion.在整个请求结束之后被调用，也就是在DispatcherServlet 渲染了对应的视图之后执行（主要是用于进行资源清理工作）
+     * http://www.cnblogs.com/softidea/p/6064064.html
      *
      * @param registry
      */
