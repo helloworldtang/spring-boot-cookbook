@@ -87,5 +87,27 @@ public class FastJsonTest {
         System.out.println(result);
     }
 
+    @Test
+    public void serialArrayToJson() {
+        String[] urls = {"http://1.com", "http://2.com"};
+        /**
+         * ["http://1.com","http://2.com"]
+         */
+        String result = JSON.toJSONString(urls, true);
+        System.out.println(result);
+
+        /**
+         [
+         "http://1.com",
+         "http://2.com"
+         ]
+         */
+        List<String> urlList = new ArrayList<>();
+        urlList.add("http://1.com");
+        urlList.add("http://2.com");
+        result = JSON.toJSONString(urlList, true);
+        System.out.println(result);
+    }
+
 
 }
