@@ -14,6 +14,7 @@ http://localhost:9999/swagger-resources/configuration/security
 
 mvn clean install -Dmaven.test.skip=true      
 
+Redis的逻辑写在DAO，没有单独拆分出来
 
 todo:
 
