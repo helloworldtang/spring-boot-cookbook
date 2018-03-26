@@ -1,12 +1,15 @@
 package com.tangcheng.learning.time;
 
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.*;
+import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Test {
+@Slf4j
+public class JavaUtilDateTest {
     public static void test1(Date d1, Date d2) {
 
         // 毫秒ms
@@ -42,6 +45,7 @@ public class Test {
         Period p = interval.toPeriod();
         System.out.println("时间相差：" + p.getDays() + " 天 " + p.getHours() + " 小时 " + p.getMinutes() + " 分钟" + p.getSeconds() + " 秒");
     }
+
     public static void main(String[] args) throws ParseException {
         String dateStart = "2017-08-12 16:29:58";
         String dateStop = "2017-08-13 16:31:48";
@@ -53,5 +57,20 @@ public class Test {
         test1(d1, d2);
         test2(d1, d2);
         test3(d1, d2);
+    }
+
+    /**
+     * 当前对象代表的时间 超前 时，返回1
+     * 当前对象代表的时间 与被比较的相等时，返回0
+     * 当前对象代表的时间 是过去的时间 时，返回-1
+     */
+    @Test
+    public void compareDateTest() {
+        Date after5Minutes = LocalDateTime.now().plusMinutes(5).toDate();
+        Date before5Minutes = LocalDateTime.now().minusMinutes(5).toDate();
+        Date now = LocalDateTime.now().toDate();
+        log.info("after5Minutes.compareTo(now):{}", after5Minutes.compareTo(now));
+        log.info("before5Minutes.compareTo(now):{}", before5Minutes.compareTo(now));
+        log.info("now.compareTo(now):{}", now.compareTo(now));
     }
 }
