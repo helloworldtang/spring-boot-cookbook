@@ -1,5 +1,6 @@
 package com.tangcheng.learning.date;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import static org.hamcrest.CoreMatchers.is;
  * @author : tang.cheng
  * @version : 2017-07-19  16:05
  */
+@Slf4j
 public class LocalDateApiTest {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(LocalDateApiTest.class);
@@ -787,6 +789,16 @@ public class LocalDateApiTest {
         dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ").withLocale(Locale.SIMPLIFIED_CHINESE).withZone(ZoneId.of("Etc/GMT-8"));
         format = dateTimeFormatter.format(new Date().toInstant());
         System.out.println(format);//2018-03-20T20:38:52+0800
+    }
+
+
+    @Test
+    public void testMax() {
+        LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);//当天零点
+        log.info("{}", todayStart.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
+        LocalDateTime todayEnd = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);//当天23:59:59
+        log.info("{}", todayEnd.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     }
 
 
