@@ -775,6 +775,7 @@ public class LocalDateApiTest {
     }
 
     /**
+     * java.time.format.DateTimeFormatter is immutable and thread-safe.
      * java.time.temporal.UnsupportedTemporalTypeException: Unsupported field: Year
      * To format an Instant a time-zone is required.
      * https://stackoverflow.com/questions/40211892/unsupported-field-year-when-formatting-an-instant-to-date-iso?noredirect=1&lq=1
@@ -789,6 +790,18 @@ public class LocalDateApiTest {
         dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ").withLocale(Locale.SIMPLIFIED_CHINESE).withZone(ZoneId.of("Etc/GMT-8"));
         format = dateTimeFormatter.format(new Date().toInstant());
         System.out.println(format);//2018-03-20T20:38:52+0800
+
+
+        /**
+         * 当前LocalDateTime大：1，当前LocalDateTime小：-1
+         */
+        LocalDateTime start = LocalDateTime.parse("2018-03-29T00:00:00+0800", dateTimeFormatter);
+        System.out.println(start);
+
+        LocalDateTime end = LocalDateTime.parse("2017-03-28T23:59:59+0800", dateTimeFormatter);
+        System.out.println(end);
+        System.out.println(end.compareTo(start));
+        System.out.println(end.compareTo(end));
     }
 
 
