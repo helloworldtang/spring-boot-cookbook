@@ -1,6 +1,7 @@
 package com.tangcheng.learning.java8;
 
-import com.tangcheng.learning.json.User;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -25,18 +26,25 @@ public class StreamTest {
 
     @Test
     public void joinListWithPO() {
-        List<User> circleList = new ArrayList<User>() {
+        List<UserDemo> circleList = new ArrayList<UserDemo>() {
             {
-                add(new User(1L, "1"));
-                add(new User(2L, "2"));
-                add(new User(5L, "5"));
-                add(new User(3L, "3"));
+                add(new UserDemo(1L, "1"));
+                add(new UserDemo(2L, "2"));
+                add(new UserDemo(5L, "5"));
+                add(new UserDemo(3L, "3"));
             }
         };
         String expect = "1,2,5,3";
-        String actual = circleList.stream().map(User::getName).collect(Collectors.joining(","));
+        String actual = circleList.stream().map(UserDemo::getName).collect(Collectors.joining(","));
         log.info("actual:{}", actual);
         assertThat(actual).isEqualTo(expect);
     }
 
+}
+
+@Data
+@AllArgsConstructor
+class UserDemo {
+    private Long id;
+    private String name;
 }

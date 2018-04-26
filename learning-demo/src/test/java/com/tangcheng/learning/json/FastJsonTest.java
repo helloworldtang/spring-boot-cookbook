@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 import com.alibaba.fastjson.TypeReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -57,11 +59,11 @@ public class FastJsonTest {
 
     @Test
     public void testGenerics() {
-        Result<User> result = new Result<>();
+        Result<UserDemo> result = new Result<>();
         result.setMsg("Success");
-        List<User> users = new ArrayList<>();
-        users.add(new User(1L, "Name1"));
-        users.add(new User(2L, "Name2"));
+        List<UserDemo> users = new ArrayList<>();
+        users.add(new UserDemo(1L, "Name1"));
+        users.add(new UserDemo(2L, "Name2"));
         result.setModule(users);
         String js = JSON.toJSONString(result);
         System.out.println(js);
@@ -110,4 +112,11 @@ public class FastJsonTest {
     }
 
 
+}
+
+@Data
+@AllArgsConstructor
+class UserDemo {
+    private Long id;
+    private String name;
 }
