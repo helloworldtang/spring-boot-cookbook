@@ -1,13 +1,12 @@
 package com.tangcheng.learning.json;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.util.ParameterizedTypeImpl;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Setter
-@Getter
-class Response<T> {
+@Data
+public class Response<T> {
     private T data;
 
     @Override
@@ -16,40 +15,26 @@ class Response<T> {
     }
 
     public static void main(String[] args) {
-
-        String jsonText = "{\"data\":{\"userId\":1,\"userName\":\"张三\"}}";
-        Response r = JSON.parseObject(jsonText, new ParameterizedTypeImpl(new Class[]{User.class}, null, Response.class));
+        String jsonText = "{\"data\":{\"id\":1,\"name\":\"张三\"}}";
+        Response response = JSON.parseObject(jsonText, new ParameterizedTypeImpl(new Class[]{User.class}, null, Response.class));
         /**
-         * {"data":{"userId":1,"userName":"张三"}}
+         * {"data":{"id":1,"name":"张三"}}
          */
-        System.out.println(r);
+        System.out.println(response);
 
-        String jsonText2 = "{\"data\":{\"productId\":12,\"productName\":\"英语四六级甩卖\"}}";
-        Response r2 = JSON.parseObject(jsonText2, new ParameterizedTypeImpl(new Class[]{Product.class}, null, Response.class));
+        response = JSON.parseObject(jsonText, new TypeReference<Response>() {
+        });
         /**
-         * {"data":{"productId":12,"productName":"英语四六级甩卖"}}
+         * {"data":{"name":"张三","id":1}}
          */
-        System.out.println(r2);
+        System.out.println(response);
     }
 }
 
-@Setter
-@Getter
-class Product {
-    private Long productId;
-    private String productName;
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
-    }
-}
-
-@Setter
-@Getter
+@Data
 class User {
-    private Integer userId;
-    private String userName;
+    private Integer id;
+    private String name;
 
     @Override
     public String toString() {
