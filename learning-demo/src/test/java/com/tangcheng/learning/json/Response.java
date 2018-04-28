@@ -16,16 +16,16 @@ public class Response<T> {
 
     public static void main(String[] args) {
         String jsonText = "{\"data\":{\"id\":1,\"name\":\"张三\"}}";
-        Response response = JSON.parseObject(jsonText, new ParameterizedTypeImpl(new Class[]{User.class}, null, Response.class));
+        Response<User> response = JSON.parseObject(jsonText, new ParameterizedTypeImpl(new Class[]{User.class}, null, Response.class));
         /**
          * {"data":{"id":1,"name":"张三"}}
          */
         System.out.println(response);
 
-        response = JSON.parseObject(jsonText, new TypeReference<Response>() {
+        response = JSON.parseObject(jsonText, new TypeReference<Response<User>>() {
         });
         /**
-         * {"data":{"name":"张三","id":1}}
+         * {"data":{"id":1,"name":"张三"}}
          */
         System.out.println(response);
     }
