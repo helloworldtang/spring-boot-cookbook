@@ -1,5 +1,6 @@
 package com.tangcheng.learning.web.dto.req;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class SayHelloRequest {
 
-    @ApiModelProperty(required = true, value = "用户名", example = "Lily")
+    @ApiModelProperty(required = true, value = "UserId", dataType = "int", example = "123")
     @NotNull
     @Min(value = 1, message = "最小值必须大于1")
     private Integer userId;
@@ -22,5 +23,11 @@ public class SayHelloRequest {
     @ApiModelProperty(required = true, value = "内容", example = "Best Wish!")
     @NotEmpty
     private String content;
+
+
+    @ApiModelProperty(example = "[http://1.com,http://2.com]")
+    @NotEmpty
+    @JSONField(jsonDirect = true)
+    private String mood;
 
 }
