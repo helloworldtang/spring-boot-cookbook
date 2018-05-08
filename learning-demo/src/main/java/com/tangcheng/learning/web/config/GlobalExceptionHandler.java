@@ -1,6 +1,7 @@
 package com.tangcheng.learning.web.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -46,6 +47,27 @@ public class GlobalExceptionHandler {
                     .append(fieldError.getDefaultMessage())
                     .append(System.lineSeparator());
         }
+        return ResponseEntity.badRequest().body(builder.toString());
+    }
+
+    /**
+     * .w.s.m.s.DefaultHandlerExceptionResolver : Failed to read HTTP message: org.springframework.http.converter.HttpMessageNotReadableException:
+     * JSON parse error: Can not deserialize instance of java.lang.Integer[] out of VALUE_STRING token;
+     * nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of java.lang.Integer[] out of VALUE_STRING token
+     * at [Source: java.io.PushbackInputStream@4204a07; line: 2, column: 15] (through reference chain: com.tangcheng.learning.web.dto.req.SayHelloRequest["classIds"])
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(JSONException.class)
+    public ResponseEntity<?> handleJsonException(JSONException e) {
+        log.error("MethodArgumentNotValidException.class.msg:{}", e);
+        StringBuilder builder = new StringBuilder();
+        if (e.getCause() != null) {
+            builder.append(e.getCause().getMessage())
+                    .append(System.lineSeparator());
+        }
+        builder.append(e.getMessage());
         return ResponseEntity.badRequest().body(builder.toString());
     }
 

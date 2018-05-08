@@ -30,4 +30,10 @@ public class SayHelloRequest {
     @JSONField(jsonDirect = true)
     private String mood;
 
+    @ApiModelProperty(value = "数组。使用@RequestBody注解，会将对象全部转换成JSON。" +
+            "如果请求参数不是JSON格式会报错HttpMessageNotReadableException:\n" +
+            " JSON parse error: Can not deserialize instance of java.lang.Integer[] out of VALUE_STRING token;"
+            , example = "[1,2]")
+    public Integer[] classIds;
+
 }
