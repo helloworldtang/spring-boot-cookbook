@@ -5,10 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -35,6 +32,18 @@ public class TestArgumentErrorController {
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile) {
         log.info("name:{}", multipartFile.getName());//@RequestParam("file") ,引自会返回 file
         return ResponseEntity.ok(multipartFile.getName() + "  " + multipartFile.getOriginalFilename() + " " + multipartFile.getContentType() + " " + multipartFile.getSize());
+    }
+
+    /**
+     * attribute 'value' and its alias 'name' are present with values of [headerArg] and [Header中传的参数], but only one is permitted.
+     *
+     * @param headerArg
+     * @return
+     */
+    @ApiOperation(value = "get Header", notes = "get Header")
+    @GetMapping("header")
+    public ResponseEntity<String> sayHello(@RequestHeader(value = "headerArg", defaultValue = "helloworld") String headerArg) {
+        return ResponseEntity.ok("headerArg:" + headerArg);
     }
 
 }

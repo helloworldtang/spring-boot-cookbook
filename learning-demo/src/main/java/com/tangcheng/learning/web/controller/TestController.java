@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
  * @author tangcheng
  * 2018/03/12
  */
-@Api(tags = "TestCase", description = "MVC相关功能TestCase")
+@Api(tags = "Validation", description = "MVC相关功能TestCase")
 @RestController
 @Slf4j
 public class TestController {

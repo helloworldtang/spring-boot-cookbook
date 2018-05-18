@@ -1,6 +1,7 @@
 package com.tangcheng.learning.web.dto.req;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -27,13 +28,13 @@ public class SayHelloRequest {
 
     @ApiModelProperty(example = "[http://1.com,http://2.com]")
     @NotEmpty
-    @JSONField(jsonDirect = true)
+    @JsonDeserialize
     private String mood;
 
     @ApiModelProperty(value = "数组。使用@RequestBody注解，会将对象全部转换成JSON。" +
             "如果请求参数不是JSON格式会报错HttpMessageNotReadableException:\n" +
             " JSON parse error: Can not deserialize instance of java.lang.Integer[] out of VALUE_STRING token;"
-            , example = "[1,2]")
+            , example = "[1,2]", dataType = "type:array")
     public Integer[] classIds;
 
 }

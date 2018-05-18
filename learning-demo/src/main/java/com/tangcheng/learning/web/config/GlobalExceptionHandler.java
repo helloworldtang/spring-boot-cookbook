@@ -6,8 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author tangcheng
@@ -48,6 +52,26 @@ public class GlobalExceptionHandler {
                     .append(System.lineSeparator());
         }
         return ResponseEntity.badRequest().body(builder.toString());
+    }
+
+
+    /**
+     * org.springframework.web.bind.ServletRequestBindingException: Missing request header 'userId' for method parameter of type Integer
+     *使用@RequestHeader 且字段为必填时，报此错误
+     * @param request
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = ServletRequestBindingException.class)
+    @ResponseBody
+    public Object exception(HttpServletRequest request, ServletRequestBindingException e) {
+        log.error("ServletRequestBindingException.class.msg:{}", e);
+
+        String[] split = e.getMessage().split("'");
+        if (split.length > 2) {
+            return ResponseEntity.badRequest().body(String.join(",", split[0], split[1]));
+        }
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     /**
