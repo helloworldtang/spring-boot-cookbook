@@ -1,4 +1,4 @@
-package com.tangcheng.learning.web.controller;
+package com.tangcheng.learning.web.api;
 
 import com.tangcheng.learning.web.dto.req.DateReq;
 import io.swagger.annotations.Api;
@@ -16,10 +16,10 @@ import java.text.SimpleDateFormat;
  * @author tangcheng
  * 2018/03/12
  */
-@Api(tags = "Validation", description = "MVC相关功能TestCase")
+@Api(tags = "Case:MVC相关", description = "HttpMessageConverterTest")
 @RestController
 @Slf4j
-public class TestController {
+public class HttpMessageConverterTestController {
 
     /**
      * Spring MVC会自动将long型的时间转换成java.util.Date

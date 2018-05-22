@@ -14,14 +14,18 @@ import javax.validation.Valid;
  * @author tangcheng
  * 2018/05/02
  */
-@Api(tags = "Valid 参数缺失，参数错误", description = "Valid 参数缺失，参数错误")
+@Api(tags = "Case:MVC参数校验DSL ", description = "MVC参数校验DSL")
 @Slf4j
 @RestController
-public class TestArgumentErrorController {
+public class MVC_DSL_TestController {
 
-    @ApiOperation(value = "say Hello", notes = "say Hello notes")
+    @ApiOperation(value = "RequestBody 校验DSL", notes = "RequestBody 校验DSL")
     @PostMapping("/say/hello")
     public ResponseEntity<String> sayHello(@Valid @RequestBody SayHelloRequest request) {
+        Integer[] classIds = request.getClassIds();
+        if (classIds == null) {
+            throw new IllegalArgumentException("classIds is null");
+        }
         return ResponseEntity.ok(request.getUserId() + request.getContent() + request.getMood());
     }
 
@@ -40,7 +44,7 @@ public class TestArgumentErrorController {
      * @param headerArg
      * @return
      */
-    @ApiOperation(value = "get Header", notes = "get Header")
+    @ApiOperation(value = "@RequestHeader", notes = "@RequestHeader")
     @GetMapping("header")
     public ResponseEntity<String> sayHello(@RequestHeader(value = "headerArg", defaultValue = "helloworld") String headerArg) {
         return ResponseEntity.ok("headerArg:" + headerArg);

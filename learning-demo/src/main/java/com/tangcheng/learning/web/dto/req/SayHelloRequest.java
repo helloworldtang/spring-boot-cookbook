@@ -1,7 +1,5 @@
 package com.tangcheng.learning.web.dto.req;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -25,10 +23,15 @@ public class SayHelloRequest {
     @NotEmpty
     private String content;
 
-
+    /**
+     * example 中 数组中字符串会自动加上双引号
+     */
     @ApiModelProperty(example = "[http://1.com,http://2.com]")
     @NotEmpty
-    @JsonDeserialize
+    private String[] pics;
+
+    @ApiModelProperty(example = "\"{name:开心}\"")
+    @NotEmpty
     private String mood;
 
     @ApiModelProperty(value = "数组。使用@RequestBody注解，会将对象全部转换成JSON。" +
