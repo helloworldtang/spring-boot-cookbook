@@ -24,6 +24,7 @@ public class SayHelloRequest {
     private String content;
 
     /**
+     * 普通的数组
      * example 中 数组中字符串会自动加上双引号
      */
     @ApiModelProperty(example = "[http://1.com,http://2.com]")
@@ -34,7 +35,7 @@ public class SayHelloRequest {
     @NotEmpty
     private String mood;
 
-    @ApiModelProperty(value = "数组。使用@RequestBody注解，会将对象全部转换成JSON。" +
+    @ApiModelProperty(value = "普通的数组。使用@RequestBody注解，会将对象全部转换成JSON。" +
             "如果请求参数不是JSON格式会报错HttpMessageNotReadableException:\n" +
             " JSON parse error: Can not deserialize instance of java.lang.Integer[] out of VALUE_STRING token;"
             , example = "[1,2]", dataType = "type:array")
