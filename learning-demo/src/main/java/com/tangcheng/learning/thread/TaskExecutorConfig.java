@@ -38,7 +38,7 @@ public class TaskExecutorConfig implements AsyncConfigurer {
 
         taskExecutor.setWaitForTasksToCompleteOnShutdown(true);//线程池会等任务完成后才会关闭
         taskExecutor.setAwaitTerminationSeconds(60);//如果60s后线程仍未关闭，则关闭线程池
-        taskExecutor.setThreadNamePrefix("ThreadPoolTaskExecutor-");
+        taskExecutor.setThreadNamePrefix("ThreadPoolTaskExecutor-");//实际显示为： [lTaskExecutor-1] c.t.learning.thread.AsyncTaskService     :
         taskExecutor.initialize();
         return taskExecutor;
     }
