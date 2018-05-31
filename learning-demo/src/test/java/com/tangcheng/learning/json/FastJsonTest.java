@@ -1,13 +1,11 @@
 package com.tangcheng.learning.json;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONPath;
-import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.internal.Integers;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -15,8 +13,7 @@ import java.io.InputStream;
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Created by tangcheng on 7/9/2017.
@@ -109,6 +106,16 @@ public class FastJsonTest {
         urlList.add("http://2.com");
         result = JSON.toJSONString(urlList, true);
         System.out.println(result);
+
+        List<Integer> integers = JSON.parseArray("", Integer.class);
+        System.out.println(integers);//null
+        assertThat(integers, is(nullValue()));
+        integers = JSON.parseArray("[]", Integer.class);
+        System.out.println(integers);//null
+        assertThat(integers.size(), is(0));
+        JSONArray objects = new JSONArray();
+        System.out.println(objects.toJSONString());
+        assertThat(integers.size(), is(0));
     }
 
 
