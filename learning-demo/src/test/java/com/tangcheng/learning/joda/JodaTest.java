@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.joda.time.*;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * @author tangcheng
  * 2018/04/12
@@ -30,6 +32,19 @@ public class JodaTest {
 
         log.info("origin:hours:{},minutes:{},seconds:{}", hourOrigin, minutesOrigin, secondsOrigin);
         log.info("hours:{},minutes:{},seconds:{}", Hours.hoursBetween(now, end).getHours(), Minutes.minutesBetween(now, end).getMinutes(), Seconds.secondsBetween(now, end).getSeconds());
+    }
+
+
+    @Test
+    public void should_return_diff_hour_day_when_use_JODA_API() {
+        int dayNum = 2;
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime end = now.plusDays(dayNum);
+        int expectedDayNum = Days.daysBetween(now, end).getDays();
+        System.out.println(expectedDayNum);
+        assertThat(expectedDayNum).isEqualTo(dayNum);
+        int expectedHours = Hours.hoursBetween(now, end).getHours();
+        assertThat(expectedHours).isEqualTo(dayNum * 24);
     }
 
 
