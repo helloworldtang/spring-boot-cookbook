@@ -2,11 +2,16 @@ package com.tangcheng.learning.oo;
 
 import org.junit.Test;
 
+import java.text.DateFormat;
+import java.text.Format;
 import java.text.MessageFormat;
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * spring-boot-cookbook
+ * https://www.cnblogs.com/softidea/p/5530834.html
  *
  * @author : tang.cheng
  * @version : 2017-07-07  14:53
@@ -14,7 +19,7 @@ import java.util.Date;
 public class MessageFormatTest {
 
     @Test
-    public void main() throws Exception {
+    public void shouldReturnData() {
         Object[] arguments = {
                 7,
                 new Date(System.currentTimeMillis()),
@@ -32,5 +37,21 @@ public class MessageFormatTest {
 //        expect:1234567890.but:1,234,567,890.str:1234567890
         System.out.println(longStyle);
     }
+
+    @Test
+    public void test() {
+        Locale locale = Locale.getDefault(Locale.Category.FORMAT);
+        Format subFormatter = NumberFormat.getInstance(locale);
+        int number = 1234567890;
+        String numberFormat = ((NumberFormat) subFormatter).format(number);
+        System.out.println(MessageFormat.format("{0},number result:{1}", number, numberFormat));//1,234,567,890,number result:1,234,567,890
+
+        subFormatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);//fix
+        Date now = new Date();
+        String dateFormatResult = ((DateFormat) subFormatter).format(now);
+        System.out.println(MessageFormat.format("now:{0},now:{1}", now, dateFormatResult)); //now:18-6-12 下午12:19,now:18-6-12 下午12:19
+
+    }
+
 
 }
