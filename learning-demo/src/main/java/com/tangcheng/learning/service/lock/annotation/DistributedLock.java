@@ -38,6 +38,16 @@ public @interface DistributedLock {
     int waitTime() default 3;
 
     /**
+     * 竞争锁时，每隔多少时间检测一次,默认100ms
+     * tips:
+     * 这个时间要根据业务情况进行设定，要小于业务的平均处理时长
+     * 如果业务比较耗时，可以设置的大一点，减少请求中心化服务器的频次
+     *
+     * @return 竞争锁时，每隔多少时间检测一次。单位ms
+     */
+    int spinWaitTime() default 100;
+
+    /**
      * 锁和排队等待过期时间的单位，默认秒。不建议配置
      * tips:
      * 感觉这个选项可提高可读性，但也容易被误用。

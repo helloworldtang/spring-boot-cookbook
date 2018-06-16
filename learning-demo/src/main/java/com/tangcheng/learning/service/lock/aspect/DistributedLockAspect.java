@@ -10,16 +10,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisStringCommands;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.temporal.TemporalUnit;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -79,9 +73,9 @@ public class DistributedLockAspect {
                 log.debug("success to get distribute lock .key->{}", lockKey);
                 return true;
             }
-            int step = 100;
-            TimeUnit.MICROSECONDS.sleep(step);
-            waitMills = waitMills - step;
+            int spinWaitTime = annotation.spinWaitTime();
+            TimeUnit.MICROSECONDS.sleep(spinWaitTime);
+            waitMills = waitMills - spinWaitTime;
             log.debug("try to get lock->{}", lockKey);
         }
         log.warn("fail to ge lock .key->{}", lockKey);
