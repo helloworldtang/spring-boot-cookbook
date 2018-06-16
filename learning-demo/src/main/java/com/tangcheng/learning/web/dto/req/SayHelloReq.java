@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * 2018/05/02
  */
 @Data
-public class SayHelloRequest {
+public class SayHelloReq {
 
     @ApiModelProperty(required = true, value = "UserId", dataType = "int", example = "123")
     @NotNull

@@ -1,6 +1,6 @@
 package com.tangcheng.learning.web.api;
 
-import com.tangcheng.learning.web.dto.req.SayHelloRequest;
+import com.tangcheng.learning.web.dto.req.SayHelloReq;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class MVC_DSL_TestController {
 
     @ApiOperation(value = "RequestBody 校验DSL", notes = "RequestBody 校验DSL")
     @PostMapping("/say/hello")
-    public ResponseEntity<String> sayHello(@Valid @RequestBody SayHelloRequest request) {
+    public ResponseEntity<String> sayHello(@Valid @RequestBody SayHelloReq request) {
         Integer[] classIds = request.getClassIds();
         if (classIds == null) {
             throw new IllegalArgumentException("classIds is null");
