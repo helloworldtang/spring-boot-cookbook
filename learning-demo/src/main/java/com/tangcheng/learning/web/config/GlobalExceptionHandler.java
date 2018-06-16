@@ -85,7 +85,7 @@ public class GlobalExceptionHandler {
      * .w.s.m.s.DefaultHandlerExceptionResolver : Failed to read HTTP message: org.springframework.http.converter.HttpMessageNotReadableException:
      * JSON parse error: Can not deserialize instance of java.lang.Integer[] out of VALUE_STRING token;
      * nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of java.lang.Integer[] out of VALUE_STRING token
-     * at [Source: java.io.PushbackInputStream@4204a07; line: 2, column: 15] (through reference chain: com.tangcheng.learning.web.dto.req.SayHelloRequest["classIds"])
+     * at [Source: java.io.PushbackInputStream@4204a07; line: 2, column: 15] (through reference chain: com.tangcheng.learning.web.dto.req.SayHelloReq["classIds"])
      * 另一种场景：
      * (1)fastjson:
      * com.alibaba.fastjson.JSONException: int value overflow, field : userId
