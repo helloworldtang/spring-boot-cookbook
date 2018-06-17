@@ -1,6 +1,12 @@
 package com.tangcheng.learning.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Optional;
 
 /**
  * spring-boot-cookbook
@@ -8,18 +14,15 @@ import org.apache.commons.lang3.StringUtils;
  * @author : tang.cheng
  * @version : 2017-08-07  18:59
  */
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private String name;
+    private Byte age;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isNameValid() {
-        return StringUtils.isNoneBlank(name);
+    public Optional<Byte> getAge() {
+        return Optional.ofNullable(age);
     }
 }
