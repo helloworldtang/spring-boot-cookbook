@@ -1,5 +1,6 @@
 package com.tangcheng.learning.web.dto.req;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
  * @author tangcheng
  * 2018/05/02
  */
+@ApiModel("Swagger使用示例")
 @Data
 public class SayHelloReq {
 
