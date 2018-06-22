@@ -45,6 +45,8 @@ public class InterfaceApplication {
      * Default properties (specified using SpringApplication.setDefaultProperties).
      */
     public static void main(String[] args) {
+        System.setProperty("-Xms", "1g");
+        System.setProperty("-Xmx", "1g");
         SpringApplication.run(InterfaceApplication.class, args);
     }
 }
