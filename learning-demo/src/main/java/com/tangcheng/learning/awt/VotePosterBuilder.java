@@ -4,6 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -63,21 +66,35 @@ public class VotePosterBuilder {
 
 
         Shape olcClip = graphics2D.getClip();
+        Stroke oldStroke = graphics2D.getStroke();
+        BasicStroke s = new BasicStroke(20f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        graphics2D.setStroke(s);
         Ellipse2D.Double shape = new Ellipse2D.Double(x, y, width, height);
         // graphics2D.fill(new Rectangle(templateWidth, templateWidth));
+
+        graphics2D.setStroke(new BasicStroke(1f));
+//        graphics2D.setColor(Color.WHITE);
+        graphics2D.setColor(Color.green);
+
+        graphics2D.draw(shape);
+
         graphics2D.clip(shape);
         headImage.getScaledInstance(width, height, BufferedImage.SCALE_SMOOTH);
         graphics2D.drawImage(headImage, x, y, null);
-        graphics2D.setColor(Color.WHITE);
-        shape = new Ellipse2D.Double(x, y, width - 1, height - 1);
+//        graphics2D.setColor(Color.WHITE);
+//        shape = new Ellipse2D.Double(x, y, width - 1, height - 1);
 //        graphics2D.drawOval(x, y, width, height);
-        graphics2D.draw(shape);
+//        graphics2D.draw(shape);
         graphics2D.setClip(olcClip);
+        graphics2D.setStroke(oldStroke);
 //        graphics2D.drawImage(headImage, x - width - 10, y, width, height, null);
         return this;
     }
 
     public VotePosterBuilder addNickname(String nickname) {
+        Font oldFont = graphics2D.getFont();
+        Color oldColor = graphics2D.getColor();
+        Stroke oldStroke = graphics2D.getStroke();
         Font font = new Font("Serif", Font.BOLD, 50);
         Rectangle2D bounds = font.getStringBounds(nickname, graphics2D.getFontRenderContext());
         double x = (templateWidth - bounds.getWidth()) / 2;
@@ -88,6 +105,18 @@ public class VotePosterBuilder {
         graphics2D.setFont(font);
         graphics2D.setColor(Color.blue);//设置当前绘图颜色
         graphics2D.drawString(nickname, (int) x, (int) baseY);
+
+        FontRenderContext frc = graphics2D.getFontRenderContext();
+        TextLayout tl = new TextLayout("不错", new Font("宋体", Font.PLAIN, 50), frc);
+        Shape sha = tl.getOutline(AffineTransform.getTranslateInstance(5, 100));
+        graphics2D.setStroke(new BasicStroke(10.0f));
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.draw(sha);
+        graphics2D.setColor(Color.BLACK);
+        graphics2D.fill(sha);
+        graphics2D.setFont(oldFont);
+        graphics2D.setColor(oldColor);
+        graphics2D.setStroke(oldStroke);
         return this;
     }
 
