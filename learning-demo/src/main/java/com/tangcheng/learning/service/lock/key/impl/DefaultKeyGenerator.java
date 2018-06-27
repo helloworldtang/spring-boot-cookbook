@@ -46,6 +46,9 @@ public class DefaultKeyGenerator implements KeyGenerator {
         Annotation[][] parameterAnnotations = method.getParameterAnnotations();
         for (int i = 0; i < parameterAnnotations.length; i++) {
             Object object = args[i];
+            if (object == null) {
+                continue;
+            }
             Field[] declaredFields = object.getClass().getDeclaredFields();
             for (Field field : declaredFields) {
                 KeyParam annotation = field.getAnnotation(KeyParam.class);
