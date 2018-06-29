@@ -70,6 +70,7 @@ public class VotePosterBuilder {
         BasicStroke s = new BasicStroke(20f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         graphics2D.setStroke(s);
         Ellipse2D.Double shape = new Ellipse2D.Double(x, y, width, height);
+        log.info("中心点的坐标：CenterX:{},CenterY:{}", shape.getCenterX(), shape.getCenterY());
         // graphics2D.fill(new Rectangle(templateWidth, templateWidth));
 
         graphics2D.setStroke(new BasicStroke(1f));
