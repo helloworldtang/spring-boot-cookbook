@@ -63,6 +63,7 @@ public class BigDecimalStripTrailingZeros {
     }
 
     /**
+     * stripTrailingZeros:小数点后的0去掉
      * Returns a BigDecimal which is numerically equal to this one but with any trailing zeros removed from the representation.
      * For example, stripping the trailing zeros from the BigDecimal value 600.0,
      * which has [BigInteger, scale] components equals to [6000, 1], yields 6E2 with [BigInteger, scale] components equals to [6, -2].
