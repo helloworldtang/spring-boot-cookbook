@@ -63,7 +63,10 @@ public class BigDecimalStripTrailingZeros {
     }
 
     /**
-     * Returns a BigDecimal which is numerically equal to this one but with any trailing zeros removed from the representation. For example, stripping the trailing zeros from the BigDecimal value 600.0, which has [BigInteger, scale] components equals to [6000, 1], yields 6E2 with [BigInteger, scale] components equals to [6, -2]. If this BigDecimal is numerically equal to zero, then BigDecimal.ZERO is returned.
+     * Returns a BigDecimal which is numerically equal to this one but with any trailing zeros removed from the representation.
+     * For example, stripping the trailing zeros from the BigDecimal value 600.0,
+     * which has [BigInteger, scale] components equals to [6000, 1], yields 6E2 with [BigInteger, scale] components equals to [6, -2].
+     * If this BigDecimal is numerically equal to zero, then BigDecimal.ZERO is returned.
      * Returns:
      * a numerically equal BigDecimal with any trailing zeros removed.
      *
