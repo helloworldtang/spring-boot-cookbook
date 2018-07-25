@@ -10,6 +10,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -21,14 +22,15 @@ import java.net.URL;
  * @date 6/25/2018 12:03 AM
  */
 @Slf4j
-public class VotePosterBuilder {
+public class GeneratePosterBuilder {
 
     private BufferedImage templateImage = null;
     private Graphics2D graphics2D;
     private int templateWidth;
     private int templateHeight;
 
-    public VotePosterBuilder(String templateUrl) {
+    public GeneratePosterBuilder(String templateUrl) {
+        // TODO: 2018/7/25 优化点：可以使用HttpClient池来下载url资源
         try {
             URL url = new URL(templateUrl);
             templateImage = ImageIO.read(url.openStream());
@@ -45,7 +47,7 @@ public class VotePosterBuilder {
         }
     }
 
-    public VotePosterBuilder addQrcode(String qrCodeImageUrl) throws IOException {
+    public GeneratePosterBuilder addQrcode(String qrCodeImageUrl) throws IOException {
         URL url = new URL(qrCodeImageUrl);
         BufferedImage qrcodeImage = ImageIO.read(url.openStream());
         int x = templateWidth * 3 / 8;
@@ -56,7 +58,7 @@ public class VotePosterBuilder {
         return this;
     }
 
-    public VotePosterBuilder addHeadImage(String headImageUrl) throws IOException {
+    public GeneratePosterBuilder addHeadImage(String headImageUrl) throws IOException {
         URL url = new URL(headImageUrl);
         BufferedImage headImage = ImageIO.read(url.openStream());
         int x = 470;
@@ -92,7 +94,7 @@ public class VotePosterBuilder {
         return this;
     }
 
-    public VotePosterBuilder addNickname(String nickname) {
+    public GeneratePosterBuilder addNickname(String nickname) {
         Font oldFont = graphics2D.getFont();
         Color oldColor = graphics2D.getColor();
         Stroke oldStroke = graphics2D.getStroke();
@@ -132,6 +134,26 @@ public class VotePosterBuilder {
             log.error(e.getMessage(), e);
         }
         System.gc();
+    }
+
+    /**
+     * 此操作很耗时，很奇怪
+     *
+     * @return
+     * @throws IOException
+     */
+    public byte[] buildAsBytes() throws IOException {
+        // TODO: 2018/7/25 这个转换操作耗时的原因？
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            graphics2D.dispose();
+            templateImage.flush();
+            ImageIO.write(templateImage, "jpg", baos);
+            return baos.toByteArray();
+        } catch (Exception e) {
+            log.error("fail to change to bytes,msg:{}", e.getMessage(), e);
+            throw e;
+        }
+
     }
 
 }

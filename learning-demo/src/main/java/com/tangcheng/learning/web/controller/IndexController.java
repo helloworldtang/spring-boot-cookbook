@@ -28,7 +28,7 @@ public class IndexController {
     @Autowired
     private WeatherUserInfoExcelView weatherUserInfoExcelView;
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String index() {
         return "index";
     }
@@ -36,10 +36,9 @@ public class IndexController {
     @GetMapping("download")
     public ModelAndView export() {
         ModelAndView modelAndView = new ModelAndView(weatherUserInfoExcelView);
-        ExcelExportBO<WeatherVO> exportBO=new ExcelExportBO<>();
+        ExcelExportBO<WeatherVO> exportBO = new ExcelExportBO<>();
         exportBO.setExcelFileName("城市天气情况");
         exportBO.setSheetName("城市天气情况");
-        exportBO.setColumnNames(ImmutableList.of("城市名", "天气情况"));
         List<WeatherVO> weatherVOList = new ArrayList<>();
         weatherVOList.add(WeatherVO.builder().cityName("北京").weatherDetail("雷阵雨转多云").build());
         weatherVOList.add(WeatherVO.builder().cityName("上海").weatherDetail("多云转晴").build());
