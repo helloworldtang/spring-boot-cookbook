@@ -1,5 +1,6 @@
 package com.tangcheng.learning.string;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 /**
@@ -13,10 +14,10 @@ public class ReplaceFullWidthWhiteSpaceTest {
     public void replaceSpecialWhiteSpaceTest() {
 
 
-        System.out.println("============trim============");
+        System.out.println(StringUtils.center("trim", 60, "="));
         String input = "  金融/投资  证券";
         System.out.println("output:" + input.trim());
-        System.out.println("============byte2char============");
+        System.out.println(StringUtils.center("byte2char", 60, "="));
         for (char c : input.toCharArray()) {
             System.out.println(c + ",byte:" + (byte) c);
         }
