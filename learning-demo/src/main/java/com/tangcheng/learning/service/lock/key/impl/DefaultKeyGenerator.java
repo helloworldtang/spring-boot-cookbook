@@ -9,9 +9,9 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Objects;
 
 /**
  * spring-boot-cookbook
@@ -61,8 +61,9 @@ public class DefaultKeyGenerator implements KeyGenerator {
         return distributedLock.prefix() + builder.toString();
     }
 
+
     /**
-     * 查找父类中有没有使用@KeyParam
+     * 查找Req中有没有使用@KeyParam
      *
      * @param builder
      * @param delimiter
@@ -70,21 +71,26 @@ public class DefaultKeyGenerator implements KeyGenerator {
      * @param parameterClass
      */
     private void findKeyParamAndAddFillRedisKey(StringBuilder builder, String delimiter, Object fieldObject, Class<?> parameterClass) {
-        KeyParam annotation;
-        Field[] declaredFields = parameterClass.getDeclaredFields();
-        for (Field field : declaredFields) {
-            annotation = field.getAnnotation(KeyParam.class);
-            if (annotation == null) {
-                continue;
-            }
+        if (parameterClass.isAssignableFrom(String.class) || parameterClass.isAssignableFrom(Integer.class)
+                || parameterClass.isAssignableFrom(Long.class) || parameterClass.isAssignableFrom(Byte.class)
+                || parameterClass.isAssignableFrom(Boolean.class) || parameterClass.isArray()
+                ) {
+            //这些是基本数据类型，就不用走下面的了
+            // TODO: 2018/8/2  parameterClass.isPrimitive()的研究
+            return;
+        }
+        ReflectionUtils.doWithFields(parameterClass, field -> {
+            KeyParam annotation = field.getAnnotation(KeyParam.class);
             field.setAccessible(true);
             Object fieldValue = ReflectionUtils.getField(field, fieldObject);
             addRedisKey(builder, field.getName(), annotation.value(), delimiter, fieldValue);
-        }
-        Class<?> superclass = parameterClass.getSuperclass();
-        if (superclass != null && !superclass.isAssignableFrom(Object.class)) {
-            findKeyParamAndAddFillRedisKey(builder, delimiter, fieldObject, superclass);
-        }
+        }, field -> {
+            KeyParam annotation = field.getAnnotation(KeyParam.class);
+            if (Objects.isNull(annotation)) {
+                return false;
+            }
+            return true;
+        });
     }
 
     /**
@@ -97,6 +103,9 @@ public class DefaultKeyGenerator implements KeyGenerator {
      * @param fileValue
      */
     private void addRedisKey(StringBuilder builder, String fieldName, String annotationValue, String delimiter, Object fileValue) {
+        if (Objects.isNull(fileValue)) {
+            return;
+        }
         if (StringUtils.isBlank(annotationValue)) {
             annotationValue = fieldName;
         }
