@@ -7,11 +7,13 @@ import com.tangcheng.learning.web.view.WeatherUserInfoExcelView;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,8 @@ public class IndexController {
     private WeatherUserInfoExcelView weatherUserInfoExcelView;
 
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("eventName", "FIFA 2018");
         return "index";
     }
 
