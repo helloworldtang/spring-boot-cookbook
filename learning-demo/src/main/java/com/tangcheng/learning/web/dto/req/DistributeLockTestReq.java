@@ -13,6 +13,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class DistributeLockTestReq {
-    @KeyParam(name = "name")
+    @KeyParam("name")
     private String name;
 }

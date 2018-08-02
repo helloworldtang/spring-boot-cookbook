@@ -5,7 +5,6 @@ import com.tangcheng.learning.service.lock.annotation.DistributedLock;
 import com.tangcheng.learning.service.lock.annotation.KeyParam;
 import com.tangcheng.learning.web.dto.req.DistributeLockTestReq;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,7 +23,7 @@ public class DistributeLockServiceImpl implements DistributeLockService {
 
     @Override
     @DistributedLock
-    public void mayBeMultiRepeatRequest(@KeyParam(name = "id") @RequestParam Long id, DistributeLockTestReq req) {
+    public void mayBeMultiRepeatRequest(@KeyParam("id") @RequestParam Long id, DistributeLockTestReq req) {
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {

@@ -18,5 +18,5 @@ public @interface KeyParam {
      *
      * @return 标识分布式锁的key的一部分
      */
-    String name() default "";
+    String value() default "";
 }
