@@ -45,7 +45,7 @@ public class StringEqualsTest {
                 list.add(field.getName());
             }
         });
-        System.out.println(list);
+        System.out.println(list); //[twoLevelChildName, oneLevelChildName, name]
     }
 
     @Test
@@ -58,7 +58,7 @@ public class StringEqualsTest {
             }
             return false;
         });
-        System.out.println(list);
+        System.out.println(list); //[twoLevelChildName]
     }
 
     @Data
@@ -69,14 +69,14 @@ public class StringEqualsTest {
     @Data
     @EqualsAndHashCode(callSuper = true)
     public static class OneLevelChildClass extends ParentClass {
-        private String oneLevelChildNmae;
+        private String oneLevelChildName;
     }
 
     @Data
     @EqualsAndHashCode(callSuper = true)
     public static class TwoLevelChildClass extends OneLevelChildClass {
         @KeyParam
-        private String twoLevelChildNmae;
+        private String twoLevelChildName;
     }
 
 
