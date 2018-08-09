@@ -74,7 +74,7 @@ public class DistributedLockAspect {
                 return true;
             }
             int spinWaitTime = annotation.spinWaitTime();
-            TimeUnit.MICROSECONDS.sleep(spinWaitTime);
+            TimeUnit.MILLISECONDS.sleep(spinWaitTime);
             waitMills = waitMills - spinWaitTime;
             log.debug("try to get lock->{}", lockKey);
         }
