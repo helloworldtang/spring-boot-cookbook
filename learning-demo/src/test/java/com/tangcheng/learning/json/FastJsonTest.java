@@ -5,15 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.assertj.core.internal.Integers;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by tangcheng on 7/9/2017.
@@ -21,17 +19,17 @@ import static org.hamcrest.Matchers.*;
 public class FastJsonTest {
 
     @Test
-    public void toJSONString() {
+    public void should_return_null_when_given_null() {
 
         Object objectNull = null;
-        assertThat("is null", null, isEmptyOrNullString());
+        assertThat(objectNull).isNull();
         String jsonString = JSON.toJSONString(objectNull);
 
         System.out.println("will be false:" + Objects.equals(jsonString, null));
         System.out.println("will be false:" + StringUtils.isBlank(jsonString));
 
-        assertThat("is string with 'null'", "null", is(jsonString));
-
+//        assertThat("is string with 'null'", "null", is(jsonString));
+        assertThat(jsonString).isEqualTo("null");
     }
 
 
@@ -63,12 +61,13 @@ public class FastJsonTest {
         users.add(new UserDemo(2L, "Name2"));
         result.setModule(users);
         String js = JSON.toJSONString(result);
-        System.out.println(js);
+        System.out.println(js);//{"module":[{"id":1,"name":"Name1"},{"id":2,"name":"Name2"}],"msg":"Success"}
         //java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.tangcheng.learning.json.User
-//        Result<User> obj = (Result<User>) JSON.parseObject(js, Result.class);
+//        Result<User> obj = (Result<User>) JSON.parseObject(js, Result.class); //v1.4.9中解决此错误
         Result<User> userResult = JSON.parseObject(js, new TypeReference<Result<User>>() {
         });
-        System.out.println(userResult);
+        System.out.println(userResult);//Result{msg='Success', module=[{"id":1,"name":"Name1"}, {"id":2,"name":"Name2"}]}
+        System.out.println(JSON.toJSONString(userResult));//{"module":[{"id":1,"name":"Name1"},{"id":2,"name":"Name2"}],"msg":"Success"}
     }
 
 
@@ -93,29 +92,39 @@ public class FastJsonTest {
          * ["http://1.com","http://2.com"]
          */
         String result = JSON.toJSONString(urls, true);
+        assertThat(result).isEqualTo("[\"http://1.com\",\"http://2.com\"]");
         System.out.println(result);
 
+        List<String> urlList = new ArrayList<>();
+        urlList.add("http://1.com");
+        urlList.add("http://2.com");
         /**
          [
          "http://1.com",
          "http://2.com"
          ]
          */
-        List<String> urlList = new ArrayList<>();
-        urlList.add("http://1.com");
-        urlList.add("http://2.com");
-        result = JSON.toJSONString(urlList, true);
+        result = JSON.toJSONString(urlList, true);//prettyFormat
+        assertThat(result).isEqualTo("[\n" +
+                "\t\"http://1.com\",\n" +
+                "\t\"http://2.com\"\n" +
+                "]");
         System.out.println(result);
 
         List<Integer> integers = JSON.parseArray("", Integer.class);
         System.out.println(integers);//null
-        assertThat(integers, is(nullValue()));
+//        assertThat(integers, is(nullValue()));  //org.hamcrest.MatcherAssert.assertThat
+        assertThat(integers).isNull();
         integers = JSON.parseArray("[]", Integer.class);
-        System.out.println(integers);//null
-        assertThat(integers.size(), is(0));
+        System.out.println(integers);//[]
+        assertThat(integers).isNotNull().isEmpty();
+
+//        assertThat(integers.size(), is(0)); //org.hamcrest.MatcherAssert.assertThat
+        assertThat(integers.size()).isEqualTo(0);
         JSONArray objects = new JSONArray();
-        System.out.println(objects.toJSONString());
-        assertThat(integers.size(), is(0));
+        System.out.println(objects.toJSONString());//[]
+//        assertThat(integers.size(), is(0)); //org.hamcrest.MatcherAssert.assertThat
+        assertThat(integers.size()).isEqualTo(0);
     }
 
 
