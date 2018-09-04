@@ -13,16 +13,14 @@
         <module>app-dao</module>
         <module>app-schedule</module>
         <module>learning-demo</module>
-        <module>app-authorization-server</module>
         <module>app-sso-client</module>
-        <module>app-resource-server</module>
         <module>app-core</module>
         <module>app-manager</module>
     </modules>
     <packaging>pom</packaging>
 
     <name>spring-boot-cookbook</name>
-    <description>Demo project for Spring Boot</description>
+    <description>cookbook for Spring Boot</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
