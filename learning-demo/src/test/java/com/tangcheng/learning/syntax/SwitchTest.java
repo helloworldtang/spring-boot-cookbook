@@ -42,5 +42,22 @@ public class SwitchTest {
         log.info("success:" + flag);
     }
 
+    @Test
+    public void givenSwitchInFor_whenSwitchContinue_thenForContinue() {
+
+        for (int i = 0; i < 2; i++) {
+            switch (i) {
+                case 0:
+                    log.info("0 {}", i);
+                    break;
+                default:
+                    log.info("default. {}", i);
+                    continue;
+            }
+            log.info("continue to do for ");
+        }
+
+    }
+
 
 }
