@@ -1,14 +1,12 @@
 package com.tangcheng.learning.web.api;
 
 import com.alibaba.fastjson.JSON;
+import com.tangcheng.learning.web.dto.req.QueryStringReq;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +18,7 @@ import java.util.List;
 @Api(tags = "请求参数初始化过程debug，【结论】没有使用@RequestBody修饰的入参，不能是Java接口", description = "【结论】没有使用@RequestBody修饰的入参，不能是接口")
 @RestController
 @Slf4j
+@RequestMapping("parameter")
 public class RequestParameterInitTestController {
 
     @ApiOperation(value = "【失败】get方法，给入参数没有使用任何注解", notes = "【失败】Failed to instantiate [java.util.List]: Specified class is an interface")
@@ -62,6 +61,12 @@ public class RequestParameterInitTestController {
         log.info("postListWithRequestBody,request:{}", request);
 //        【可以正常响应】
         return ResponseEntity.ok(JSON.toJSONString(request));
+    }
+
+    @ApiOperation(value = "get参数的初始化", notes = "")
+    @GetMapping("queryString")
+    public ResponseEntity<QueryStringReq> getParameterInit(QueryStringReq req) {
+        return ResponseEntity.ok(req);
     }
 
 
