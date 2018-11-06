@@ -18,6 +18,13 @@ import java.util.Arrays;
 public class CtxCommandLine {
 
 
+    /**
+     * stream不能复用
+     * java.lang.IllegalStateException: stream has already been operated upon or closed
+     *
+     * @param ctx
+     * @return
+     */
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
