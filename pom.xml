@@ -12,10 +12,9 @@
         <module>app-domain</module>
         <module>app-dao</module>
         <module>app-schedule</module>
-        <module>learning-demo</module>
-        <module>app-sso-client</module>
         <module>app-core</module>
         <module>app-manager</module>
+        <module>learning-demo</module>
     </modules>
     <packaging>pom</packaging>
 
