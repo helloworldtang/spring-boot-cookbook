@@ -1,6 +1,7 @@
 package com.tangcheng.learning;
 
 import com.spring4all.swagger.EnableSwagger2Doc;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,8 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @EnableSwagger2Doc
 @SpringBootApplication
+@Slf4j
 public class DemoApplication {
     public static void main(String[] args) {
+        String env = System.getProperty("spring.profiles.active");
+        log.info("env:{}", env);
         SpringApplication.run(DemoApplication.class, args);
     }
 }
