@@ -4,6 +4,7 @@ import lombok.Builder;
 import org.springframework.util.Assert;
 
 import java.util.Map;
+import java.util.regex.Matcher;
 
 @Builder
 public class Template {
@@ -33,7 +34,9 @@ public class Template {
         Assert.notNull(template, "template must not be null");
         Assert.notEmpty(params, "params must not be empty");
         for (Map.Entry<String, String> entry : params.entrySet()) {
-            template = template.replaceAll("\\$\\{".concat(entry.getKey().trim()).concat("\\}"), entry.getValue());
+            String replacement = entry.getValue();
+            replacement = Matcher.quoteReplacement(replacement);
+            template = template.replaceAll("\\$\\{".concat(entry.getKey().trim()).concat("\\}"), replacement);
         }
         return template;
     }

@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 
 public class TemplateTest {
+
     private String hi = "hi,";
     private String template = hi + "${name}";
     private String expected;
@@ -21,7 +21,6 @@ public class TemplateTest {
         expected = hi + name;
         params = new HashMap<>();
         params.put("name", name);
-
     }
 
     @Test
@@ -30,9 +29,63 @@ public class TemplateTest {
         assertThat(process).isEqualTo(expected);
     }
 
+
     @Test
     public void Should_Given_Key_Value_When_Return_Human_Content_Use_Static_Process() {
         String process = Template.process(template, params);
         assertThat(process).isEqualTo(expected);
     }
+
+
+    /**
+     * java.lang.IllegalArgumentException: character to be escaped is missing
+     * <p>
+     * at java.util.regex.Matcher.appendReplacement(Matcher.java:809)
+     * at java.util.regex.Matcher.replaceAll(Matcher.java:955)
+     * at java.lang.String.replaceAll(String.java:2223)
+     */
+    @Test
+    public void whenReplacementWith_backslash_thenSuccess() {
+        String name = "tangcheng\\";
+        System.out.println(name);
+        String expected = hi + name;
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+        String result = Template.process(template, params);
+        System.out.println(result);
+        assertThat(result).isEqualTo(expected);
+    }
+
+    /**
+     * java.lang.IllegalArgumentException: Illegal group reference
+     * <p>
+     * at java.util.regex.Matcher.appendReplacement(Matcher.java:857)
+     * at java.util.regex.Matcher.replaceAll(Matcher.java:955)
+     * at java.lang.String.replaceAll(String.java:2223)
+     */
+    @Test
+    public void whenReplacementWith_$_thenSuccess() {
+        String name = "$tangcheng";
+        System.out.println(name);
+        String expected = hi + name;
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+        String result = Template.process(template, params);
+        System.out.println(result);
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    public void whenReplacementWith_$_Or_backslash_thenSuccess() {
+        String name = "$tangcheng\\";
+        System.out.println(name);
+        String expected = hi + name;
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+        String result = Template.process(template, params);
+        System.out.println(result);
+        assertThat(result).isEqualTo(expected);
+    }
+
+
 }
