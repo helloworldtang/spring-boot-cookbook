@@ -24,7 +24,7 @@ import javax.validation.Valid;
 public class MVC_DSL_TestController {
 
     @GetMapping
-    @ApiOperation(value = "条件查询")
+    @ApiOperation(value = "条件查询",notes = "条件查询")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username", value = "用户名", dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "password", value = "密码", dataType = "string", paramType = "query"),
@@ -35,7 +35,7 @@ public class MVC_DSL_TestController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "获取单条信息详情")
+    @ApiOperation(value = "获取单条信息详情",notes = "获取单条信息详情")
     @ApiImplicitParam(name = "id", value = "用户编号", dataType = "long", paramType = "path")
     public ResponseEntity<UserVO> get(@PathVariable Long id) {
         log.info("单个参数用  @ApiImplicitParam");
