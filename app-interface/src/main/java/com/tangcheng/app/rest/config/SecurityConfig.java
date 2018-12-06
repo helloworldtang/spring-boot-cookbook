@@ -57,7 +57,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         LoginAuthenticationFilter loginAuthenticationFilter = new LoginAuthenticationFilter();
         loginAuthenticationFilter.setAuthenticationManager(authenticationManager());
         loginAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
-
+        /**
+         * o.s.security.web.FilterChainProxy        : /v1/mvc/valids at position 4 of 14 in additional filter chain; firing Filter: 'CsrfFilter'
+         * o.s.security.web.csrf.CsrfFilter         : Invalid CSRF token found for http://localhost:8080/v1/mvc/valids
+         * 端点返回的错误信息：
+         * {
+         *   "timestamp": 1543992032445,
+         *   "status": 403,
+         *   "error": "Forbidden",
+         *   "message": "Invalid CSRF Token 'null' was found on the request parameter '_csrf' or header 'X-CSRF-TOKEN'.",
+         *   "path": "/v1/mvc/valids"
+         * }
+         *
+         * 补充信息：
+         * Spring Security 4.0之后，引入了CSRF，默认是开启。不得不说，CSRF和RESTful技术有冲突。CSRF默认支持的方法： GET|HEAD|TRACE|OPTIONS，不支持POST。
+         * 原因找到了：spring Security 3默认关闭csrf，Spring Security 4默认启动了csrf。 
+         * 解决方案：
+         * 如果不采用csrf，可禁用security的csrf
+         */
+        http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET,
                         "/favicon.ico",
@@ -67,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/post/data/**").permitAll()
                 .antMatchers("/user/**").hasRole("ADMIN")//Any URL that starts with "/admin/" will be restricted to users who have the role "ROLE_ADMIN". You will notice that since we are invoking the hasRole method we do not need to specify the "ROLE_" prefix.
                 .antMatchers("/db/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/flyway", "/tx/**", "/user/**", "/etag/**", "/test/**").permitAll()
+                .antMatchers("/flyway", "/tx/**", "/user/**", "/etag/**", "/test/**", "/v1/mvc/**").permitAll()
                 .anyRequest().fullyAuthenticated()//Any URL that has not already been matched on only requires that the user be authenticated
                 .and()
                 .addFilterBefore(loginAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

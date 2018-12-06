@@ -39,7 +39,6 @@ public class DistributedLockAspect {
     }
 
     @Around("execution(public * *(..))&&distributedLockPointCut()")
-
     public Object process(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = signature.getMethod();

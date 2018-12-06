@@ -5,11 +5,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by tang.cheng on 2016/11/8.
@@ -21,9 +23,10 @@ import javax.validation.Valid;
  * <p>
  * hibernate validator 5.2.4 Final是JSR 349 Bean Validation 1.1的具体实现。
  */
+@Slf4j
 @Api(tags = "validator learning", description = "Input information check demo")
 @RestController
-@RequestMapping("validator")
+@RequestMapping("v1/mvc/valids")
 public class ValidatorController {
 
 
@@ -71,6 +74,14 @@ public class ValidatorController {
         return ResponseEntity.ok(student);
     }
 
+    @ApiOperation(value = "添加一条记录", notes = "添加一条记录")
+    @PostMapping
+    public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student) {
+        long id = ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE);
+        log.info("id:{}", id);
+        student.setId(id);
+        return ResponseEntity.ok(student);
+    }
 
 }
 
