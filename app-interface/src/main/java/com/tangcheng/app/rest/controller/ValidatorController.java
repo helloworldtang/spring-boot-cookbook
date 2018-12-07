@@ -18,6 +18,14 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 
 /**
+ * javax.validation.Valid
+ * org.springframework.validation.annotation.Validated的区别与联系：
+ * 相同点：添加上面任何一个注解后，这个对象在DispatcherServlet中都会被校验
+ * 不同点：
+ * （1）@Valid是JDK中支持的，@Validated是Spring支持的
+ * （2）@Valid注解，则所有的校验注解都会被执行；@Validated注解支持有选择性的支持校验，即支持group分组的概念
+ * <p>
+ * <p>
  * spring boot 1.4默认使用 hibernate validator 5.2.4 Final实现校验功能。
  * 只要配置依赖spring-boot-starter-web即可
  * <p>
@@ -76,7 +84,7 @@ public class ValidatorController {
 
     @ApiOperation(value = "添加一条记录", notes = "添加一条记录")
     @PostMapping
-    public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student) {
+    public ResponseEntity<Student> createStudent(@Validated @RequestBody Student student) {
         long id = ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE);
         log.info("id:{}", id);
         student.setId(id);
