@@ -1,5 +1,7 @@
 package com.tangcheng.app.business.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
@@ -22,11 +24,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.client.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,11 +41,24 @@ public class RestTemplateConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RestTemplateConfig.class);
 
+    /**
+     * 加入日志打印，方便排查问题
+     *
+     * @return
+     */
     @Bean
     public RestTemplate restTemplate() {
         ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(getHttpClient());
-        return new RestTemplate(requestFactory);
+        RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(requestFactory));
+        List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
+        if (interceptors == null) {
+            interceptors = new ArrayList<>();
+        }
+        interceptors.add(new LoggingClientHttpRequestInterceptor());
+        restTemplate.setInterceptors(interceptors);
+        return restTemplate;
     }
+
 
     //httpclient 4.5.2使用连接池的经典配置
     private CloseableHttpClient getHttpClient() {
@@ -110,3 +127,19 @@ public class RestTemplateConfig {
 
 
 }
+
+
+@Slf4j
+class LoggingClientHttpRequestInterceptor implements ClientHttpRequestInterceptor {
+
+    @Override
+    public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+        long begin = System.currentTimeMillis();
+        ClientHttpResponse response = execution.execute(request, body);
+        long cost = System.currentTimeMillis() - begin;
+        log.info("cost:[{}]ms,{} url:{}. request:{},\nresponse:{},", cost, request.getMethod().name(), request.getURI().toString(), IOUtils.toString(body, "utf-8"), IOUtils.toString(response.getBody()));
+        return response;
+    }
+
+}
+

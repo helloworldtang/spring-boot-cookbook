@@ -17,6 +17,7 @@ import java.util.Map;
  * @version : 2017-08-03  12:30
  */
 @RestController
+@RequestMapping("test")
 public class HttpSessionController {
 
     @RequestMapping("/session/set")

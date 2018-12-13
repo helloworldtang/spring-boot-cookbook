@@ -6,6 +6,7 @@ import com.tangcheng.app.domain.query.Result;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -14,6 +15,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -360,6 +362,25 @@ public class RestTemplateApiTest {
         ResponseEntity<Result> forEntity = restTemplate.exchange(requestEntity, Result.class);
         Result actual = forEntity.getBody();
         assertThat(actual, is(excepted));
+    }
+
+
+    @Test
+    public void givenApiWithGenericReturnType_thenUseExchange() {
+        /**
+         * 返回值为泛型的场景：借助于ParameterizedTypeReference和HttpHeader指定contentType
+         */
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+            HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+            ResponseEntity<Map<String, Object>> responseEntity = restTemplate.exchange(new URI("http://localhost:8080/test/session/get"), HttpMethod.GET, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {
+            });
+            assertThat(responseEntity.getStatusCode(), is(HttpStatus.OK));
+            System.out.println(responseEntity.getBody());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
 

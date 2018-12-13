@@ -3,6 +3,7 @@ package com.tangcheng.learning.json;
 import com.alibaba.fastjson.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -54,11 +55,11 @@ public class FastJsonTest {
 
     @Test
     public void testGenerics() {
-        Result<UserDemo> result = new Result<>();
+        Result<UserDO> result = new Result<>();
         result.setMsg("Success");
-        List<UserDemo> users = new ArrayList<>();
-        users.add(new UserDemo(1L, "Name1"));
-        users.add(new UserDemo(2L, "Name2"));
+        List<UserDO> users = new ArrayList<>();
+        users.add(new UserDO(1L, "Name1"));
+        users.add(new UserDO(2L, "Name2"));
         result.setModule(users);
         String js = JSON.toJSONString(result);
         System.out.println(js);//{"module":[{"id":1,"name":"Name1"},{"id":2,"name":"Name2"}],"msg":"Success"}
@@ -84,6 +85,18 @@ public class FastJsonTest {
         String result = JSON.toJSONString(source, true);
         System.out.println(result);
     }
+
+
+    @Test
+    public void serialMapWithPOKey() {
+        Map<UserDO, UserDO> source = new HashMap<>();
+        for (long i = 0; i < 10; i++) {
+            source.put(new UserDO(i, "name" + i), new UserDO(i, "name" + i));
+        }
+        String jsonStr = JSON.toJSONString(source);
+        System.out.println(jsonStr);
+    }
+
 
     @Test
     public void serialArrayToJson() {
@@ -132,7 +145,8 @@ public class FastJsonTest {
 
 @Data
 @AllArgsConstructor
-class UserDemo {
+@NoArgsConstructor
+class UserDO {
     private Long id;
     private String name;
 }
