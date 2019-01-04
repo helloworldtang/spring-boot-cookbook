@@ -12,13 +12,17 @@ http://localhost:9999/swagger-resources/configuration/ui
 http://localhost:9999/swagger-resources/configuration/security
 
 
+```bash
 mvn clean install -Dmaven.test.skip=true      
+```
 
-Redis的逻辑写在DAO，没有单独拆分出来
-
-todo:
-
-OpenAPI平台
-http.requireChannel().anyRequest().requireSecure().and()
+todo:    
+OpnApi     
+`http.requireChannel().anyRequest().requireSecure().and()`
 让Connector跳转时如果和server.port相同会报冲突
-https也使用80端口,就是这种https://www.baidu.com/
+https也使用80端口,就是这种https://www.alipay.com/
+
+
+
+![微信扫描二维码，关注我的公众号](https://user-images.githubusercontent.com/13701989/50696841-8c288b80-107b-11e9-9fbf-2b9e20adc166.jpg)
+ <center>微信扫描二维码，关注我的公众号</center>
