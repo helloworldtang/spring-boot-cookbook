@@ -1,4 +1,4 @@
-package com.tangcheng.init;
+package com.tangcheng.learning.init.spring;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +59,6 @@ public class InitTestBean implements BeanNameAware, BeanFactoryAware, Applicatio
     @Override
     public void destroy() throws Exception {
         LOGGER.info("Step-10调用。DisposableBean.destroy");
-        LOGGER.info("Step-10调用。");
+        LOGGER.info("Step-10调用。同样，如果bean使用destroy-method声明了销毁方法，该方法也会被调用");
     }
 }

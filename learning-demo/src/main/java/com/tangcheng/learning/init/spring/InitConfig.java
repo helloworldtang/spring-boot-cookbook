@@ -1,4 +1,4 @@
-package com.tangcheng.init;
+package com.tangcheng.learning.init.spring;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
