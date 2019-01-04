@@ -20,10 +20,9 @@ todo:
 OpnApi     
 `http.requireChannel().anyRequest().requireSecure().and()`
 让Connector跳转时如果和server.port相同会报冲突
-https也使用80端口,就是这种https://www.baidu.com/  
+https也使用80端口,就是这种https://www.alipay.com/
 
 
 
-
-![微信扫描二维码，关注我的公众号](https://upload-images.jianshu.io/upload_images/6086860-6781dd7c41d7f14d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![微信扫描二维码，关注我的公众号](https://user-images.githubusercontent.com/13701989/50696841-8c288b80-107b-11e9-9fbf-2b9e20adc166.jpg)
  <center>微信扫描二维码，关注我的公众号</center>
