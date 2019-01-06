@@ -19,7 +19,7 @@ public class InitBeanConfigTest {
     public void givenBean_WhenInit_thenFirstConstructorFunction_SecondPostConstructAnna_ThirdInitMethod() {
         /**
          * step1:执行构造函数
-         * step2:执行使用@PostConstruct注解修饰的方法
+         * step2:执行使用@PostConstruct注解修饰的方法【如果存在多个使用注解@PostConstruct修饰的方法，则这几个方法的执行顺序不确定】
          * step3:执行@Bean注解中initMethod属性指定的方法
          */
     }
