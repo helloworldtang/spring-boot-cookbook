@@ -29,6 +29,9 @@ public class SortTest {
         List<Integer> list = Arrays.asList(7, 1, 2, 3, 4, 5);
         Collections.sort(list);//默认升序
         System.out.println(list);//[1, 2, 3, 4, 5, 7]
+        char test = '亾'; //https://www.cnblogs.com/softidea/p/10271219.html
+        System.out.println(test);
+
     }
 
 }
