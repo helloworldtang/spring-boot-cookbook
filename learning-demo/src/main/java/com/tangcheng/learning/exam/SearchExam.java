@@ -39,6 +39,11 @@ public class SearchExam {
     }
 
 
+    /**
+     * 冒泡排序：升序
+     *
+     * @param sourceList
+     */
     public void bubbleSort(List<Integer> sourceList) {
         if (sourceList == null || sourceList.isEmpty()) {
             return;
