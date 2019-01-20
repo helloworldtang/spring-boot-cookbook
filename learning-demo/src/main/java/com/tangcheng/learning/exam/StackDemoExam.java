@@ -42,6 +42,10 @@ public class StackDemoExam {
         for (int i = 1; i < charArray.length; i++) {
             char next = charArray[i];
             if (stack.isEmpty()) {
+                if (patternMatch.get(next) == null) {
+                    // when empty,the next must be left bracket!
+                    return false;
+                }
                 stack.push(next);
                 continue;
             }
