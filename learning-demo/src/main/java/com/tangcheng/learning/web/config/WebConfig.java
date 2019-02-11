@@ -1,11 +1,20 @@
 package com.tangcheng.learning.web.config;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.ValueFilter;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.tangcheng.learning.web.interceptor.MyInterceptor1;
 import com.tangcheng.learning.web.interceptor.MyInterceptor2;
 import com.tangcheng.learning.web.interceptor.MyInterceptor3;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author tangcheng
@@ -59,5 +68,33 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new MyInterceptor3());
     }
 
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(0, fastJsonHttpMessageConverter());
+    }
+
+    @Bean
+    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
+        FastJsonHttpMessageConverter httpMessageConverter = new FastJsonHttpMessageConverter();
+        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.QuoteFieldNames,
+                SerializerFeature.WriteEnumUsingToString,
+                SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteDateUseDateFormat);
+        fastJsonConfig.setSerializeFilters(new ValueFilter() {
+            @Override
+            public Object process(Object o, String s, Object source) {
+                if (source == null) {
+                    return "";
+                }
+                if (source instanceof Date) {
+                    return ((Date) source).getTime();
+                }
+                return source;
+            }
+        });
+        httpMessageConverter.setFastJsonConfig(fastJsonConfig);
+        return httpMessageConverter;
+    }
 
 }
