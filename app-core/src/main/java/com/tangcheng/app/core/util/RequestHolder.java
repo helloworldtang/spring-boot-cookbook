@@ -1,5 +1,6 @@
 package com.tangcheng.app.core.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -50,11 +51,10 @@ public class RequestHolder {
         HttpServletRequest httpServletRequest = getRequestFacade();
         String requestURI = httpServletRequest.getRequestURI();
         String queryString = httpServletRequest.getQueryString();
-        if (queryString == null) {
-            return requestURI;
+        if (StringUtils.isBlank(queryString)) {
+            return String.format("[%s] %s", httpServletRequest.getMethod(), requestURI);
         }
-        return requestURI + "?" + queryString;
-
+        return String.format("[%s] %s?%s", httpServletRequest.getMethod(), requestURI, queryString);
     }
 
 

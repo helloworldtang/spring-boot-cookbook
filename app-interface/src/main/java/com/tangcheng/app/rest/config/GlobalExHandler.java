@@ -4,8 +4,7 @@ import com.tangcheng.app.core.util.RequestHolder;
 import com.tangcheng.app.domain.errorcode.GlobalCode;
 import com.tangcheng.app.domain.exception.BizException;
 import com.tangcheng.app.domain.vo.ResultData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +21,8 @@ import java.sql.SQLException;
  */
 @RestControllerAdvice
 @ResponseStatus(HttpStatus.BAD_REQUEST)
+@Slf4j
 public class GlobalExHandler {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExHandler.class);
 
     /**
      * 专门处理业务异常
@@ -34,16 +32,16 @@ public class GlobalExHandler {
      */
     @ExceptionHandler(BizException.class)
     public ResultData<?> handleAllException(BizException bizEx) {
-        LOGGER.error(bizEx.getMessage(), RequestHolder.getLastAccessUrl());
+        log.error("BizException.class {},{}", RequestHolder.getLastAccessUrl(), bizEx.getMessage(), bizEx);
         return ResultData.builder().detail(bizEx).build();
     }
 
 
     @ExceptionHandler(BindException.class)
-    public ResponseEntity handleBindException(BindException e) {
-        LOGGER.error(e.getMessage(), e);
+    public ResponseEntity handleBindException(BindException bindEx) {
+        log.error("BindException.class {},{}", RequestHolder.getLastAccessUrl(), bindEx.getMessage(), bindEx);
         StringBuilder result = new StringBuilder();
-        for (FieldError fieldError : e.getFieldErrors()) {
+        for (FieldError fieldError : bindEx.getFieldErrors()) {
             result.append(fieldError.getField()).append(":").
                     append(fieldError.getDefaultMessage()).
                     append(System.lineSeparator());
@@ -60,7 +58,7 @@ public class GlobalExHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResultData<String> throwable(Exception e) {
-        LOGGER.error(e.getMessage(), e);
+        log.error("Exception.class {},{}", RequestHolder.getLastAccessUrl(), e.getMessage(), e);
         if (e instanceof SQLException || e instanceof DataAccessException) {
             return ResultData.<String>builder().bizError(GlobalCode.FAIL.setMsg("服务器好像开小差了，等会再试下:-) ")).build();
         }
