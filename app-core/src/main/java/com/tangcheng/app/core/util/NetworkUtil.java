@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.InetAddress;
 
+/**
+ * @Auther: cheng.tang
+ * @Date: 2017/5/20
+ * @Description:
+ */
 public class NetworkUtil {
     private static Logger LOGGER = LoggerFactory.getLogger(NetworkUtil.class);
 
