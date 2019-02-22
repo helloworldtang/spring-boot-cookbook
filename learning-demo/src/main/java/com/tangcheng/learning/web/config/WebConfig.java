@@ -9,12 +9,10 @@ import com.tangcheng.learning.web.interceptor.MyInterceptor2;
 import com.tangcheng.learning.web.interceptor.MyInterceptor3;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author tangcheng
@@ -66,11 +64,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new MyInterceptor1());
         registry.addInterceptor(new MyInterceptor2());
         registry.addInterceptor(new MyInterceptor3());
-    }
-
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(0, fastJsonHttpMessageConverter());
     }
 
     @Bean

@@ -60,7 +60,7 @@ public class GlobalExHandler {
     public ResultData<String> throwable(Exception e) {
         log.error("Exception.class {},{}", RequestHolder.getLastAccessUrl(), e.getMessage(), e);
         if (e instanceof SQLException || e instanceof DataAccessException) {
-            return ResultData.<String>builder().bizError(GlobalCode.FAIL.setMsg("服务器好像开小差了，等会再试下:-) ")).build();
+            return ResultData.<String>builder().bizError(GlobalCode.FAIL.setMsg("哎呀，好像有人开小差了！等会再试下哦:-) ")).build();
         }
         return ResultData.<String>builder().bizError(GlobalCode.FAIL.setMsg(e.getMessage())).build();
     }

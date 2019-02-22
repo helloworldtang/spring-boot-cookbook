@@ -1,15 +1,17 @@
 package com.tangcheng.learning.web.config;
 
+import com.tangcheng.learning.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+
+//    @ModelAttribute
+//    public void initUser(ModelMap modelMap) {
+//        User user = new User("tom", (byte) 123);
+//        modelMap.put("user", user);
+//    }
 
     /**
      * javax.validation.Valid对Request参数时行校验，不合法会报org.springframework.validation.BindException
@@ -71,8 +79,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = ServletRequestBindingException.class)
-    @ResponseBody
-    public Object exception(HttpServletRequest request, ServletRequestBindingException e) {
+    public ResponseEntity<String> exception(HttpServletRequest request, ServletRequestBindingException e) {
         log.error("{}.msg:{}", e.getClass().getName(), e);
         String[] split = e.getMessage().split("'");
         if (split.length > 2) {

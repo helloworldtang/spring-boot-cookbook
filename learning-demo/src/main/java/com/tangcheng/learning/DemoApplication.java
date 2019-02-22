@@ -13,8 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Slf4j
 public class DemoApplication {
     public static void main(String[] args) {
-        String env = System.getProperty("spring.profiles.active");
-        log.info("env:{}", env);
         SpringApplication.run(DemoApplication.class, args);
     }
 }

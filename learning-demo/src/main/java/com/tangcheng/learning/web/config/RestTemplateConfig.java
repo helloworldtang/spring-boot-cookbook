@@ -28,15 +28,12 @@ import org.apache.http.impl.conn.ManagedHttpClientConnectionFactory;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.conn.SystemDefaultDnsResolver;
 import org.apache.http.impl.io.DefaultHttpRequestWriterFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.*;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -52,9 +49,6 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Configuration
 public class RestTemplateConfig {
-
-    @Autowired
-    private HttpMessageConverter fastJsonHttpMessageConverter;
 
     /**
      * 加入日志打印，方便排查问题
@@ -72,13 +66,6 @@ public class RestTemplateConfig {
             interceptors.add(new LoggingClientHttpRequestInterceptor());
         }
         restTemplate.setInterceptors(interceptors);
-        List<HttpMessageConverter<?>> messageConverters = restTemplate.getMessageConverters();
-        if (CollectionUtils.isEmpty(messageConverters)) {
-            messageConverters.add(fastJsonHttpMessageConverter);
-            restTemplate.setMessageConverters(messageConverters);
-        } else {
-            messageConverters.add(0, fastJsonHttpMessageConverter);
-        }
         return restTemplate;
     }
 
