@@ -31,7 +31,7 @@ public class CompletableFutureTest {
      * 16:12:05.172 [main] INFO com.tangcheng.learning.concurrent.CompletableFutureTest - last log
      */
     @Test
-    public void testCompletableFuture() {
+    public void testCompletableFutureSupplyAsync() {
 
         log.info("start");
         /**
@@ -52,6 +52,40 @@ public class CompletableFutureTest {
         }, executor).exceptionally(ex -> {
                     log.error("exceptionally 一个任务失败了 item:{},{}", item, ex.getMessage());
                     return "一个任务失败了" + ex.getMessage();
+                }
+        )).toArray(CompletableFuture[]::new);
+        //allOf():工厂方法接受由CompletableFuture对象构成的数组,数组中所有的CompletableFuture完成后它返回一个CompletableFuture<Void>对象。
+        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.allOf(completableFutures);
+        //等待所有的子线程执行完毕
+        voidCompletableFuture.join();
+        log.info("last log ");
+    }
+
+
+    /**
+     * todo:whencomplate
+     * },executor)).collect(toList()).stream().map(CompletableFuture::join).collect(toList());
+     */
+    @Test
+    public void testCompletableFutureSyncRun() {
+        log.info("start");
+        /**
+         * runSync不要求有返回值
+         */
+        CompletableFuture[] completableFutures = Stream.of(1, 2, 3).map(item -> CompletableFuture.runAsync(() -> {
+            try {
+                int timeout = ThreadLocalRandom.current().nextInt(1, 5);
+                if (timeout == 1) {
+                    throw new IllegalArgumentException("出错了，为什么是1");
+                }
+                TimeUnit.SECONDS.sleep(timeout);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            log.info("finish :{}", item);
+        }, executor).exceptionally(ex -> {
+                    log.error("exceptionally 一个任务失败了 item:{},{}", item, ex.getMessage());
+                    return null;
                 }
         )).toArray(CompletableFuture[]::new);
         //allOf():工厂方法接受由CompletableFuture对象构成的数组,数组中所有的CompletableFuture完成后它返回一个CompletableFuture<Void>对象。
