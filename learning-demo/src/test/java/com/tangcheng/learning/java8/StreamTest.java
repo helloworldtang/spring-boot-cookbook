@@ -13,6 +13,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 public class StreamTest {
 
+
+    /**
+     * Filter 只返回true的记录
+     */
+    @Test
+    public void filterTest() {
+        List<String> strArr = Arrays.asList("1", "2", "3", "4");
+        List<String> list = strArr.stream().filter("2"::equals).collect(Collectors.toList());
+        assertThat(list.size()).isEqualTo(1);
+        assertThat(list.get(0)).isEqualTo("2");
+    }
+
+
     /**
      * list排序
      */
