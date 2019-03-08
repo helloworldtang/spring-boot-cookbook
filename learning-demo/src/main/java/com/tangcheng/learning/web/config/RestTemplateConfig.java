@@ -66,6 +66,9 @@ public class RestTemplateConfig {
             interceptors.add(new LoggingClientHttpRequestInterceptor());
         }
         restTemplate.setInterceptors(interceptors);
+        /**
+         * 404,500之类的报错。在LoggingClientHttpRequestInterceptor中都可以找到，就不再配置自定义ResponseErrorHandler了
+         */
         return restTemplate;
     }
 
@@ -143,37 +146,49 @@ class LoggingClientHttpRequestInterceptor implements ClientHttpRequestIntercepto
 
     private static final String UNKNOWN_HTTP_METHOD = "[unknown httpMethod]";
 
-    private static final String HAS_NO_CONTENT_TYPE = "[NO Content-Type]";
+    private static final String HAS_NO_CONTENT_TYPE = "[has no contentType]";
 
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         long begin = System.currentTimeMillis();
-        ClientHttpResponse response = execution.execute(request, body);
-        long cost = System.currentTimeMillis() - begin;
         String httpMethodName = UNKNOWN_HTTP_METHOD;
         HttpMethod method = request.getMethod();
         if (method != null) {
             httpMethodName = method.name();
         }
-        MediaType contentType = response.getHeaders().getContentType();
-        String responseContent;
-        /**
-         * 只打印json,xml或text/*的response
-         */
-        if (contentType != null) {
-            String subtype = contentType.getSubtype();
-            if (subtype.contains("json") || contentType.getType().contains("text") || subtype.contains("xml")) {
-                responseContent = IOUtils.toString(response.getBody(), "utf-8");
+        String requestBody = IOUtils.toString(body, "utf-8");
+        try {
+            ClientHttpResponse response = execution.execute(request, body);
+            long cost = System.currentTimeMillis() - begin;
+
+            MediaType contentType = response.getHeaders().getContentType();
+            String responseContent;
+            if (contentType != null) {
+                String subtype = contentType.getSubtype();
+                if (subtype.contains("json") || contentType.getType().contains("text") || subtype.contains("xml")) {
+                    responseContent = IOUtils.toString(response.getBody(), "utf-8");
+                } else {
+                    responseContent = "neither text,nor xml,nor json";
+                }
             } else {
-                responseContent = "neither text,nor xml,nor json";
+                responseContent = HAS_NO_CONTENT_TYPE;
             }
-        } else {
-            responseContent = HAS_NO_CONTENT_TYPE;
+
+            if (cost > 3000) {
+                log.info("【特殊标识】慢接口 【 TODOLIST 】 大于3秒 cost:[{}]ms,{} {}. request:{},response:{},", cost, httpMethodName, request.getURI().toString(), requestBody, responseContent);
+            } else if (cost > 2000) {
+                log.info("【特殊标识】慢接口 【 TODOLIST 】 大于2秒 cost:[{}]ms,{} {}. request:{},response:{},", cost, httpMethodName, request.getURI().toString(), requestBody, responseContent);
+            } else {
+                log.info("cost:[{}]ms,on {} {}. request:{},response:{},", cost, httpMethodName, request.getURI().toString(), requestBody, responseContent);
+            }
+            return response;
+        } catch (IOException e) {
+            log.error("【特殊标识】【 TODOLIST 】 接口 cost:[{}]ms,I/O error on {} {}. request:{},response:{},", (System.currentTimeMillis() - begin), httpMethodName, request.getURI().toString(), requestBody, e.getMessage());
+            throw e;
         }
-        log.info("cost:[{}]ms,{} {}. request:{},response:{},", cost, httpMethodName, request.getURI().toString(), IOUtils.toString(body, "utf-8"), responseContent);
-        return response;
+
     }
 
-
 }
+
