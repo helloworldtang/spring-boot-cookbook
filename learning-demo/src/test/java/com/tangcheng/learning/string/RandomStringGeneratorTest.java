@@ -2,6 +2,8 @@ package com.tangcheng.learning.string;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.rng.UniformRandomProvider;
+import org.apache.commons.rng.simple.RandomSource;
 import org.apache.commons.text.RandomStringGenerator;
 import org.apache.commons.text.TextRandomProvider;
 import org.junit.Test;
@@ -13,6 +15,22 @@ import org.junit.Test;
  * @date 7/25/2018 7:25 AM
  */
 public class RandomStringGeneratorTest {
+
+
+    @Test
+    public void generateTextWithThreadSafe() {
+
+        UniformRandomProvider rng = RandomSource.create(RandomSource.MT);
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+                .withinRange('a', 'z')
+                .usingRandom(rng::nextInt) // uses Java 8 syntax
+                .build();
+        for (int i = 0; i < 10; i++) {
+            System.out.println(generator.generate(10));
+        }
+
+    }
+
 
     /**
      * https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/RandomStringGenerator.html
