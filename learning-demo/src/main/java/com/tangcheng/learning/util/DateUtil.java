@@ -29,6 +29,7 @@ public class DateUtil {
         if (StringUtils.isBlank(yyyyMMddHHmmssStr)) {
             return null;
         }
+        yyyyMMddHHmmssStr = yyyyMMddHHmmssStr.replace("T", " ");
         try {
             LocalDateTime localDateTime = LocalDateTime.parse(yyyyMMddHHmmssStr, yyyyMMddHHmmss);
             ZoneId zone = ZoneId.systemDefault();
