@@ -73,6 +73,24 @@ public class FastJsonTest {
 
 
     @Test
+    public void TestListGenerics() {
+        List<UserDO> userDOList = Arrays.asList(new UserDO(1L, "Name1"), new UserDO(2L, "Name2"));
+        String userListStr = JSON.toJSONString(userDOList);
+        List<UserDO> userDOS = JSON.parseArray(userListStr, UserDO.class);
+        assertThat(userDOS.size()).isEqualTo(userDOList.size());
+        assertThat(userDOS.get(0)).isEqualToComparingFieldByField(userDOList.get(0));
+        assertThat(userDOS.get(1)).isEqualToComparingFieldByField(userDOList.get(1));
+        System.out.println(userDOS);
+        List<UserDO> result = JSON.parseObject(userListStr, new TypeReference<List<UserDO>>() {
+        }.getType());
+        assertThat(result.size()).isEqualTo(userDOList.size());
+        assertThat(result.get(0)).isEqualToComparingFieldByField(userDOList.get(0));
+        assertThat(result.get(1)).isEqualToComparingFieldByField(userDOList.get(1));
+        System.out.println(result);
+    }
+
+
+    @Test
     public void serialMapToJson() {
         Map<Long, String> source = new HashMap<>();
         for (long i = 0; i < 10; i++) {
