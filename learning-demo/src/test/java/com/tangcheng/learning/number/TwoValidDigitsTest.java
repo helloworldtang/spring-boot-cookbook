@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 
@@ -30,6 +31,18 @@ public class TwoValidDigitsTest {
         System.out.println(originInitWithDouble);
         System.out.println(originInitWithStr);
         assertThat(originInitWithStr.compareTo(originInitWithDouble), greaterThan(0));
+    }
+
+    @Test
+    public void bigDecimalMaxValue() {
+        BigDecimal data1 = new BigDecimal("1.2");
+        BigDecimal data2 = new BigDecimal("1.5");
+        BigDecimal max = data1.max(data2);
+        System.out.println(max);
+        assertThat(max, comparesEqualTo(data2));
+        max = data2.max(data1);
+        System.out.println(max);
+        assertThat(max, comparesEqualTo(data2));
     }
 
     @Test
