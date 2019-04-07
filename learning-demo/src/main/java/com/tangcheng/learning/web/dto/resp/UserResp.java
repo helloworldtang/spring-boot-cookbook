@@ -1,7 +1,7 @@
 package com.tangcheng.learning.web.dto.resp;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.tangcheng.learning.web.dto.req.UserReq;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,8 +13,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-// TODO: 10/2/2018 冲突的问题
-//@ApiModel("用户信息UserResp") 与 @JacksonXmlRootElement(localName = "UserDto")
-@JacksonXmlRootElement(localName = "UserDto")
+@ApiModel("用户信息UserResp")
 public class UserResp extends UserReq {
 }
