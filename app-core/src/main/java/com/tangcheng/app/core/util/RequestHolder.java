@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,8 +41,8 @@ public class RequestHolder {
 
     public static HttpServletResponse getResponseFacade() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        ServletWebRequest servletWebRequest = (ServletWebRequest) requestAttributes;
-        return servletWebRequest.getResponse();
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
+        return servletRequestAttributes.getResponse();
     }
 
 
