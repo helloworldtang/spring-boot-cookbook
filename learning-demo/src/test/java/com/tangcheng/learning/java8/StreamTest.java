@@ -42,12 +42,12 @@ public class StreamTest {
     @Test
     public void listSort() {
         //对数字进行排序
-        List<Integer> nums = Arrays.asList(3, 1, 5, 2, 9, 8, 4, 10, 6, 7);
-        nums.sort(Comparator.reverseOrder()); //reverseOrder倒序
-        System.out.println("倒序:" + nums);//倒序:[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+        List<Integer> numList = Arrays.asList(3, 1, 5, 2, 9, 8, 4, 10, 6, 7);
+        numList.sort(Comparator.reverseOrder()); //reverseOrder倒序
+        System.out.println("倒序:" + numList);//倒序:[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 
-        nums.sort(Comparator.naturalOrder());//naturalOrder自然排序即：正序
-        System.out.println("正序:" + nums);//正序:[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        numList.sort(Comparator.naturalOrder());//naturalOrder自然排序即：正序
+        System.out.println("正序:" + numList);//正序:[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
         //按照对象某个属性进行排序：例如年龄
@@ -132,6 +132,71 @@ public class StreamTest {
         String actual = circleList.stream().map(UserDemo::getName).collect(Collectors.joining(","));
         log.info("actual:{}", actual);
         assertThat(actual).isEqualTo(expect);
+    }
+
+    @Test
+    public void testFlatMap() {
+        String[] arrayOfWords = {"hello", "word"};
+        Stream<String> streamOfWords = Arrays.stream(arrayOfWords);
+        /**
+         * Arrays.stream可以接受一个数组，让数组中的元素拼接成一个字符串流，而不是一个数组流
+         * hello
+         * word
+         */
+        streamOfWords.forEach(System.out::println);
+        List<String> words = Arrays.asList("Java 8", "Lambdas", "In", "Action");
+        /**
+         * 流支持map方法，它会接受一个函数作为参数。
+         * 这个函数会被应用到每个元素上，并将其映射成一个新的元素
+         * （使用映射一词，是因为它和转换类似，但其中的细微差别在于它是“创建一个新版本”而不是去“修改”）
+         * 下面的示例中把方法引用String::length传给了map方法，来提取流中的字符串的长度
+         */
+        List<Integer> resultList = words.stream().map(String::length).collect(Collectors.toList());
+        System.out.println(resultList);
+        assertThat(resultList).isEqualTo(Arrays.asList(6, 7, 2, 6));
+
+        List<String[]> resultArrayList = words.stream().map(word -> word.split(" ")).distinct().collect(Collectors.toList());
+        /**
+         * 数组
+         * [Java, 8]
+         * [Lambdas]
+         * [In]
+         * [Action]
+         */
+        resultArrayList.stream().map(Arrays::toString).forEach(System.out::println);
+        /**
+         *数组
+         * [Java, 8]
+         * [Lambdas]
+         * [In]
+         * [Action]
+         */
+        resultArrayList.forEach(item -> {
+            System.out.println(Arrays.toString(item));
+        });
+
+        List<Stream<String>> collect = words.stream().map(word -> word.split(" ")).map(Arrays::stream).distinct().collect(Collectors.toList());
+        /**
+         * 已经是字符串，不再是数组
+         * Java
+         * 8
+         * Lambdas
+         * In
+         * Action
+         */
+        collect.forEach(item -> {
+            item.forEach(System.out::println);
+        });
+
+
+        List<String> stringList = words.stream().map(w -> w.split(" "))
+                .flatMap(Arrays::stream)
+                .distinct()
+                .collect(Collectors.toList());
+        System.out.println(stringList);
+        assertThat(stringList).isEqualTo(Arrays.asList("Java", "8", "Lambdas", "In", "Action"));
+
+
     }
 
 }
