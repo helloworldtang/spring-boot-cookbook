@@ -19,6 +19,17 @@ public class TwoValidDigitsTest {
 
     private double source = 123232.12345;
 
+
+    /**
+     * 当前对象大时，当前对象compareTo时，返回1，相等时返回0，小于时返回-1
+     */
+    @Test
+    public void compare() {
+        BigDecimal b1 = new BigDecimal("0.5");
+        BigDecimal b2 = new BigDecimal("0.8");
+        assertThat(b1.compareTo(b2), is(-1));
+    }
+
     /**
      * 如果对精度有要求
      * 初始化BigDecimal时必须使用String
