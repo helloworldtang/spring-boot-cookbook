@@ -63,6 +63,11 @@ public class TwoValidDigitsTest {
         double actual = bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         assertThat(actual, is(123232.12));
 
+        sourceEgLessThan5 = 123232.12445;
+        bd = new BigDecimal(sourceEgLessThan5);
+        actual = bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        assertThat(actual, is(123232.12));
+
         double sourceEgEqual5 = 123232.12545;
         bd = new BigDecimal(sourceEgEqual5);
         actual = bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
