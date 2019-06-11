@@ -22,8 +22,9 @@ public class HelloController {
                 request.getLocalPort()
         );
         StringBuffer requestURL = request.getRequestURL();
-        String domainUrl = requestURL.delete(requestURL.length() - request.getRequestURI().length(), requestURL.length()).toString();
-        log.info("domainUrl : {}", domainUrl);
+        String requestURI = request.getRequestURI();
+        String domainUrl = requestURL.delete(requestURL.length() - requestURI.length(), requestURL.length()).toString();
+        log.info("domainUrl:{} , requestURL:{} , requestURI:{}", domainUrl, requestURL.toString(), requestURI);
         return GREETINGS_FROM_SPRING_BOOT;
     }
 
