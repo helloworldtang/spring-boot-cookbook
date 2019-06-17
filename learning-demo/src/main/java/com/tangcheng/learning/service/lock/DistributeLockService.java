@@ -1,4 +1,4 @@
-package com.tangcheng.learning.service;
+package com.tangcheng.learning.service.lock;
 
 import com.tangcheng.learning.service.lock.annotation.DistributedLock;
 import com.tangcheng.learning.service.lock.annotation.KeyParam;

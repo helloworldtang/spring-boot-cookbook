@@ -27,13 +27,13 @@ public class OptionalTest {
     public void should_invoke_createUser_when_input_null() {
         User user = null;
         user = Optional.ofNullable(user).orElseGet(this::createUser);
-        log.info("after orElseGet(this::createUser) ,user: {}", user);
+        log.info("after orElseGet(this::testValidateService) ,user: {}", user);
 
         /**
          * 不管user是不是null，orElse后面的createUser()方法都会被调用
          */
         user = Optional.ofNullable(user).orElse(createUser());
-        log.info("after orElse(createUser()) ,user: {}", user);
+        log.info("after orElse(testValidateService()) ,user: {}", user);
         /**
          *如果User不是null,则osElseGet后面的方法不会被调用
          */
@@ -42,7 +42,7 @@ public class OptionalTest {
     }
 
     private User createUser() {
-        log.info("invoke createUser()");
+        log.info("invoke testValidateService()");
         return User.builder().name("optional").build();
     }
 

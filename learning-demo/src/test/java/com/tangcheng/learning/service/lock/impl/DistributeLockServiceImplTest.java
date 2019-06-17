@@ -1,6 +1,6 @@
-package com.tangcheng.learning.service.impl;
+package com.tangcheng.learning.service.lock.impl;
 
-import com.tangcheng.learning.service.DistributeLockService;
+import com.tangcheng.learning.service.lock.DistributeLockService;
 import com.tangcheng.learning.web.dto.req.DistributeLockTestReq;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,10 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.*;
 
 /**
  * spring-boot-cookbook

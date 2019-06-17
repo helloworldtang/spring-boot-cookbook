@@ -1,6 +1,6 @@
-package com.tangcheng.learning.service.impl;
+package com.tangcheng.learning.service.lock.impl;
 
-import com.tangcheng.learning.service.DistributeLockService;
+import com.tangcheng.learning.service.lock.DistributeLockService;
 import com.tangcheng.learning.service.lock.annotation.DistributedLock;
 import com.tangcheng.learning.service.lock.annotation.KeyParam;
 import com.tangcheng.learning.web.dto.req.DistributeLockTestReq;
