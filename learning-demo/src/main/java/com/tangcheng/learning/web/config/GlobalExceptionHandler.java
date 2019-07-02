@@ -1,20 +1,15 @@
 package com.tangcheng.learning.web.config;
 
-import com.tangcheng.learning.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author tangcheng
@@ -74,12 +69,11 @@ public class GlobalExceptionHandler {
      * org.springframework.web.bind.ServletRequestBindingException: Missing request header 'userId' for method parameter of type Integer
      * 使用@RequestHeader 且字段为必填时，报此错误
      *
-     * @param request
      * @param e
      * @return
      */
     @ExceptionHandler(value = ServletRequestBindingException.class)
-    public ResponseEntity<String> exception(HttpServletRequest request, ServletRequestBindingException e) {
+    public ResponseEntity<String> exception(ServletRequestBindingException e) {
         log.error("{}.msg:{}", e.getClass().getName(), e);
         String[] split = e.getMessage().split("'");
         if (split.length > 2) {

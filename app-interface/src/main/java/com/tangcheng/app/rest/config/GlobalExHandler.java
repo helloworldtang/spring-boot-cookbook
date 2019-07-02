@@ -10,11 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 /**
  * Created by MyWorld on 2016/9/23.
@@ -36,17 +39,58 @@ public class GlobalExHandler {
         return ResultData.builder().detail(bizEx).build();
     }
 
-
+    /**
+     * javax.validation.Valid对Request参数时行校验，不合法会报org.springframework.validation.BindException
+     *
+     * @param e
+     * @return
+     */
     @ExceptionHandler(BindException.class)
-    public ResponseEntity handleBindException(BindException bindEx) {
-        log.error("BindException.class {},{}", RequestHolder.getLastAccessUrl(), bindEx.getMessage(), bindEx);
-        StringBuilder result = new StringBuilder();
-        for (FieldError fieldError : bindEx.getFieldErrors()) {
-            result.append(fieldError.getField()).append(":").
-                    append(fieldError.getDefaultMessage()).
-                    append(System.lineSeparator());
+    public ResponseEntity handleBindException(BindException e) {
+        log.warn("{},msg:{}", RequestHolder.getLastAccessUrl(), e.getMessage());
+        String bindExceptionMsg = e.getFieldErrors().stream()
+                .map(FieldError::getDefaultMessage)
+                .collect(Collectors.joining(System.lineSeparator()));
+        return ResponseEntity.badRequest().body(bindExceptionMsg);
+    }
+
+    /**
+     * Request Body 必填。但实际传参时不传
+     * org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor#resolveArgument(org.springframework.core.MethodParameter, org.springframework.web.method.support.ModelAndViewContainer, org.springframework.web.context.request.NativeWebRequest, org.springframework.web.bind.support.WebDataBinderFactory)
+     * if (binder.getBindingResult().hasErrors() && isBindExceptionRequired(binder, parameter)) {
+     * throw new MethodArgumentNotValidException(parameter, binder.getBindingResult());
+     * }
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.warn("{},msg:{}", RequestHolder.getLastAccessUrl(), e.getMessage());
+        String bindExceptionMsg = e.getBindingResult().getFieldErrors().stream()
+                .map(FieldError::getDefaultMessage)
+                .collect(Collectors.joining(System.lineSeparator()));
+        return ResponseEntity.badRequest().body(bindExceptionMsg);
+    }
+
+    /**
+     * org.springframework.web.bind.ServletRequestBindingException: Missing request header 'userId' for method parameter of type Integer
+     * 使用@RequestHeader 且字段为必填时，报此错误
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(ServletRequestBindingException.class)
+    public ResponseEntity<String> handleServletRequestBindingException(ServletRequestBindingException e) {
+        log.warn("{},msg:{}", RequestHolder.getLastAccessUrl(), e.getMessage());
+        String servletRequestBindingExceptionMsg = getServletRequestBindingExceptionMsg(e);
+        return ResponseEntity.badRequest().body(servletRequestBindingExceptionMsg);
+    }
+
+
+    private String getServletRequestBindingExceptionMsg(ServletRequestBindingException e) {
+        String[] split = e.getMessage().split("'");
+        if (split.length > 2) {
+            return String.join(",", split[0], split[1]);
         }
-        return ResponseEntity.badRequest().body(result.toString());
+        return e.getMessage();
     }
 
 
