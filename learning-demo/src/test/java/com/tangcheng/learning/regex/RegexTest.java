@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * @author tangcheng
  * 2017/10/30
@@ -90,6 +92,27 @@ public class RegexTest {
             System.out.println("day: " + m.group(3)); //第三组
         }
         System.out.println(s.replaceAll("(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})", "${day}-${month}-${year}")); //将 年-月-日 形式的日期改为 日-月-年 形式
+    }
+
+
+    @Test
+    public void testRegex() {
+        /**
+         * 在java字符串和正则表达式中，“\”都具有特殊的含义 分了两层，先通过java一层处理，然后再经过regex一层
+         *
+         * 在java中\\表示一个正则中的转义符"\"。
+         * \\/表示正则中的“\/”,即对“/”进行转义，即原样输出。但此处“/”又不是特殊字符，不需要转义
+         * 所以“\\/”可以简写成/
+         *  https://www.cnblogs.com/softidea/p/5312413.html
+         *
+         */
+        String regexOld = "/user/userInvoices\\/[0-9]{11}\\/[0-9]";
+        String regexOptimize = "/user/userInvoices/[0-9]{11}/[0-9]";
+
+        String input = "/user/userInvoices/12345678911/1";
+        assertThat(Pattern.compile(regexOld).matcher(input).find()).isTrue();
+        assertThat(Pattern.compile(regexOptimize).matcher(input).find()).isTrue();
+        assertThat(Pattern.compile(regexOptimize).matcher("/user/userInvoices/1/1").find()).isFalse();
     }
 
 
