@@ -1,7 +1,12 @@
 package com.tangcheng.learning.awt.thumbnailator;
 
+import com.google.zxing.WriterException;
+import com.tangcheng.learning.awt.RestClient;
+import com.tangcheng.learning.awt.ZXingFactory;
+import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Position;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -9,13 +14,25 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author: tangcheng
  * @description:
  * @since: Created in 2018/06/27 15:11
  */
+@Slf4j
 public class ThumbNailatorDemo {
+
+    @Autowired
+    private RestClient restClient;
+
+    private static final byte[] LOCK = new byte[0];
+
+    private static Map<String, File> URL_2FILE = new ConcurrentHashMap<>();
+
+
     public static void main(String[] args) throws IOException {
         //首先获取
         String result = "result.png";
@@ -152,6 +169,62 @@ public class ThumbNailatorDemo {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public void drawWaterMark() {
+        try {
+            String urlInQr = "http://baidu.com?q=k=123";
+            File templateFile = loadBgImgUrl("http://img6.bdstatic.com/img/image/public/PC1.jpg");
+            BufferedImage img = ImageIO.read(templateFile);
+            int width = img.getWidth();
+            int height = img.getHeight();
+            int type = img.getType();
+
+            BufferedImage imgWithWatermark = new BufferedImage(width, height, type);
+            // 得到画笔对象
+            // Graphics g= buffImg.getGraphics();
+            Graphics2D g = imgWithWatermark.createGraphics();
+            RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            rh.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            rh.put(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+            rh.put(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+            g.setRenderingHints(rh);
+            // Draw the actual image.
+            g.drawImage(img, 0, 0, null);
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
+            File qrFile = ZXingFactory.createQRFile("www.baidu.com?q=123");
+            BufferedImage watermarkImg = ImageIO.read(qrFile);
+            g.drawImage(watermarkImg, 20, 20, 227, 226, null);
+            g.dispose();
+
+            File posterFile = File.createTempFile("download", ".png");
+            ImageIO.write(imgWithWatermark, "png", posterFile);
+            posterFile.createNewFile();
+            log.info("posterFile :{}", posterFile.getAbsolutePath());
+            qrFile.createNewFile();
+            log.info("qrFile :{}", qrFile.getAbsolutePath());
+        } catch (WriterException | IOException e) {
+            log.warn("生成QR失败   msg:{}", e.getMessage(), e);
+            throw new RuntimeException("生成QR失败");
+        }
+    }
+
+    private File loadBgImgUrl(String url) throws IOException {
+        File file = URL_2FILE.get(url);
+        if (file != null) {
+            return file;
+        }
+        URL_2FILE.clear();
+        synchronized (LOCK) {
+            file = URL_2FILE.get(url);
+            if (file != null) {
+                return file;
+            }
+            file = restClient.downFileToLocal(url);
+            URL_2FILE.put(url, file);
+            return file;
+        }
     }
 
 

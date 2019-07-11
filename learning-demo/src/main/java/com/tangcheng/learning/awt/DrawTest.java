@@ -43,6 +43,7 @@ class DrawComponent extends JComponent {
         setPreferredSize(new Dimension(DEFAULT_W, DEFAULT_H));
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 

@@ -2,10 +2,11 @@ package com.tangcheng.learning.awt;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.awt.*;
-import java.awt.font.*;
-import java.awt.geom.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author Cay Horstmann
@@ -68,6 +69,8 @@ class FontFrame extends JFrame {
  * A component that shows a centered message in a box.
  */
 class FontComponent extends JComponent {
+
+    @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
