@@ -1,8 +1,10 @@
 package com.tangcheng.learning.number;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -12,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author tangcheng
  * 2017/10/30
  */
+@Slf4j
 public class TwoValidDigitsTest {
 
     private double source = 123232.12345;
@@ -146,6 +149,30 @@ public class TwoValidDigitsTest {
         nf.setMaximumFractionDigits(2);
         String actual = nf.format(source);
         assertThat(actual).isEqualTo("123,232.12");
+    }
+
+
+    /**
+     * BigDecimal的实例进行运算后，参与运算的BigDecimal的值并没有被更改
+     */
+    @Test
+    public void bigDecimalOperate() {
+        BigDecimal sourceValue = new BigDecimal("123.1");
+        BigDecimal num1 = sourceValue;
+        BigDecimal num2 = new BigDecimal("100");
+        /**
+         * BigDecimal不使用科学计数法
+         */
+        String resultStr = num1.multiply(num2).setScale(0, RoundingMode.DOWN).stripTrailingZeros().toPlainString();
+        num1 = new BigDecimal(resultStr);
+        /**
+         * BigDecimal的实例进行运算后，参与运算的BigDecimal的值并没有发生变化
+         * 运算的过程中使用了multiplicand.intCompact，并没有直接使用原对象的实例
+         */
+        assertThat(sourceValue).isEqualTo(new BigDecimal("123.1"));
+        assertThat(num2).isEqualTo(new BigDecimal("100"));
+        assertThat(num1).isEqualTo(new BigDecimal("12310"));
+        log.info("sourceValue : {}, num1: {} ,num2 : {}", sourceValue.toPlainString(), num1.toPlainString(), num2.toPlainString());
     }
 
 
