@@ -1,6 +1,7 @@
 package com.tangcheng.app.service.biz;
 
 import com.tangcheng.app.domain.vo.GeoVO;
+import com.tangcheng.app.domain.vo.GpsVO;
 import com.tangcheng.app.domain.vo.MapVO;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Service;
@@ -89,8 +90,19 @@ public class LocationServiceImpl implements LocationService {
         return mapVO;
     }
 
-    public static void main(String[] args) {
-        LocationServiceImpl locationService=new LocationServiceImpl();
-        System.out.println(locationService.getLocationData());
+    @Override
+    public List<GpsVO> getGpsData() {
+        List<GpsVO> gpsVOList = new ArrayList<>();
+        gpsVOList.add(new GpsVO(116.4113, 39.929718));
+        gpsVOList.add(new GpsVO(116.41135, 39.929794));
+        gpsVOList.add(new GpsVO(116.41131, 39.929966));
+        gpsVOList.add(new GpsVO(116.41101, 39.929966));
+        gpsVOList.add(new GpsVO(116.41098, 39.930004));
+        gpsVOList.add(new GpsVO(116.410934, 39.930027));
+        gpsVOList.add(new GpsVO(116.41092, 39.930065));
+        gpsVOList.add(new GpsVO(116.410965, 39.93009));
+
+        return gpsVOList;
     }
+
 }

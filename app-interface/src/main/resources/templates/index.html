@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--https://github.com/thymeleaf/thymeleaf-extras-springsecurity-->
+<head th:lang="zh">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title th:text="#{index.title}">Title</title>
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap.min.css}"
+          href="../static/css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="container">
+    <header>
+        <h1 th:text="${title}"></h1>
+
+        <nav>
+            <ul>
+                <li>
+                    <a class="glyphicon glyphicon-log-out"
+                       style="cursor: pointer;"
+                       onclick="logout()">
+                        Logout
+                    </a>
+                </li>
+                <li>
+                    <a class="glyphicon glyphicon-registration-mark"
+                       style="cursor: pointer"
+                       th:href="@{/admin/user}">
+                        Register
+                    </a>
+                </li>
+                <li><a class="glyphicon glyphicon-search"
+                       style="cursor: pointer"
+                       th:href="@{/search}">
+                    Search
+                </a></li>
+                <li>栏目4</li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <article>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="'welcome:'+ ${message}+'!'">访问Model</h3>
+                </div>
+                <div class="panel-body">
+                    <span th:text="${#dates.format(date)}"></span>
+                </div>
+                <form id="logoutId" th:action="@{/logout}" method="post">
+                    <input type="submit" value="Sign Out"/>
+                </form>
+            </div>
+
+            <div class="pull-right" style="border: medium fuchsia;">
+                <h3>pull-right 整体右浮动 （Bootstrap），即这个外层的div整体向右浮动</h3>
+                <button class="btn btn-xs" type="button">line1</button>
+                <button class="btn btn-xs" type="button">line2</button>
+                <button class="btn btn-xs" type="button">line3</button>
+            </div>
+
+            <div sec:authorize="isAuthenticated()" th:if="${principal}" th:object="${principal}">
+                <p>已有用户登录</p>
+                <p>登录的用户为: <span sec:authentication="name"></span></p>
+                <p>用户权限为: <span th:text="*{userAuthentication.authorities}"></span></p>
+
+            </div>
+            <div sec:authorize="isAnonymous()">
+                <p>未有用户登录</p>
+            </div>
+            <div sec:authorize="hasRole('ADMIN')">
+                我是管理员
+            </div>
+            <p>登录的用户为: <span sec:authentication="username"></span></p>
+
+        </article>
+
+        <article>
+
+
+            <div sec:authorize="isAuthenticated()">
+                Hello <span sec:authentication="name">isAuthenticated</span>
+            </div>
+            <div sec:authorize="isRememberMe()">
+                Hello<span sec:authentication="name">isRememberMe</span>
+            </div>
+            <div sec:authorize-url="/admin">
+                <br/>
+                <a th:href="@{/templates/index.html}">authorize-url</a>
+            </div>
+        </article>
+
+        <article>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">列表</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="person:${peopleList}">
+                            <span th:text="${person.name}"></span>
+                            <span th:text="${person.age}"></span>
+                            <br/>
+                            <button class="btn btn-primary"
+                                    th:onclick="'getName(\''+${person.name}+${person.age}+'\');'">
+                                console.log(name)
+                                console.log(age)
+                            </button>
+                            <button class="btn btn-primary"
+                                    th:onclick="|javascript:getName('/user/${person.name}/delete')|">
+                                method2
+                                console.log(name)
+                                console.log(age)
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </article>
+
+        <article>
+            <!--Thymeleaf支持>,<,>=,<=,==,!=作为比较条件，同时也支持将SpringEL表达式用于条件中-->
+            <div th:if="${not #lists.isEmpty(modelList)}">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">列表</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item" th:each="model:${modelList}">
+                                <span th:text="${model.name}"></span>
+                                <span th:text="${model.age}"></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <ul class="list-group">
+
+                <li class="list-group-item">
+                    <span class="badge">dddd</span>
+                    Hello Li
+                </li>
+
+                <li class="list-group-item">
+                    <span>222</span>
+                    Hello Li222
+                </li>
+            </ul>
+        </article>
+        <article>
+
+            <div class="list-group">
+                <a href="#" class="list-group-item active">1111</a>
+                <a href="#" class="list-group-item ">
+                    <h4 class="list-group-item-heading">
+                        List group item heading
+                    </h4>
+                    <p class="list-group-item-text">
+                        list-group-item-text
+                    </p>
+                </a>
+                <a href="#" class="list-group-item ">3333</a>
+                <a href="#" class="list-group-item ">4444</a>
+            </div>
+        </article>
+    </section>
+
+
+</div>
+<aside>
+    <h2>相关信息</h2>
+    <p>相关信息detail</p>
+</aside>
+<footer>
+    版权所有
+</footer>
+</body>
+<script th:src="@{js/jquery-3.2.1.min.js}" src="../static/js/jquery-3.2.1.min.js"></script>
+<script th:inline="javascript">
+    var single = [[${singlePerson}]];
+    console.log(single.name + "/" + single.age)
+
+    function getName(name) {
+        console.log("getName:" + name)
+    }
+
+    function logout() {
+        //Adding CSRF will update the LogoutFilter to only use HTTP POST.
+//        http://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/htmlsingle/#csrf-logout
+        $("#logoutId").submit();
+    }
+
+</script>
+</html>

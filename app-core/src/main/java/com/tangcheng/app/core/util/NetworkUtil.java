@@ -3,11 +3,17 @@ package com.tangcheng.app.core.util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.InetAddress;
 
+/**
+ * @Auther: cheng.tang
+ * @Date: 2017/5/20
+ * @Description:
+ */
 public class NetworkUtil {
     private static Logger LOGGER = LoggerFactory.getLogger(NetworkUtil.class);
 
@@ -15,6 +21,15 @@ public class NetworkUtil {
 
     public static String getRemoteIp() {
         return getRemoteIp(RequestHolder.getRequestFacade());
+    }
+
+    /**
+     * todo:  user-agent长度范围，如何是合适的区间？
+     *
+     * @return
+     */
+    public static String getUserAgent() {
+        return RequestHolder.getRequestFacade().getHeader(HttpHeaders.USER_AGENT);
     }
 
     public static String getRemoteIp(HttpServletRequest request) {

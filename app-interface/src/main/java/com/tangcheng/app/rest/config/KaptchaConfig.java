@@ -49,9 +49,10 @@ public class KaptchaConfig {
         properties.put("kaptcha.image.height", "50");
         properties.put("kaptcha.textproducer.font.size", "40");
         properties.put("kaptcha.session.key", Constants.KAPTCHA_SESSION_KEY);
+        properties.put("kaptcha.textproducer.char.string", "abcdefhjkmnpqstuvwxy2345678");//把容易混淆的字符剔除，譬如l,1,2,z,g,9
         properties.put("kaptcha.textproducer.char.length", "4");
         properties.put("kaptcha.background.clear.to", Color.gray);
-        properties.put("kaptcha.textproducer.font.names", "宋体,楷体,微软雅黑");
+        properties.put("kaptcha.textproducer.font.names", "Times, TimesNR, 'New Century Schoolbook', Georgia, 'New York', serif");
 
         Config config = new Config(properties);
         DefaultKaptcha kaptcha = new DefaultKaptcha();

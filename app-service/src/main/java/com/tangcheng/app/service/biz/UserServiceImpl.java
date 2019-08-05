@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResultData<?> saveUser(String username, String email, String password) {
         userRepository.saveUser(username, email, password);
-        return new ResultData<>(GlobalCode.SUCCESS);
+        return ResultData.builder().build();
     }
 
     @Override
@@ -31,21 +31,21 @@ public class UserServiceImpl implements UserService {
         CustomUserDetails userDetails = userRepository.getUser(username);
         if (userDetails == null) {
             LOGGER.warn("invalid username:{}", username);
-            return new ResultData<>(GlobalCode.NOT_EXIST);
+            return ResultData.builder().bizError(GlobalCode.NOT_EXIST).build();
         }
-        return new ResultData<>(GlobalCode.SUCCESS, userDetails);
+        return ResultData.builder().detail(userDetails).build();
     }
 
     @Override
     public ResultData<?> updateUser(String username, String email) {
         userRepository.updateUser(username, email);
-        return new ResultData<>(GlobalCode.SUCCESS);
+        return ResultData.builder().build();
     }
 
     @Override
     public ResultData<?> removeUser(String username) {
         userRepository.removeUser(username);
-        return new ResultData<>(GlobalCode.SUCCESS);
+        return ResultData.builder().build();
     }
 
 }

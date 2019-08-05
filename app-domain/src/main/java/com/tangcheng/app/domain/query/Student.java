@@ -10,8 +10,7 @@ import javax.validation.constraints.Size;
 /**
  * Created by tang.cheng on 2016/12/27.
  */
-
-@ApiModel
+@ApiModel("Student_学员")
 public class Student {
     private Long id;
     //在需要校验的字段上指定约束条件

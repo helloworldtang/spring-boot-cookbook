@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Table</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Table Rowspan:</h1>
+
+    <table id="dataTable" class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>UserId</th>
+            <th>Name</th>
+            <th hidden>RecordId</th>
+            <th>在做什么</th>
+            <th>拥有的能力</th>
+            <th>有怎样的财富</th>
+            <th>身处何处</th>
+            <th>阶段</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <div th:remove="tag" th:each="item:${list}">
+
+            <tr>
+                <td rowspan="3" th:text="${item.id}">id</td>
+                <td th:text="${item.record[0].line1}">doing</td>
+                <td th:text="${item.record[0].line2}">ability</td>
+                <td th:text="${item.record[0].line3}">wealth</td>
+            </tr>
+            <tr>
+                <td th:text="${item.record[0].line1}">doing</td>
+                <td th:text="${item.record[0].line2}">ability</td>
+                <td th:text="${item.record[0].line3}">wealth</td>
+            </tr>
+            <tr>
+                <td th:text="${item.record[0].line1}">doing</td>
+                <td th:text="${item.record[0].line2}">ability</td>
+                <td th:text="${item.record[0].line3}">wealth</td>
+            </tr>
+
+        </div>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>

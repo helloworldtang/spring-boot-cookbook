@@ -2,6 +2,7 @@ package com.tangcheng.app.rest.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,28 +29,32 @@ public class TestRedisTemplateOperation {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    @RequestMapping(value = "/add",method = RequestMethod.GET)
+    @ApiOperation(value = "String类型增加一个value", notes = "String类型增加一个value")
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String set() {
         String key = "mykey";
         stringRedisTemplate.boundValueOps(key).increment(1);
         return key;
     }
 
-    @RequestMapping(value = "/get",method = RequestMethod.GET)
+    @ApiOperation(value = "读取一个String类型的数据", notes = "读取一个String类型的数据")
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
     public String get() {
         String key = "mykey";
         //如果key不存在时，Jedis会返回空字符串（key中无值时，redis会删除这个key）
         return stringRedisTemplate.boundValueOps(key).get();
     }
 
-    @RequestMapping(value = "/getList",method = RequestMethod.GET)
+    @ApiOperation(value = "获取一个List列表", notes = "获取一个List列表")
+    @RequestMapping(value = "/getList", method = RequestMethod.GET)
     public String getList() {
         String key = "myList";
         //如果key不存在时，Jedis会返回空集合（key中无值时，redis会删除这个key）。这种场景的返回值为"[]"
         return redisTemplate.boundListOps(key).range(0, -1).toString();
     }
 
-    @RequestMapping(value = "/setList/{element}",method = RequestMethod.GET)
+    @ApiOperation(value = "往List中新增一个元素，leftPush", notes = "往List中新增一个元素，leftPush")
+    @RequestMapping(value = "/setList/{element}", method = RequestMethod.GET)
     public void setList(@PathVariable("element") String element) {
         String key = "myList";
         redisTemplate.boundListOps(key).leftPush(element);
@@ -62,7 +67,8 @@ public class TestRedisTemplateOperation {
      *
      * @return
      */
-    @RequestMapping(value = "/getHash",method = RequestMethod.GET)
+    @ApiOperation(value = "获取一个Hash中存放的数据", notes = "获取一个Hash中存放的数据")
+    @RequestMapping(value = "/getHash", method = RequestMethod.GET)
     public String getHash() {
         String key = "myHash";
         Collection collection = Arrays.asList(1, 2, 3, 4, 5);
@@ -85,7 +91,8 @@ public class TestRedisTemplateOperation {
         return result;
     }
 
-    @RequestMapping(value = "/setHash/{field}/{value}",method = RequestMethod.GET)
+    @ApiOperation(value = "往一个Hash添加一个键值对", notes = "往一个Hash添加一个键值对")
+    @RequestMapping(value = "/setHash/{field}/{value}", method = RequestMethod.GET)
     public void setHash(@PathVariable("field") String field, @PathVariable("value") String value) {
         String key = "myHash";
         //执行hmset myHash 1 value1后
@@ -97,7 +104,8 @@ public class TestRedisTemplateOperation {
      * 存放在Redis中的值：
      * hash : {"keyEmptyArrayList":[],"key2":"key2","keyWithNullValue":null}
      */
-    @RequestMapping(value = "/set/hash/null",method = RequestMethod.GET)
+    @ApiOperation(value = "往一个Hash中放不Java对象的情况", notes = "往一个Hash中放不Java对象的情况")
+    @RequestMapping(value = "/set/hash/null", method = RequestMethod.GET)
     public void setHasWithNullValue() {
         String key = "myhashWithNull";
         redisTemplate.boundHashOps(key).put("keyWithNullValue", null);//在hash的value中会存放字符串“null”
@@ -106,7 +114,8 @@ public class TestRedisTemplateOperation {
     }
 
 
-    @RequestMapping(value = "/redis/{key}",method = RequestMethod.GET)
+    @ApiOperation(value = "一个获取不同Redis数据结构值的通用功能", notes = "一个获取不同Redis数据结构值的通用功能")
+    @RequestMapping(value = "/redis/{key}", method = RequestMethod.GET)
     public String getRedisData(@PathVariable("key") String key) throws JsonProcessingException {
         if (redisTemplate.hasKey(key)) {
             ObjectMapper objectMapper = new ObjectMapper();

@@ -7,4 +7,6 @@ public interface BizError {
     Integer getCode();
 
     String getMsg();
+
+    BizError setMsg(String msg);
 }

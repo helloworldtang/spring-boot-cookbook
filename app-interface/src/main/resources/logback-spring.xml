@@ -52,7 +52,6 @@
     <logger name="com.tangcheng" level="INFO" additivity="false">
         <appender-ref ref="ROLLING-FILE-INFO"/>
         <appender-ref ref="ROLLING-FILE-WARN"/>
-        <appender-ref ref="CONSOLE"/>
     </logger>
     <logger name="org.springframework">
         <appender-ref ref="ROLLING-FILE-WARN"/>

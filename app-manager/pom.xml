@@ -22,6 +22,19 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
+
+        <!--https://github.com/mkopylec/recaptcha-spring-boot-starter       -->
+        <dependency>
+            <groupId>com.github.mkopylec</groupId>
+            <artifactId>recaptcha-spring-boot-starter</artifactId>
+            <version>1.3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+
     </dependencies>
 
 </project>

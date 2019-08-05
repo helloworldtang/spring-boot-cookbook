@@ -2,57 +2,40 @@ package com.tangcheng.app.domain.vo;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.tangcheng.app.domain.exception.BizError;
 import com.tangcheng.app.domain.errorcode.GlobalCode;
-
-import java.io.Serializable;
+import com.tangcheng.app.domain.exception.BizError;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Created by tangcheng on 3/25/2017.
  */
-public class ResultData<T> implements Serializable {
-    private Integer code;
-    private String msg;
+@Builder
+public class ResultData<T> implements BizError {
+
+    @Builder.Default
+    private BizError bizError = GlobalCode.SUCCESS;
+
+    @Getter
     @JSONField(name = "result")
     private T detail;
 
-    public ResultData(BizError bizError) {
-        this.code = bizError.getCode();
-        this.msg = bizError.getMsg();
-    }
 
-    public ResultData(BizError bizError, T detail) {
-        this(bizError);
-        this.detail = detail;
-    }
-
-    public ResultData(T detail) {
-        this(GlobalCode.SUCCESS);
-        this.detail = detail;
-    }
-
+    @Override
     public Integer getCode() {
-        return code;
+        return bizError.getCode();
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
+    @Override
     public String getMsg() {
-        return msg;
+        return bizError.getMsg();
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    @Override
+    public BizError setMsg(String msg) {
+        bizError.setMsg(msg);
+        return bizError;
     }
 
-    public T getDetail() {
-        return detail;
-    }
-
-    public void setDetail(T detail) {
-        this.detail = detail;
-    }
 
 }

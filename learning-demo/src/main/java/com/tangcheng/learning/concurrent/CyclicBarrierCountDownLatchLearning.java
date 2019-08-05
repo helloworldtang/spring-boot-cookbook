@@ -55,7 +55,7 @@ public class CyclicBarrierCountDownLatchLearning {
                 "\n 因此所有的Writer线程会一起阻塞下去forever until server shutdown",parties,lessParties);
     }
 
-    static class Writer implements Runnable {
+    private static class Writer implements Runnable {
         private CyclicBarrier cyclicBarrier;
         private CountDownLatch startGate;
 

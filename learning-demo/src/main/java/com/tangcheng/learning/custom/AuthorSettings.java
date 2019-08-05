@@ -6,6 +6,10 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Max;
 
+/**
+ * 得出与配置文件关联的prefix不支持驼峰命名和蛇形命名（下划线）
+ * https://img2018.cnblogs.com/blog/280044/201901/280044-20190129001148618-733449854.png
+ */
 @Component
 @Validated
 @ConfigurationProperties(prefix = "info.author")
