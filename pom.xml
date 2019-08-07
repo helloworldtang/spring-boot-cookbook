@@ -7,14 +7,10 @@
     <artifactId>spring-boot-cookbook</artifactId>
     <version>1.0.1</version>
     <modules>
-        <module>app-interface</module>
-        <module>app-service</module>
-        <module>app-domain</module>
-        <module>app-dao</module>
         <module>app-schedule</module>
         <module>app-core</module>
-        <module>app-manager</module>
         <module>learning-demo</module>
+        <module>app</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -52,7 +48,12 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.54</version>
+                <version>1.2.58</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tangcheng</groupId>
+                <artifactId>app-core</artifactId>
+                <version>1.0.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CityDoMapper">
+
+    <select id="testWhereLabel" parameterType="map" resultType="CityDo">
+        SELECT * from city
+        <where>
+            <if test="id!=null">
+                id=#{id}
+            </if>
+            <if test="name!=nul">
+                and NAME =#{name}
+            </if>
+            <if test="state!=null">
+                AND state=#{state}
+            </if>
+        </where>
+
+    </select>
+
+
+</mapper>
