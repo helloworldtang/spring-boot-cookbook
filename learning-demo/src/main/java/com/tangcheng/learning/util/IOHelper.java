@@ -10,7 +10,13 @@ import org.apache.commons.io.LineIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 /**
@@ -74,13 +80,10 @@ public class IOHelper {
                     int readCount = tais.read(content, 0, size);
                     LOGGER.info("fileName:{}", entry.getName());
                     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(content, 0, readCount);
-                    LineIterator iterator = IOUtils.lineIterator(byteArrayInputStream, Charset.forName("utf-8"));
-                    try {
+                    try (LineIterator iterator = IOUtils.lineIterator(byteArrayInputStream, Charset.forName("utf-8"))) {
                         while (iterator.hasNext()) {
                             LOGGER.info("line:{}", iterator.nextLine());
                         }
-                    } finally {
-                        LineIterator.closeQuietly(iterator);
                     }
                 }
             }
