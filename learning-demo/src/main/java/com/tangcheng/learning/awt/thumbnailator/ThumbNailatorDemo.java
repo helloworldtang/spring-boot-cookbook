@@ -60,7 +60,30 @@ public class ThumbNailatorDemo {
 
         //给文字水印
         pressText("C:/Users/luojie/Desktop/image_watermark_bottom_right.jpg", "WEIXINYONGHU", "Comic Sans MS", Font.BOLD, 30, Color.BLACK, 275, 65, 1f);
+    }
 
+
+    /**
+     * 解决缩放后背景颜色变黑的问题
+     * File.createNewFile和 File.createTempFile比较和区别
+     * https://www.cnblogs.com/softidea/p/11532004.html
+     * <p>
+     * 我的ImageIO.write ByteArrayOutputStream为什么这么慢？
+     * https://www.cnblogs.com/softidea/p/10811489.html
+     *
+     * @param sourceImage
+     * @param width
+     * @param height
+     * @return
+     * @throws IOException
+     */
+    public File resizeBgPic(BufferedImage sourceImage, int width, int height) throws IOException {
+        Thumbnails.Builder<BufferedImage> builder = Thumbnails.of(sourceImage)
+                .imageType(BufferedImage.TYPE_INT_ARGB)
+                .forceSize(width, height);
+        File tempFile = File.createTempFile("tmp", ".png");
+        builder.outputFormat("png").toFile(tempFile);
+        return tempFile;
     }
 
 
@@ -91,11 +114,11 @@ public class ThumbNailatorDemo {
             g.setColor(color);
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
 
-            int width_wi = fontSize * getTextLength(pressText);
-            int height_wi = fontSize;
+            int widthWi = fontSize * getTextLength(pressText);
+            int heightWi = fontSize;
 
-            int widthDiff = width - width_wi;
-            int heightDiff = height - height_wi;
+            int widthDiff = width - widthWi;
+            int heightDiff = height - heightWi;
             if (x < 0) {
                 x = widthDiff / 2;
             } else if (x > widthDiff) {
@@ -107,7 +130,7 @@ public class ThumbNailatorDemo {
             } else if (y > heightDiff) {
                 y = heightDiff;
             }
-            g.drawString(pressText, x, y + height_wi);//水印文件
+            g.drawString(pressText, x, y + heightWi);//水印文件
             g.dispose();
             ImageIO.write(bufferedImage, "JPEG", file);
         } catch (IOException e) {
@@ -136,11 +159,15 @@ public class ThumbNailatorDemo {
     }
 
 
-    /*
+    /**
      * 圆角处理
-     * @param BufferedImage
+     *
+     * @param srcImageFile
+     * @param result
+     * @param type
      * @param cornerRadius
-     * */
+     * @return
+     */
     public static String makeRoundedCorner(String srcImageFile, String result, String type, int cornerRadius) {
         try {
             BufferedImage image = ImageIO.read(new File(srcImageFile));
@@ -157,7 +184,9 @@ public class ThumbNailatorDemo {
 //        g2.fillRoundRect(0, 0,w, h, cornerRadius, cornerRadius);
 //        g2.setComposite(AlphaComposite.SrcIn);
 
-            //这里绘画原型图
+            /**
+             * 这里绘画原型图
+             */
             Ellipse2D.Double shape = new Ellipse2D.Double(0, 0, w, h);
             g2.setClip(shape);
 
