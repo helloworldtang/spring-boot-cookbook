@@ -41,3 +41,4 @@ resources/gitignore/*
 build/
 build.properties
 junit*.properties
+target/
