@@ -40,7 +40,7 @@ public class DistributedLockRedis {
 //        redisTemplate.getConnectionFactory().getConnection().setNX()
         String redisKey;
         if (StringUtils.isBlank(bizName)) {
-            LOGGER.warn("is not recommended!");
+            LOGGER.warn("has no bizName. is not recommended!");
             redisKey = DISTRIBUTED_LOCK_REDIS_KEY;
         } else {
             redisKey = DISTRIBUTED_LOCK_REDIS_KEY + bizName.trim();
@@ -51,10 +51,16 @@ public class DistributedLockRedis {
             long currentTimeMillis = System.currentTimeMillis();
             long releaseLockTime = currentTimeMillis + unit.toMillis(lockTimeout) + 1;
             //这两个if else不能混写，因为多个相同类型的线程竞争锁时,在锁超时时，设置的超时时间是一样的
-            if (valueOps.setIfAbsent(releaseLockTime)) {//第一次获取锁
+            if (valueOps.setIfAbsent(releaseLockTime)) {
+                /**
+                 * 第一次获取锁
+                 */
                 redisTemplate.expire(redisKey, lockTimeout, unit);
                 return;
-            } else if (currentTimeMillis > valueOps.get()) {//锁已经超时
+            } else if (currentTimeMillis > valueOps.get()) {
+                /**
+                 * 锁已经超时
+                 */
                 //如果其它线程占用锁，再重新设置的时间和原来时间的时间差，可以忽略
                 Long lockCurrentValue = valueOps.getAndSet(releaseLockTime);
                 //如果当前时间小于LockKey存放的时间，说明已经有其它线程加锁
