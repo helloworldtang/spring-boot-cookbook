@@ -3,6 +3,10 @@ package com.tangcheng.learning.service.lock.annotation;
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * @author cheng.tang
+ */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
