@@ -14,18 +14,17 @@ import java.util.Objects;
 @Service
 public class RedisDemo {
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     @Transactional(rollbackFor = {NullPointerException.class})
     public void doBiz() {
-        BoundListOperations listOps = redisTemplate.boundListOps("myList");
+        BoundListOperations<String, String> listOps = redisTemplate.boundListOps("myList");
         listOps.leftPush("hello");
         listOps.leftPush("world");
         String value = getValue();
         if (Objects.equals(value, "world")) {
             System.out.println("O,my god");
         }
-
     }
 
     private String getValue() {
