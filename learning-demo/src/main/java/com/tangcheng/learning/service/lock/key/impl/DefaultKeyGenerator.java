@@ -71,12 +71,14 @@ public class DefaultKeyGenerator implements KeyGenerator {
      * @param parameterClass
      */
     private void findKeyParamAndAddFillRedisKey(StringBuilder builder, String delimiter, Object fieldObject, Class<?> parameterClass) {
-        if (parameterClass.isAssignableFrom(String.class) || parameterClass.isAssignableFrom(Integer.class)
+        if (parameterClass.isPrimitive()
+                || parameterClass.isAssignableFrom(String.class)
+                || parameterClass.isAssignableFrom(Integer.class)
                 || parameterClass.isAssignableFrom(Long.class) || parameterClass.isAssignableFrom(Byte.class)
-                || parameterClass.isAssignableFrom(Boolean.class) || parameterClass.isArray()
-                ) {
-            //这些是基本数据类型，就不用走下面的了
-            // TODO: 2018/8/2  parameterClass.isPrimitive()的研究
+                || parameterClass.isAssignableFrom(Boolean.class) || parameterClass.isAssignableFrom(Short.class)
+                || parameterClass.isAssignableFrom(Float.class) || parameterClass.isAssignableFrom(Double.class)
+                || parameterClass.isAssignableFrom(Character.class)
+                || parameterClass.isArray()) {
             return;
         }
         ReflectionUtils.doWithFields(parameterClass, field -> {
@@ -103,7 +105,7 @@ public class DefaultKeyGenerator implements KeyGenerator {
      * @param fileValue
      */
     private void addRedisKey(StringBuilder builder, String fieldName, String annotationValue, String delimiter, Object fileValue) {
-        if (Objects.isNull(fileValue)) {
+        if (Objects.isNull(fileValue) || StringUtils.isBlank(fileValue.toString())) {
             return;
         }
         if (StringUtils.isBlank(annotationValue)) {

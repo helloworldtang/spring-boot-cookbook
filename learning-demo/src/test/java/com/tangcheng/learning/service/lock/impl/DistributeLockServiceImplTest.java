@@ -42,10 +42,11 @@ public class DistributeLockServiceImplTest {
         int size = 10;
         ExecutorService executorService = Executors.newFixedThreadPool(size);
         for (int i = 0; i < size; i++) {
-            executorService.submit(() -> distributeLockService.mayBeMultiRepeatRequest(1L, new DistributeLockTestReq("dl")));
+            executorService.submit(() -> distributeLockService.mayBeMultiRepeatRequest(1L, new DistributeLockTestReq("nameValue")));
         }
-        executorService.awaitTermination(5, TimeUnit.SECONDS);
+        executorService.awaitTermination(5, TimeUnit.MINUTES);
         executorService.shutdown();
     }
+
 
 }
