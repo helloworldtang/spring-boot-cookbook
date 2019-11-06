@@ -35,6 +35,10 @@ public class SplitTest {
         assertThat(ary.length).isEqualTo(3);
         System.out.println(Arrays.stream(ary).collect(Collectors.toList()));
         System.out.println(Arrays.asList(ary).size());
+        String[] split = "https://oss-cn-shanghai.aliyuncs.com/pathfinder-private/PRODUCT/BIG/BIG_AA3402_01.jpg?x-oss-process=style/gongbangbang_style".split("\\?");
+        for (String s : split) {
+            System.out.println(s);
+        }
     }
 
 
