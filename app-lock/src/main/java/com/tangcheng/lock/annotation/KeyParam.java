@@ -1,4 +1,4 @@
-package com.tangcheng.learning.service.lock.annotation;
+package com.tangcheng.lock.annotation;
 
 import java.lang.annotation.*;
 

@@ -1,9 +1,9 @@
-package com.tangcheng.learning.service.lock.aspect;
+package com.tangcheng.lock.aspect;
 
-import com.tangcheng.learning.service.lock.annotation.DistributedLock;
-import com.tangcheng.learning.service.lock.annotation.SpinWaitTimeParam;
-import com.tangcheng.learning.service.lock.exception.DistributedLockException;
-import com.tangcheng.learning.service.lock.key.KeyGenerator;
+import com.tangcheng.lock.annotation.DistributedLock;
+import com.tangcheng.lock.annotation.SpinWaitTimeParam;
+import com.tangcheng.lock.exception.DistributedLockException;
+import com.tangcheng.lock.key.KeyGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -37,7 +37,7 @@ public class DistributedLockAspect {
     @Autowired
     private KeyGenerator keyGenerator;
 
-    @Pointcut("@annotation(com.tangcheng.learning.service.lock.annotation.DistributedLock)")
+    @Pointcut("@annotation(com.tangcheng.lock.annotation.DistributedLock)")
     public void distributedLockPointCut() {
     }
 

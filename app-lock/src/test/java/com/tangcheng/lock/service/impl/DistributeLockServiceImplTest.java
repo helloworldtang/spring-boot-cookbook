@@ -1,16 +1,17 @@
-package com.tangcheng.learning.service.lock.impl;
+package com.tangcheng.lock.service.impl;
 
-import com.tangcheng.learning.service.lock.DistributeLockService;
-import com.tangcheng.learning.web.dto.req.DistributeLockTestReq;
+import com.tangcheng.AppLockApplicationTest;
+import com.tangcheng.lock.domain.req.DistributeLockTestReq;
+import com.tangcheng.lock.service.DistributeLockService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * spring-boot-cookbook
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @date 6/17/2018 2:31 AM
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = AppLockApplicationTest.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DistributeLockServiceImplTest {
 
     @Autowired
@@ -40,11 +41,12 @@ public class DistributeLockServiceImplTest {
     @Test
     public void mayBeMultiRepeatRequest() throws InterruptedException {
         int size = 10;
+        CountDownLatch latch = new CountDownLatch(size);
         ExecutorService executorService = Executors.newFixedThreadPool(size);
         for (int i = 0; i < size; i++) {
-            executorService.submit(() -> distributeLockService.mayBeMultiRepeatRequest(1L, new DistributeLockTestReq("nameValue")));
+            executorService.submit(() -> distributeLockService.mayBeMultiRepeatRequest(1L, new DistributeLockTestReq("nameValue"), latch));
         }
-        executorService.awaitTermination(5, TimeUnit.MINUTES);
+        latch.await();
         executorService.shutdown();
     }
 

@@ -1,6 +1,5 @@
 package com.tangcheng.learning.reflect;
 
-import com.tangcheng.learning.service.lock.annotation.KeyParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.junit.Test;
@@ -68,19 +67,6 @@ public class StringEqualsTest {
         System.out.println(list); //[twoLevelChildName, oneLevelChildName, name]
     }
 
-    @Test
-    public void springReflectionUtilsTest2() {
-        final List<String> list = new ArrayList<String>();
-        ReflectionUtils.doWithFields(TwoLevelChildClass.class, field -> list.add(field.getName()), field -> {
-            KeyParam annotation = field.getAnnotation(KeyParam.class);
-            if (annotation != null) {
-                return true;
-            }
-            return false;
-        });
-        System.out.println(list); //[twoLevelChildName]
-    }
-
     @Data
     public static class ParentClass {
         private String name;
@@ -95,7 +81,6 @@ public class StringEqualsTest {
     @Data
     @EqualsAndHashCode(callSuper = true)
     public static class TwoLevelChildClass extends OneLevelChildClass {
-        @KeyParam
         private String twoLevelChildName;
     }
 

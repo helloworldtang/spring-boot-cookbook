@@ -1,4 +1,4 @@
-package com.tangcheng.learning.service.lock.exception;
+package com.tangcheng.lock.exception;
 
 /**
  * @author: cheng.tang

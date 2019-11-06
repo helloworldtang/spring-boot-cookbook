@@ -1,6 +1,6 @@
-package com.tangcheng.learning.web.dto.req;
+package com.tangcheng.lock.domain.req;
 
-import com.tangcheng.learning.service.lock.annotation.KeyParam;
+import com.tangcheng.lock.annotation.KeyParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

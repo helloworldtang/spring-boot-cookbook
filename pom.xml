@@ -11,6 +11,7 @@
         <module>app-core</module>
         <module>learning-demo</module>
         <module>app</module>
+        <module>app-lock</module>
     </modules>
     <packaging>pom</packaging>
 

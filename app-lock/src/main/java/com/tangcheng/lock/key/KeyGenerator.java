@@ -1,4 +1,4 @@
-package com.tangcheng.learning.service.lock.key;
+package com.tangcheng.lock.key;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 

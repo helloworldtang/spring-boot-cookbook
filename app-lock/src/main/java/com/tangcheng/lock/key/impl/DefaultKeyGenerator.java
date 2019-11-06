@@ -1,8 +1,8 @@
-package com.tangcheng.learning.service.lock.key.impl;
+package com.tangcheng.lock.key.impl;
 
-import com.tangcheng.learning.service.lock.annotation.DistributedLock;
-import com.tangcheng.learning.service.lock.annotation.KeyParam;
-import com.tangcheng.learning.service.lock.key.KeyGenerator;
+import com.tangcheng.lock.annotation.DistributedLock;
+import com.tangcheng.lock.annotation.KeyParam;
+import com.tangcheng.lock.key.KeyGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
