@@ -35,7 +35,7 @@ public @interface DistributedLock {
      *
      * @return 获得锁后，自动释放锁的时间
      */
-    int expireTime() default 60;
+    int expireTime() default 10;
 
     /**
      * 排队等待的最大时间

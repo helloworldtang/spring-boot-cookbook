@@ -1,21 +1,19 @@
-package com.tangcheng;
+package com.tangcheng.lock;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author: cheng.tang
- * @date: 2019/11/6
+ * @date: 2019/11/23
  * @see
  * @since
  */
 @SpringBootApplication
-public class AppLockApplicationTest {
-
+public class AppLockApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AppLockApplicationTest.class, args);
+        SpringApplication.run(AppLockApplication.class, args);
     }
-
 
 }

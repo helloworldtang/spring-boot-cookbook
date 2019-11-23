@@ -3,14 +3,21 @@ package com.tangcheng.lock.key.impl;
 import com.tangcheng.lock.annotation.DistributedLock;
 import com.tangcheng.lock.annotation.KeyParam;
 import com.tangcheng.lock.key.KeyGenerator;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -20,6 +27,7 @@ import java.util.Objects;
  * @author tangcheng
  * @date 6/16/2018 11:52 PM
  */
+@Slf4j
 @Component
 public class DefaultKeyGenerator implements KeyGenerator {
 
@@ -36,8 +44,7 @@ public class DefaultKeyGenerator implements KeyGenerator {
         DistributedLock distributedLock = method.getAnnotation(DistributedLock.class);
         Parameter[] parameters = method.getParameters();
         Object[] args = proceedingJoinPoint.getArgs();
-        StringBuilder builder = new StringBuilder();
-
+        Map<String, String> paramsKey = new HashMap<>();
         String delimiter = distributedLock.delimiter();
         for (int i = 0; i < parameters.length; i++) {
             Parameter parameter = parameters[i];
@@ -52,25 +59,45 @@ public class DefaultKeyGenerator implements KeyGenerator {
                     continue;
                 }
                 Class<?> parameterClass = fieldObject.getClass();
-                findKeyParamAndAddFillRedisKey(builder, delimiter, fieldObject, parameterClass);
+                findKeyParamAndAddFillRedisKey(paramsKey, delimiter, fieldObject, parameterClass);
                 //查找父类的字段
                 continue;
             }
-            addRedisKey(builder, parameter.getName(), annotation.value(), delimiter, args[i]);
+            addRedisKey(paramsKey, parameter.getName(), annotation.value(), delimiter, args[i]);
         }
-        return distributedLock.prefix() + builder.toString();
+        String redisKeyByBizParams = sortByParamNamesAndJoinByDelimiter(paramsKey, delimiter);
+        return distributedLock.prefix() + redisKeyByBizParams;
+    }
+
+
+    private String sortByParamNamesAndJoinByDelimiter(Map<String, String> paramsKey, String delimiter) {
+        if (CollectionUtils.isEmpty(paramsKey)) {
+            log.warn("没有配置业务参数【不规范的操作】");
+            return "";
+        }
+        List<Map.Entry<String, String>> list = new ArrayList<>(paramsKey.entrySet());
+        //升序排序
+        list.sort(Comparator.comparing(Map.Entry::getKey));
+        StringBuilder result = new StringBuilder();
+        for (Map.Entry<String, String> entry : list) {
+            result.append(delimiter)
+                    .append(entry.getKey())
+                    .append(delimiter)
+                    .append(entry.getValue());
+        }
+        return result.toString();
     }
 
 
     /**
      * 查找Req中有没有使用@KeyParam
      *
-     * @param builder
+     * @param paramsKey
      * @param delimiter
      * @param fieldObject
      * @param parameterClass
      */
-    private void findKeyParamAndAddFillRedisKey(StringBuilder builder, String delimiter, Object fieldObject, Class<?> parameterClass) {
+    private void findKeyParamAndAddFillRedisKey(Map<String, String> paramsKey, String delimiter, Object fieldObject, Class<?> parameterClass) {
         if (parameterClass.isPrimitive()
                 || parameterClass.isAssignableFrom(String.class)
                 || parameterClass.isAssignableFrom(Integer.class)
@@ -85,7 +112,7 @@ public class DefaultKeyGenerator implements KeyGenerator {
             KeyParam annotation = field.getAnnotation(KeyParam.class);
             field.setAccessible(true);
             Object fieldValue = ReflectionUtils.getField(field, fieldObject);
-            addRedisKey(builder, field.getName(), annotation.value(), delimiter, fieldValue);
+            addRedisKey(paramsKey, field.getName(), annotation.value(), delimiter, fieldValue);
         }, field -> {
             KeyParam annotation = field.getAnnotation(KeyParam.class);
             if (Objects.isNull(annotation)) {
@@ -98,23 +125,20 @@ public class DefaultKeyGenerator implements KeyGenerator {
     /**
      * 将注解中key-value拼装到redis-key
      *
-     * @param builder
+     * @param paramsKey
      * @param fieldName
      * @param annotationValue
      * @param delimiter
      * @param fileValue
      */
-    private void addRedisKey(StringBuilder builder, String fieldName, String annotationValue, String delimiter, Object fileValue) {
+    private void addRedisKey(Map<String, String> paramsKey, String fieldName, String annotationValue, String delimiter, Object fileValue) {
         if (Objects.isNull(fileValue) || StringUtils.isBlank(fileValue.toString())) {
             return;
         }
         if (StringUtils.isBlank(annotationValue)) {
             annotationValue = fieldName;
         }
-        builder.append(delimiter)
-                .append(annotationValue)
-                .append(delimiter)
-                .append(fileValue);
+        paramsKey.put(annotationValue, fileValue.toString());
     }
 
 

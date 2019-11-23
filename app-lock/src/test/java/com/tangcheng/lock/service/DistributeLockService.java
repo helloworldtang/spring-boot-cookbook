@@ -7,7 +7,6 @@ import com.tangcheng.lock.domain.req.DistributeLockTestReq;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * spring-boot-cookbook
@@ -18,8 +17,7 @@ import java.util.concurrent.TimeUnit;
 public interface DistributeLockService {
 
 
-    @DistributedLock(spinWaitTimeParam = @SpinWaitTimeParam(spinWaitTime = 200, timeUnit = TimeUnit.MINUTES))
-    void mayBeMultiRepeatRequest(@KeyParam("id") @RequestParam Long id, DistributeLockTestReq req, CountDownLatch latch);
-
+    @DistributedLock(spinWaitTimeParam = @SpinWaitTimeParam(spinWaitTime = 10))
+    void mayBeMultiRepeatRequest(@KeyParam("id") @RequestParam Integer id, DistributeLockTestReq req, CountDownLatch latch);
 
 }

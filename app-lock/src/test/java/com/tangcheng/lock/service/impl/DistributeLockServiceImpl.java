@@ -24,7 +24,7 @@ public class DistributeLockServiceImpl implements DistributeLockService {
 
     @Override
     @DistributedLock
-    public void mayBeMultiRepeatRequest(@KeyParam("id") @RequestParam Long id, DistributeLockTestReq req, CountDownLatch latch) {
+    public void mayBeMultiRepeatRequest(@KeyParam("id") @RequestParam Integer id, DistributeLockTestReq req, CountDownLatch latch) {
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {

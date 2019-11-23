@@ -61,8 +61,7 @@ public class DistributedLockAspect {
             }
         }
         //能走到这的，肯定是没有获取到锁，原因有两个，超过了等待时间还没有获取到
-        log.warn(" 没有获取到锁 key->{}", lockKey);
-        throw new DistributedLockException("没有获取到锁");
+        throw new DistributedLockException("fail to ge lock");
     }
 
     private Boolean getLock(DistributedLock annotation, String lockKey) throws InterruptedException {
