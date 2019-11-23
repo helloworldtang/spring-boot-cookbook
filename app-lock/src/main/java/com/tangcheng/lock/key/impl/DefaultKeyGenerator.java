@@ -35,24 +35,24 @@ public class DefaultKeyGenerator implements KeyGenerator {
      * 如果对象中嵌套对象，则取不到@KeyParam的字段
      *
      * @param proceedingJoinPoint
+     * @param distributedLock
      * @return
      */
     @Override
-    public String getLockKey(ProceedingJoinPoint proceedingJoinPoint) {
+    public String getLockKey(ProceedingJoinPoint proceedingJoinPoint, DistributedLock distributedLock) {
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = methodSignature.getMethod();
-        DistributedLock distributedLock = method.getAnnotation(DistributedLock.class);
         Parameter[] parameters = method.getParameters();
         Object[] args = proceedingJoinPoint.getArgs();
-        Map<String, String> paramsKey = new HashMap<>();
+        Map<String, String> paramsKey = new HashMap<>(32);
         String delimiter = distributedLock.delimiter();
         for (int i = 0; i < parameters.length; i++) {
             Parameter parameter = parameters[i];
             if (parameter == null) {
                 continue;
             }
-            KeyParam annotation = parameter.getAnnotation(KeyParam.class);
-            if (annotation == null) {
+            KeyParam keyParamAnnotation = parameter.getAnnotation(KeyParam.class);
+            if (keyParamAnnotation == null) {
                 //如果入参没有加@KeyParam，则看对象里面的字段有没有加@KeyParam
                 Object fieldObject = args[i];
                 if (fieldObject == null) {
@@ -63,7 +63,7 @@ public class DefaultKeyGenerator implements KeyGenerator {
                 //查找父类的字段
                 continue;
             }
-            addRedisKey(paramsKey, parameter.getName(), annotation.value(), delimiter, args[i]);
+            addRedisKey(paramsKey, parameter.getName(), keyParamAnnotation.value(), delimiter, args[i]);
         }
         String redisKeyByBizParams = sortByParamNamesAndJoinByDelimiter(paramsKey, delimiter);
         return distributedLock.prefix() + redisKeyByBizParams;

@@ -1,5 +1,6 @@
 package com.tangcheng.lock.key;
 
+import com.tangcheng.lock.annotation.DistributedLock;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 /**
@@ -14,8 +15,9 @@ public interface KeyGenerator {
      * 根据AOP参数，生成指定分布式锁的Key
      *
      * @param proceedingJoinPoint
+     * @param distributedLock
      * @return 缓存的key
      */
-    String getLockKey(ProceedingJoinPoint proceedingJoinPoint);
+    String getLockKey(ProceedingJoinPoint proceedingJoinPoint, DistributedLock distributedLock);
 
 }

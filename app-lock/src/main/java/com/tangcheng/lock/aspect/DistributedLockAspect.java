@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * https://mp.weixin.qq.com/s/oNS-1t8rO2_uuwNHmH69JQ
  * spring-boot-cookbook
  * 基于AOP的分布式锁的主逻辑
  *
@@ -41,12 +42,18 @@ public class DistributedLockAspect {
     public void distributedLockPointCut() {
     }
 
-    @Around("execution(public * *(..))&&distributedLockPointCut()")
+    @Around("distributedLockPointCut()")
     public Object process(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = signature.getMethod();
         DistributedLock annotation = method.getAnnotation(DistributedLock.class);
-        String lockKey = keyGenerator.getLockKey(proceedingJoinPoint);
+        if (annotation == null) {
+            Class<?> classTarget = proceedingJoinPoint.getTarget().getClass();
+            Class<?>[] parameterTypes = ((MethodSignature) proceedingJoinPoint.getSignature()).getParameterTypes();
+            Method objMethod = classTarget.getMethod(signature.getName(), parameterTypes);
+            annotation = objMethod.getAnnotation(DistributedLock.class);
+        }
+        String lockKey = keyGenerator.getLockKey(proceedingJoinPoint, annotation);
         if (StringUtils.isBlank(lockKey)) {
             log.warn("lockKey is blank");
             throw new DistributedLockException("lock key must not be blank");

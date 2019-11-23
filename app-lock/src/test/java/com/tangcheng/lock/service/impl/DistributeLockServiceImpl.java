@@ -2,6 +2,7 @@ package com.tangcheng.lock.service.impl;
 
 import com.tangcheng.lock.annotation.DistributedLock;
 import com.tangcheng.lock.annotation.KeyParam;
+import com.tangcheng.lock.annotation.SpinWaitTimeParam;
 import com.tangcheng.lock.domain.req.DistributeLockTestReq;
 import com.tangcheng.lock.service.DistributeLockService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public class DistributeLockServiceImpl implements DistributeLockService {
 
 
     @Override
-    @DistributedLock
+    @DistributedLock(spinWaitTimeParam = @SpinWaitTimeParam(spinWaitTime = 10))
     public void mayBeMultiRepeatRequest(@KeyParam("id") @RequestParam Integer id, DistributeLockTestReq req, CountDownLatch latch) {
         try {
             TimeUnit.SECONDS.sleep(1);
