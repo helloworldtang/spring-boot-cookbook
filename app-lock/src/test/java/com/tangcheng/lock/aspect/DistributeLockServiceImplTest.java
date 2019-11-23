@@ -1,4 +1,4 @@
-package com.tangcheng.lock.service.impl;
+package com.tangcheng.lock.aspect;
 
 import com.tangcheng.lock.AppLockApplication;
 import com.tangcheng.lock.domain.req.DistributeLockTestReq;
