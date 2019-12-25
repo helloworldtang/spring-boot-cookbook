@@ -1,7 +1,6 @@
 package com.tangcheng.learning.reflect;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.tangcheng.learning.domain.bo.TwoLevelChildClass;
 import org.junit.Test;
 import org.springframework.util.ReflectionUtils;
 
@@ -65,23 +64,6 @@ public class StringEqualsTest {
             }
         });
         System.out.println(list); //[twoLevelChildName, oneLevelChildName, name]
-    }
-
-    @Data
-    public static class ParentClass {
-        private String name;
-    }
-
-    @Data
-    @EqualsAndHashCode(callSuper = true)
-    public static class OneLevelChildClass extends ParentClass {
-        private String oneLevelChildName;
-    }
-
-    @Data
-    @EqualsAndHashCode(callSuper = true)
-    public static class TwoLevelChildClass extends OneLevelChildClass {
-        private String twoLevelChildName;
     }
 
 
