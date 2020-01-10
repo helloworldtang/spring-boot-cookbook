@@ -1,17 +1,17 @@
 package com.tangcheng.app.dao.repository;
 
-import com.tangcheng.app.domain.vo.CustomUserDetails;
-import com.tangcheng.app.domain.entity.UserDO;
-import com.tangcheng.app.domain.entity.UserRoleDO;
 import com.tangcheng.app.dao.repository.mapper.UserDOMapper;
 import com.tangcheng.app.dao.repository.mapper.UserRoleDOMapper;
+import com.tangcheng.app.domain.entity.UserDO;
+import com.tangcheng.app.domain.entity.UserRoleDO;
+import com.tangcheng.app.domain.vo.CustomUserDetails;
 import org.joda.time.LocalDateTime;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -20,10 +20,10 @@ import java.util.Date;
 @Repository
 public class UserRepository {
 
-    @Autowired
+    @Resource
     private UserDOMapper userDoMapper;
 
-    @Autowired
+    @Resource
     private UserRoleDOMapper userRoleDoMapper;
 
     @Cacheable(value = "user", key = "#username")

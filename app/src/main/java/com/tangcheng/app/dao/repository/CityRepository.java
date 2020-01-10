@@ -1,10 +1,10 @@
 package com.tangcheng.app.dao.repository;
 
-import com.tangcheng.app.domain.entity.CityDO;
 import com.tangcheng.app.dao.repository.mapper.CityDOMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tangcheng.app.domain.entity.CityDO;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ import java.util.Map;
 @Repository
 public class CityRepository {
 
-    @Autowired
+    @Resource
     private CityDOMapper cityDoMapper;
 
     public List<CityDO> getCity(String state) {

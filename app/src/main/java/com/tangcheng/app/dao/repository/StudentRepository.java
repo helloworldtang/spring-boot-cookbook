@@ -1,11 +1,11 @@
 package com.tangcheng.app.dao.repository;
 
-import com.tangcheng.app.domain.entity.StudentDO;
 import com.tangcheng.app.dao.repository.mapper.StudentDOMapper;
+import com.tangcheng.app.domain.entity.StudentDO;
 import org.apache.ibatis.session.RowBounds;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -13,7 +13,8 @@ import java.util.List;
  */
 @Repository
 public class StudentRepository {
-    @Autowired
+
+    @Resource
     private StudentDOMapper studentDoMapper;
 
     public List<StudentDO> listAll() {
