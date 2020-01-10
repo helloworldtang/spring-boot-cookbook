@@ -1,10 +1,10 @@
 package com.tangcheng.app.dao.repository;
 
 import com.tangcheng.app.domain.vo.CustomUserDetails;
-import com.tangcheng.app.domain.entity.UserDo;
-import com.tangcheng.app.domain.entity.UserRoleDo;
-import com.tangcheng.app.dao.repository.mapper.UserDoMapper;
-import com.tangcheng.app.dao.repository.mapper.UserRoleDoMapper;
+import com.tangcheng.app.domain.entity.UserDO;
+import com.tangcheng.app.domain.entity.UserRoleDO;
+import com.tangcheng.app.dao.repository.mapper.UserDOMapper;
+import com.tangcheng.app.dao.repository.mapper.UserRoleDOMapper;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -21,10 +21,10 @@ import java.util.Date;
 public class UserRepository {
 
     @Autowired
-    private UserDoMapper userDoMapper;
+    private UserDOMapper userDoMapper;
 
     @Autowired
-    private UserRoleDoMapper userRoleDoMapper;
+    private UserRoleDOMapper userRoleDoMapper;
 
     @Cacheable(value = "user", key = "#username")
     public CustomUserDetails getUser(String username) {
@@ -33,7 +33,7 @@ public class UserRepository {
 
     @Cacheable(value = "user", key = "#username")
     public CustomUserDetails saveUser(String username, String email, String password) {
-        UserDo userDo = new UserDo();
+        UserDO userDo = new UserDO();
         userDo.setUsername(username);
         userDo.setPassword(password);
         userDo.setEmail(email);
@@ -43,7 +43,7 @@ public class UserRepository {
         userDo.setCredentialsExpired(accountExpired);
         userDo.setAccountLocked(false);
         userDoMapper.insertUseGeneratedKeys(userDo);
-        UserRoleDo userRoleDo = new UserRoleDo();
+        UserRoleDO userRoleDo = new UserRoleDO();
         userRoleDo.setUserId(userDo.getId());
         userRoleDo.setRoleId(2);//user
         userRoleDoMapper.insert(userRoleDo);
@@ -52,7 +52,7 @@ public class UserRepository {
 
     @CachePut(value = "user", key = "#username")
     public CustomUserDetails updateUser(String username, String email) {
-        UserDo record = new UserDo();
+        UserDO record = new UserDO();
         record.setUsername(username);
         CustomUserDetails userDetails = getUser(username);
         userDetails.setEmail(email);
@@ -62,7 +62,7 @@ public class UserRepository {
 
     @CacheEvict(value = "user", key = "#username")
     public void removeUser(String username) {
-        UserDo record = new UserDo();
+        UserDO record = new UserDO();
         record.setUsername(username);
         userDoMapper.delete(record);
     }

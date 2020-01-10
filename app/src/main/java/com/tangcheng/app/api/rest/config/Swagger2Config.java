@@ -45,7 +45,7 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)//Docket, Springfox’s, primary api configuration mechanism is initialized for swagger specification 2.0
                 .groupName("cookbook")//分组，在html页面展示时有用。启用group选项会更改api json的访问路径。可以在/swagger-resources中location字段中找到
                 .select()//select() returns an instance of ApiSelectorBuilder to give fine grained control over the endpoints exposed via swagger.
-                .apis(RequestHandlerSelectors.basePackage("com.tangcheng.app.rest.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.tangcheng"))
                 .paths(PathSelectors.any())// .paths(Predicates.or(PathSelectors.regex("/api/.*")))//过滤的接口,此片过滤掉/api/打头的接口
                 .build()//The selector requires to be built after configuring the api and path selectors. Out of the box we provide predicates for regex, ant, any, none
 //                .ignoredParameterTypes(Student.class)//swagger-ui.html中如果有返回值是Student时，就会显示 Response Class (Status 200) OK <span class="strong">Student is not defined!</span>

@@ -1,7 +1,7 @@
 package com.tangcheng.app.dao.repository;
 
-import com.tangcheng.app.domain.entity.CityDo;
-import com.tangcheng.app.dao.repository.mapper.CityDoMapper;
+import com.tangcheng.app.domain.entity.CityDO;
+import com.tangcheng.app.dao.repository.mapper.CityDOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,20 +16,20 @@ import java.util.Map;
 public class CityRepository {
 
     @Autowired
-    private CityDoMapper cityDoMapper;
+    private CityDOMapper cityDoMapper;
 
-    public List<CityDo> getCity(String state) {
-        CityDo cityDo = new CityDo();
+    public List<CityDO> getCity(String state) {
+        CityDO cityDo = new CityDO();
         cityDo.setState(state);
         return cityDoMapper.select(cityDo);
     }
 
 
-    public List<CityDo> listAll() {
+    public List<CityDO> listAll() {
         return cityDoMapper.selectAll();
     }
 
-    public List<CityDo> list(Long id, String name, String state) {
+    public List<CityDO> list(Long id, String name, String state) {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("id", id);
         paramsMap.put("name", name);

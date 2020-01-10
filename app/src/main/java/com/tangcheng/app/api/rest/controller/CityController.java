@@ -1,7 +1,7 @@
 package com.tangcheng.app.api.rest.controller;
 
 import com.tangcheng.app.core.aop.MethodLogAnnotation;
-import com.tangcheng.app.domain.entity.CityDo;
+import com.tangcheng.app.domain.entity.CityDO;
 import com.tangcheng.app.service.biz.CityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class CityController {
 
     @MethodLogAnnotation(desc = "查找City")
     @RequestMapping(value = "/city", method = RequestMethod.GET)
-    public ResponseEntity<List<CityDo>> getCity(@RequestParam("state") String state, HttpServletRequest request) {
+    public ResponseEntity<List<CityDO>> getCity(@RequestParam("state") String state, HttpServletRequest request) {
         LOGGER.info("{},{},{}", request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort());
         return ResponseEntity.ok(cityService.getCity(state));
     }
@@ -33,7 +33,7 @@ public class CityController {
 
     @MethodLogAnnotation(desc = "查找City")
     @RequestMapping(value = "/city/list", method = RequestMethod.GET)
-    public ResponseEntity<List<CityDo>> listAll() {
+    public ResponseEntity<List<CityDO>> listAll() {
         return ResponseEntity.ok(cityService.listAll());
     }
 

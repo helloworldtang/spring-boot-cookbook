@@ -3,7 +3,7 @@ package com.tangcheng.app.domain.entity;
 import javax.persistence.*;
 
 @Table(name = "role")
-public class RoleDo {
+public class RoleDO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
