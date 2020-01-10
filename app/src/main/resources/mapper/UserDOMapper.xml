@@ -28,25 +28,26 @@
     </resultMap>
 
     <select id="getUserByName" resultMap="UserDetailsResultMap">
-    SELECT
-    `user`.id,
-    `user`.username,
-    `user`.password,
-    `user`.email,
-    `user`.account_enabled,
-    `user`.account_expired,
-    `user`.credentials_expired,
-    `user`.account_locked,
-    `user`.account_locked,
-    role.id role_id,
-    role.`name`,
-    role.type
-    FROM
-    user_role
-    JOIN `user` ON `user`.id = user_role.user_id
-    JOIN role ON role.id = user_role.role_id
-    WHERE
-    `user`.username = #{username}
+        SELECT
+        `user`.id,
+        `user`.username,
+        `user`.password,
+        `user`.email,
+        `user`.account_enabled,
+        `user`.account_expired,
+        `user`.credentials_expired,
+        `user`.account_locked,
+        role.id role_id,
+        role.`name`,
+        role.type
+        FROM
+        user_role
+        JOIN `user` ON `user`.id = user_role.user_id
+        JOIN role ON role.id = user_role.role_id
+        join (select @account_locked:=0) dynamicSqlVar
+        WHERE
+        `user`.username = #{username}
+        and account_locked=@account_locked
   </select>
 
 
