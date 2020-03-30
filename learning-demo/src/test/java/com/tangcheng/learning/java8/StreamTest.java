@@ -45,9 +45,11 @@ public class StreamTest {
         List<Integer> numList = Arrays.asList(3, 1, 5, 2, 9, 8, 4, 10, 6, 7);
         numList.sort(Comparator.reverseOrder()); //reverseOrder倒序
         System.out.println("倒序:" + numList);//倒序:[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+        assertThat(numList).isEqualTo(Arrays.asList(10, 9, 8, 7, 6, 5, 4, 3, 2, 1));
 
         numList.sort(Comparator.naturalOrder());//naturalOrder自然排序即：正序
         System.out.println("正序:" + numList);//正序:[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        assertThat(numList).isEqualTo(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 
 
         //按照对象某个属性进行排序：例如年龄
