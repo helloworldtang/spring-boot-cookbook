@@ -1,6 +1,12 @@
 package com.tangcheng.app.api.rest.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -16,18 +22,21 @@ import java.util.Map;
  * @author : tang.cheng
  * @version : 2017-08-03  12:30
  */
+@Api(tags = "操作Session")
 @RestController
 @RequestMapping("test")
 public class HttpSessionController {
 
-    @RequestMapping("/session/set")
+    @ApiOperation("往Session中设置值")
+    @PutMapping("/session/set")
     public String set(HttpSession session) {
         String key = "test";
         session.setAttribute(key, new Date());
         return key;
     }
 
-    @RequestMapping("/session/get")
+    @ApiOperation("获取Session中的值")
+    @RequestMapping(value = "/session/get", method = RequestMethod.GET)
     public Map<String, Object> get(HttpSession session) {
         /**
          *
