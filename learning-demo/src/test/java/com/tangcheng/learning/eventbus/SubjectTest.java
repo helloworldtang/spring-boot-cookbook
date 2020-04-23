@@ -25,4 +25,6 @@ public class SubjectTest {
     public void dispatchAnotherEvent() throws Exception {
         subject.dispatchAnotherEvent("AnotherEvent ");
     }
+
+
 }

@@ -1,31 +1,20 @@
 package com.tangcheng.learning.eventbus;
 
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 /**
  * Created by tang.cheng on 2016/8/17.
  */
+@Slf4j
 @Component
 public class Observer2 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Observer2.class);
-
-    @Autowired
-    private EventBus eventBus;
-
-    @PostConstruct
-    public void register() {
-        eventBus.register(this);
-    }
 
     @Subscribe
     public void listen(ObserverEvent observerEvent) {
-        LOGGER.info("type:{}.receive msg:{}", ObserverEvent.class.getSimpleName(), observerEvent.getMsg());
+        log.info("type:{}.receive msg:{}", ObserverEvent.class.getSimpleName(), observerEvent.getMsg());
     }
+
+
 }

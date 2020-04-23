@@ -1,37 +1,33 @@
 package com.tangcheng.learning.eventbus;
 
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 /**
  * Created by tang.cheng on 2016/8/17.
  */
+@Slf4j
 @Component
 public class Observer1 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Observer1.class);
-    @Autowired
-    private EventBus eventBus;
-
-    @PostConstruct
-    public void register() {
-        eventBus.register(this);
-    }
-
+    /**
+     * 如果一个Subscriber报错了，并不影响其它的
+     * https://www.cnblogs.com/softidea/p/5731234.html
+     *
+     * @param observerEvent
+     */
     @Subscribe
     public void listen(ObserverEvent observerEvent) {
-        LOGGER.info("type:{}.receive msg:{}", ObserverEvent.class.getSimpleName(), observerEvent.getMsg());
+//        log.info("type:{}.receive msg:{}", ObserverEvent.class.getSimpleName(), observerEvent.getMsg());
+        throw new IllegalArgumentException("Observer1报错了");
     }
 
 
     @Subscribe
     public void listen(AnotherEvent observerEvent) {
-        LOGGER.info("type:{}.receive msg:{}", AnotherEvent.class.getSimpleName(), observerEvent.getMsg());
+        log.info("type:{}.receive msg:{}", AnotherEvent.class.getSimpleName(), observerEvent.getMsg());
     }
+
+
 }
