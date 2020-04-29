@@ -29,4 +29,18 @@ public class UriTemplateHandlerTest {
     }
 
 
+    @Test
+    public void uriTemplateHandlerWithTwoQueryStringTest() {
+        UriTemplateHandler uriTemplateHandler = new DefaultUriTemplateHandler();
+        Map<String, String> uriVariables = new HashMap<>();
+        uriVariables.put("orderNo", "12345");
+        URI expand = uriTemplateHandler.expand("https://chaojihao.com/user/order/detail?orderno={orderNo}&logtoSensor=1", uriVariables);
+        System.out.println(expand.toString());
+        assertThat(expand.toString()).isEqualTo("https://chaojihao.com/user/order/detail?orderno=12345&logtoSensor=1");
+    }
+
+
+
+
+
 }
