@@ -1,6 +1,7 @@
 package com.tangcheng.learning.inject;
 
 import org.apache.commons.io.IOUtils;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,9 +13,8 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 /**
@@ -27,16 +27,46 @@ public class InjectTest {
     @Value("classpath:sourceData.txt")
     private Resource resource;
 
+    @Value("${list.items:1,2,3}")
+    private String[] items;
+
+    @Value("${str.value:}")
+    private String strWithDefault;
+
     @Test
     public void injectFileTest() throws IOException {
         assertThat(resource, notNullValue());
         String canonicalPath = resource.getFile().getCanonicalPath();
         System.out.println(canonicalPath);
         List<String> list = IOUtils.readLines(resource.getInputStream(), "utf-8");
-        assertThat(list, hasItems(is("123"), is("456")));
+        assertThat(list, Matchers.hasItems("123", "456"));
         for (String s : list) {
             System.out.println(s);
         }
     }
+
+    /**
+     * 使用英文逗点分隔的字符串会被按 英文逗点 进行分隔成 一个数组
+     */
+    @Test
+    public void valueAnnotation_Given_String_Separate_With_Comma_Then_Return_List() {
+        assertThat(items, notNullValue());
+        assertThat(items, arrayWithSize(3));
+        for (String item : items) {
+            System.out.println(item);
+        }
+    }
+
+
+    /**
+     * 使用 : 后，会有默认值 空字符串
+     */
+    @Test
+    public void valueAnnotation_String() {
+        assertThat(strWithDefault, is(""));
+        assertThat(strWithDefault, Matchers.notNullValue());
+        System.out.println("strWithDefault:" + strWithDefault + ";");
+    }
+
 
 }
