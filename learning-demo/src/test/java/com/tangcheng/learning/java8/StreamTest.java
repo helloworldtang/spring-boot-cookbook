@@ -21,18 +21,27 @@ public class StreamTest {
     @Test
     public void filterTest() {
         List<String> listOne = Stream.of("1", "2", "3", "4").collect(Collectors.toList());
-        List<String> listTwo = Stream.of("2", "3", "5").collect(Collectors.toList());
-        listTwo.removeAll(listOne);
-        assertThat(listTwo.size()).isEqualTo(1);
-        assertThat(listTwo.get(0)).isEqualTo("5");
-        listOne.addAll(listTwo);
-        assertThat(listOne.size()).isEqualTo(5);
-
 
         List<String> list = listOne.stream().filter("2"::equals).collect(Collectors.toList());
         assertThat(list.size()).isEqualTo(1);
         assertThat(list.get(0)).isEqualTo("2");
+    }
 
+
+    @Test
+    public void test_api_removeAll_addAll() {
+        List<String> listOne = Stream.of("1", "2", "3", "4").collect(Collectors.toList());
+        List<String> listTwo = Stream.of("2", "3", "5").collect(Collectors.toList());
+        listTwo.removeAll(listOne);
+        /**
+         * removeAll会remove集合中有交集的部分
+         */
+        assertThat(listTwo.size()).isEqualTo(1);
+        assertThat(listTwo.get(0)).isEqualTo("5");
+        listOne.addAll(listTwo);
+        assertThat(listOne.size()).isEqualTo(5);
+        listOne.addAll(listTwo);
+        assertThat(listOne.size()).isEqualTo(6);
     }
 
 
