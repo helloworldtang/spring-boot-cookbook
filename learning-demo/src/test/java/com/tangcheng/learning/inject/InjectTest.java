@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
@@ -29,6 +30,12 @@ public class InjectTest {
 
     @Value("${list.items:1,2,3}")
     private String[] items;
+
+    @Value("${list.items:}")
+    private String[] itemsWithDefaultBlankValue;
+
+//    @Value("${list.items}")
+    private String[] itemsWithoutDefault;
 
     @Value("${str.value:}")
     private String strWithDefault;
@@ -49,12 +56,25 @@ public class InjectTest {
      * 使用英文逗点分隔的字符串会被按 英文逗点 进行分隔成 一个数组
      */
     @Test
-    public void valueAnnotation_Given_String_Separate_With_Comma_Then_Return_List() {
+    public void valueAnnotation_Given_String_Separate_With_Comma_Then_Return_Array() {
         assertThat(items, notNullValue());
         assertThat(items, arrayWithSize(3));
         for (String item : items) {
             System.out.println(item);
         }
+        assertThat(items, arrayWithSize(3));
+
+    }
+
+    /**
+     * 使用:后，没有给默认值，则只会初始化数组。里面没有东西。
+     * 即仅仅 不为null
+     */
+    @Test
+    public void valueAnnotation_Given_Default_Is_Nothing_Then_Return_Empty_Array() {
+        assertThat(itemsWithDefaultBlankValue, notNullValue());
+        assertThat(itemsWithDefaultBlankValue, emptyArray());
+        assertThat(itemsWithDefaultBlankValue.length, is(0));
     }
 
 
