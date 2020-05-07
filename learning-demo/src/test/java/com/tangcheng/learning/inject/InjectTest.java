@@ -63,7 +63,6 @@ public class InjectTest {
             System.out.println(item);
         }
         assertThat(items, arrayWithSize(3));
-
     }
 
     /**
