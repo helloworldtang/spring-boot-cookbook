@@ -17,4 +17,10 @@ public class IntegerEventHandler implements EventHandler<Integer> {
         return msg > 0;
     }
 
+    @Override
+    public Boolean support(String name, Integer type) {
+        return null;
+    }
+
+
 }

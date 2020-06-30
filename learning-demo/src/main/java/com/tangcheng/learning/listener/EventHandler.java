@@ -7,5 +7,9 @@ package com.tangcheng.learning.listener;
  * @since
  */
 public interface EventHandler<T> {
+
     Boolean support(T msg);
+
+    Boolean support(String name, Integer type);
+
 }

@@ -10,9 +10,16 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class StringEventHandler implements EventHandler<String> {
+
     @Override
     public Boolean support(String msg) {
         log.info("check String support");
         return msg.length() > 0;
     }
+
+    @Override
+    public Boolean support(String name, Integer type) {
+        return null;
+    }
+
 }
