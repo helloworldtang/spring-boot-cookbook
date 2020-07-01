@@ -89,11 +89,18 @@
         这个class在 version  19.0 中有。
         从哪个版本中开始有，没有进一步跟踪
         https://mvnrepository.com/artifact/com.google.guava/guava
+        CVE-2018-10237
+moderate severity
+Vulnerable versions: > 11.0, < 24.1.1
+Patched version: 24.1.1
+Unbounded memory allocation in Google Guava 11.0 through 24.x before 24.1.1 allows remote attackers to conduct denial of service attacks against servers
+that depend on this library and deserialize attacker-provided data, because the AtomicDoubleArray class (when serialized with Java serialization)
+and the CompoundOrdering class (when serialized with GWT serialization) perform eager allocation without appropriate checks on what a client has sent and whether the data size is reasonable.
         -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
+            <version>[24.1.1,)</version>
         </dependency>
 
         <dependency>
