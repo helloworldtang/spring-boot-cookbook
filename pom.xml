@@ -46,11 +46,20 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.58</version>
+                <version>1.2.72</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>2.10.6</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.tangcheng</groupId>
                 <artifactId>app-core</artifactId>
