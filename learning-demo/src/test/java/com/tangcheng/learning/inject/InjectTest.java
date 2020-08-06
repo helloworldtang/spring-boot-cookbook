@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.is;
@@ -31,10 +32,13 @@ public class InjectTest {
     @Value("${list.items:1,2,3}")
     private String[] items;
 
+    @Value("${list.items:1,2,3}")
+    private Long[] longItems;
+
     @Value("${list.items:}")
     private String[] itemsWithDefaultBlankValue;
 
-//    @Value("${list.items}")
+    //@Value("${list.items}")
     private String[] itemsWithoutDefault;
 
     @Value("${str.value:}")
@@ -63,6 +67,17 @@ public class InjectTest {
             System.out.println(item);
         }
         assertThat(items, arrayWithSize(3));
+    }
+
+    /**
+     * 使用:后，没有给默认值，则只会初始化数组。里面没有东西。
+     * 即仅仅 不为null
+     */
+    @Test
+    public void valueAnnotation_Given_Default_With_StringNum_Then_Return_Long_Type_Array() {
+        assertThat(longItems, notNullValue());
+        assertThat(longItems.length, is(3));
+        assertThat(longItems, arrayContaining((long) 1, (long) 2, (long) 3));
     }
 
     /**
