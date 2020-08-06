@@ -1,7 +1,7 @@
 package com.tangcheng.learning.web.config;
 
+import com.alibaba.fastjson.JSONException;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
