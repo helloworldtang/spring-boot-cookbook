@@ -38,8 +38,7 @@ public class StackDemoExam {
         }
         char[] charArray = bracketSource.toCharArray();
         Stack<Character> stack = new Stack<>();
-        stack.push(charArray[0]);
-        for (int i = 1; i < charArray.length; i++) {
+        for (int i = 0; i < charArray.length; i++) {
             char next = charArray[i];
             if (stack.isEmpty()) {
                 if (patternMatch.get(next) == null) {
