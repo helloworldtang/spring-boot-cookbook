@@ -38,8 +38,13 @@ public class StackDemoExam {
         }
         char[] charArray = bracketSource.toCharArray();
         Stack<Character> stack = new Stack<>();
-        for (int i = 0; i < charArray.length; i++) {
-            char next = charArray[i];
+        for (char next : charArray) {
+            /**
+             * public synchronized E peek() {
+             *    int len = size();
+             *      if (len == 0)
+             *        throw new EmptyStackException();
+             */
             if (stack.isEmpty()) {
                 if (patternMatch.get(next) == null) {
                     // when empty,the next must be left bracket!
@@ -48,8 +53,9 @@ public class StackDemoExam {
                 stack.push(next);
                 continue;
             }
-            Character first = stack.peek();
-            if (Objects.equals(next, patternMatch.get(first))) {
+
+            Character lastItem = stack.peek();
+            if (Objects.equals(next, patternMatch.get(lastItem))) {
                 stack.pop();
             } else {
                 stack.push(next);
