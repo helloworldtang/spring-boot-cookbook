@@ -15,7 +15,7 @@ import java.util.List;
  * @description:
  * @since: Created in 2018/07/06 15:05
  */
-@Api(tags = "请求参数初始化过程debug，【结论】没有使用@RequestBody修饰的入参，不能是Java接口", description = "【结论】没有使用@RequestBody修饰的入参，不能是接口")
+@Api(tags = "请求参数初始化过程debug，【结论】没有使用@RequestBody修饰的入参，不能是Java接口")
 @RestController
 @Slf4j
 @RequestMapping("parameter")
