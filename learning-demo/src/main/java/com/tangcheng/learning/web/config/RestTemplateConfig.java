@@ -89,7 +89,40 @@ public class RestTemplateConfig {
 
         //DNS解析器
         DnsResolver dnsResolver = SystemDefaultDnsResolver.INSTANCE;
-        //创建连接池管理器
+        /**
+         * 创建连接池管理器
+         * PoolingHttpClientConnectionManager是一个HttpClientConnection的连接池，可以为多线程提供并发请求服务。主要作用就是分配连接，回收连接等。同一个route的请求，会优先使用连接池提供的空闲长连接。
+         * https://www.cnblogs.com/shoren/p/httpclient-leaseConnection.html
+         *
+         * 2.7.4. Hostname verification
+         * In addition to the trust verification and the client authentication performed on the SSL/TLS protocol level, HttpClient can optionally verify whether the target hostname matches the names stored inside the server's X.509 certificate, once the connection has been established. This verification can provide additional guarantees of authenticity of the server trust material. The javax.net.ssl.HostnameVerifier interface represents a strategy for hostname verification. HttpClient ships with two javax.net.ssl.HostnameVerifier implementations. Important: hostname verification should not be confused with SSL trust verification.
+         *
+         * DefaultHostnameVerifier:  The default implementation used by HttpClient is expected to be compliant with RFC 2818. The hostname must match any of alternative names specified by the certificate, or in case no alternative names are given the most specific CN of the certificate subject. A wildcard can occur in the CN, and in any of the subject-alts.
+         * NoopHostnameVerifier:  This hostname verifier essentially turns hostname verification off. It accepts any SSL session as valid and matching the target host.
+         * Per default HttpClient uses the DefaultHostnameVerifier implementation. One can specify a different hostname verifier implementation if desired
+         *
+         * SSLContext sslContext = SSLContexts.createSystemDefault();
+         * SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+         *         sslContext,
+         *         NoopHostnameVerifier.INSTANCE);
+         *
+         * 2.7.2. Integration with connection manager
+         * Custom connection socket factories can be associated with a particular protocol scheme as as HTTP or HTTPS and then used to create a custom connection manager.
+         *
+         * ConnectionSocketFactory plainsf = <...>
+         * LayeredConnectionSocketFactory sslsf = <...>
+         * Registry<ConnectionSocketFactory> r = RegistryBuilder.<ConnectionSocketFactory>create()
+         *         .register("http", plainsf)
+         *         .register("https", sslsf)
+         *         .build();
+         *
+         * HttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(r);
+         * HttpClients.custom()
+         *         .setConnectionManager(cm)
+         *         .build();
+         * http://hc.apache.org/httpcomponents-client-4.5.x/tutorial/html/connmgmt.html#d5e418
+         *
+         */
         PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager(socketFactoryRegistry, connectionFactory, dnsResolver);
         //设置默认的socket参数
         manager.setDefaultSocketConfig(SocketConfig.custom().setTcpNoDelay(true).build());
