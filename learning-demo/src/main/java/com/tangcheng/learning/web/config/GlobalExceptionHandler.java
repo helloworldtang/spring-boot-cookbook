@@ -2,6 +2,8 @@ package com.tangcheng.learning.web.config;
 
 import com.alibaba.fastjson.JSONException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -9,7 +11,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * @author tangcheng
@@ -128,6 +134,27 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error("{}.msg:{}", e.getClass().getName(), e);
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<?> handleSQLException(IllegalArgumentException e) {
+        log.error("【数据库报错了】{}.msg:{}", e.getClass().getName(), e);
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity<?> handleDataAccessException(IllegalArgumentException e) {
+        log.error("【数据库报错了】{}.msg:{}", e.getClass().getName(), e);
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<?> handleIOException(IllegalArgumentException e) {
         log.error("{}.msg:{}", e.getClass().getName(), e);
         return ResponseEntity.badRequest().body(e.getMessage());
     }
