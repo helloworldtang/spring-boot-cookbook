@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>com.tangcheng</groupId>
-            <artifactId>app-core</artifactId>
+            <artifactId>cookbook-core</artifactId>
         </dependency>
 
         <dependency>

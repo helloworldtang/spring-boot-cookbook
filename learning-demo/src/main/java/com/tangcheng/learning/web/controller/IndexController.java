@@ -27,11 +27,12 @@ public class IndexController {
     @Autowired
     private WeatherUserInfoExcelView weatherUserInfoExcelView;
 
-    @GetMapping("/")
+    @GetMapping({"/", "home", "index", ""})
     public String index(Model model) {
         model.addAttribute("eventName", "FIFA 2018");
         return "index";
     }
+
 
     @GetMapping("download/xls")
     public ModelAndView exportXls() {
