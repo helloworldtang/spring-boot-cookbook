@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -37,19 +38,19 @@ public class IndexController {
     private Producer captchaProducer;
 
     @RequestMapping(value = {"/home", "/"}, method = RequestMethod.GET)
-    public ModelAndView home(Principal principal) {
+    public ModelAndView home(@ApiIgnore Principal principal) {
         LOGGER.info("isRememberMeAuthenticated:{}", isRememberMeAuthenticated());
         ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("title", "Login success!");
-        modelAndView.addObject("message", principal.getName());
+        modelAndView.addObject("title", principal.getName() + " login success!");
+        modelAndView.addObject("loginUserName", principal.getName());
         modelAndView.addObject("date", new Date());
 
         Person person1 = new Person();
-        person1.setName("SinglePeople");
+        person1.setName("person1");
         person1.setAge(ThreadLocalRandom.current().nextInt());
 
         Person person2 = new Person();
-        person2.setName("SinglePeople");
+        person2.setName("person2");
         person2.setAge(ThreadLocalRandom.current().nextInt(1, 150));
 
         List<Person> peopleList = newArrayList(person1, person2);

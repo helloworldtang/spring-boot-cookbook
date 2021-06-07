@@ -50,7 +50,7 @@
         <article>
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title" th:text="'welcome:'+ ${message}+'!'">访问Model</h3>
+                    <h3 class="panel-title" th:text="'welcome:'+ ${loginUserName}+'!'">访问Model</h3>
                 </div>
                 <div class="panel-body">
                     <span th:text="${#dates.format(date)}"></span>
