@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @see
  * @since
  */
-public class UriTemplateHandlerTest {
+public class UriTemplateEngineHandlerTest {
 
     @Test
     public void uriTemplateHandlerTest() {
@@ -38,9 +38,6 @@ public class UriTemplateHandlerTest {
         System.out.println(expand.toString());
         assertThat(expand.toString()).isEqualTo("https://chaojihao.com/user/order/detail?orderno=12345&logtoSensor=1");
     }
-
-
-
 
 
 }

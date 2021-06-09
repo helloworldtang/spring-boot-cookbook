@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 @Builder
-public class Template {
+public class TemplateEngine {
 
     private String template;
 
