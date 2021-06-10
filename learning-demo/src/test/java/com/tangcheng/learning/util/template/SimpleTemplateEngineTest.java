@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TemplateEngineTest {
+public class SimpleTemplateEngineTest {
 
     private String hi = "hi,";
     private String template = hi + "${name}";
@@ -25,14 +25,14 @@ public class TemplateEngineTest {
 
     @Test
     public void Should_Given_Key_Value_When_Return_Human_Content_Use_Builder() {
-        String process = TemplateEngine.builder().template(template).build().process(params);
+        String process = SimpleTemplateEngine.builder().template(template).build().process(params);
         assertThat(process).isEqualTo(expected);
     }
 
 
     @Test
     public void Should_Given_Key_Value_When_Return_Human_Content_Use_Static_Process() {
-        String process = TemplateEngine.process(template, params);
+        String process = SimpleTemplateEngine.process(template, params);
         assertThat(process).isEqualTo(expected);
     }
 
@@ -51,7 +51,7 @@ public class TemplateEngineTest {
         String expected = hi + name;
         Map<String, String> params = new HashMap<>();
         params.put("name", name);
-        String result = TemplateEngine.process(template, params);
+        String result = SimpleTemplateEngine.process(template, params);
         System.out.println(result);
         assertThat(result).isEqualTo(expected);
     }
@@ -70,7 +70,7 @@ public class TemplateEngineTest {
         String expected = hi + name;
         Map<String, String> params = new HashMap<>();
         params.put("name", name);
-        String result = TemplateEngine.process(template, params);
+        String result = SimpleTemplateEngine.process(template, params);
         System.out.println(result);
         assertThat(result).isEqualTo(expected);
     }
@@ -82,7 +82,7 @@ public class TemplateEngineTest {
         String expected = hi + name;
         Map<String, String> params = new HashMap<>();
         params.put("name", name);
-        String result = TemplateEngine.process(template, params);
+        String result = SimpleTemplateEngine.process(template, params);
         System.out.println(result);
         assertThat(result).isEqualTo(expected);
     }

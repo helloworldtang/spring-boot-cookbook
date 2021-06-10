@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @see
  * @since
  */
-public class UriTemplateEngineHandlerTest {
+public class UriSimpleTemplateEngineHandlerTest {
 
     @Test
     public void uriTemplateHandlerTest() {
