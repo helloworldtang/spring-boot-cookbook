@@ -23,4 +23,6 @@ public class ModelHeaderBO {
 
     private List<String> receiverList;
 
+    private ModelPlanBO modelPlanBO;
+
 }

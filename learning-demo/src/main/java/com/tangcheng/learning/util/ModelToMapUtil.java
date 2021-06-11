@@ -3,6 +3,7 @@ package com.tangcheng.learning.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -19,7 +20,7 @@ import java.util.*;
 public class ModelToMapUtil {
 
     public static <T> Map<String, Object> transfer2Map(T model) {
-        String jsonStr = JSON.toJSONString(model);
+        String jsonStr = JSON.toJSONString(model, SerializerFeature.DisableCircularReferenceDetect);
         JSONObject jsonObject = JSON.parseObject(jsonStr);
         return transferJSONObject2Map(jsonObject);
     }
@@ -35,7 +36,7 @@ public class ModelToMapUtil {
                 List<Object> objects = transferJSONArray2Map((JSONArray) value);
                 result.put(key, objects);
             } else if (value instanceof JSONObject) {
-                Map<String, Object> jsonObject2Map = transferJSONObject2Map(jsonObject);
+                Map<String, Object> jsonObject2Map = transferJSONObject2Map((JSONObject) value);
                 result.put(key, jsonObject2Map);
             } else {
                 result.put(key, value);
