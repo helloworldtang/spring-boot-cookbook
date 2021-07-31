@@ -3,15 +3,20 @@ package com.tangcheng.app.api.rest.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.async.DeferredResult;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tang.cheng on 2016/9/29.
@@ -54,6 +59,7 @@ public class Swagger2Config {
                 .pathMapping("/")// 在这里可以设置请求的统一前缀；默认请求都是以 / 根路径开始，如果我们的应用不是部署在根路径，比如以/platform（应用名）部署，则可以通过一下方式设置请求的统一前缀。
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)//使用默认的响应信息true：默认响应信息将会回到全局的响应信息中；false:不加到全局的响应信息中
+                .securitySchemes(securitySchemes())
                 ;
     }
 
@@ -72,4 +78,12 @@ public class Swagger2Config {
                 .contact(new Contact("Tang.Cheng", "https://github.com/helloworldtang/spring-boot-cookbook", "helloworld.tang@qq.com"))
                 .build();
     }
+
+    private List<ApiKey> securitySchemes() {
+        List<ApiKey> securitySchemes = new ArrayList<>(1);
+        securitySchemes.add(new ApiKey("Bearer Token", HttpHeaders.AUTHORIZATION, "header"));
+        return securitySchemes;
+    }
+
+
 }
