@@ -38,27 +38,25 @@ public class DistributedLockAspect {
     @Autowired
     private KeyGenerator keyGenerator;
 
-    @Pointcut("@annotation(com.tangcheng.lock.annotation.DistributedLock)")
-    public void distributedLockPointCut() {
+    @Pointcut("@annotation(distributedLock)")
+    public void distributedLockPointCut(DistributedLock distributedLock) {
     }
 
-    @Around("distributedLockPointCut()")
-    public Object process(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    @Around("distributedLockPointCut(distributedLock)")
+    public Object process(ProceedingJoinPoint proceedingJoinPoint, DistributedLock distributedLock) throws Throwable {
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
-        Method method = signature.getMethod();
-        DistributedLock annotation = method.getAnnotation(DistributedLock.class);
-        if (annotation == null) {
+        if (distributedLock == null) {
             Class<?> classTarget = proceedingJoinPoint.getTarget().getClass();
             Class<?>[] parameterTypes = ((MethodSignature) proceedingJoinPoint.getSignature()).getParameterTypes();
             Method objMethod = classTarget.getMethod(signature.getName(), parameterTypes);
-            annotation = objMethod.getAnnotation(DistributedLock.class);
+            distributedLock = objMethod.getAnnotation(DistributedLock.class);
         }
-        String lockKey = keyGenerator.getLockKey(proceedingJoinPoint, annotation);
+        String lockKey = keyGenerator.getLockKey(proceedingJoinPoint, distributedLock);
         if (StringUtils.isBlank(lockKey)) {
             log.warn("lockKey is blank");
             throw new DistributedLockException("lock key must not be blank");
         }
-        Boolean success = getLock(annotation, lockKey);
+        Boolean success = getLock(distributedLock, lockKey);
         if (success) {
             try {
                 return proceedingJoinPoint.proceed();
