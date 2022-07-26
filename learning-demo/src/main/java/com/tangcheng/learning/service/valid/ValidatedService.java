@@ -5,8 +5,8 @@
  */
 package com.tangcheng.learning.service.valid;
 
-import com.tangcheng.learning.web.dto.dto.ValidateResultDTO;
-import com.tangcheng.learning.web.dto.req.UserReq;
+import com.tangcheng.learning.adapter.web.dto.dto.ValidateResultDTO;
+import com.tangcheng.learning.adapter.web.dto.req.UserReq;
 
 import javax.validation.constraints.NotNull;
 

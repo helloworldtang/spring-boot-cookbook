@@ -115,6 +115,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.tangcheng</groupId>
+            <artifactId>time-cost-statistics</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>xsoup</artifactId>
             <version>0.3.1</version>
