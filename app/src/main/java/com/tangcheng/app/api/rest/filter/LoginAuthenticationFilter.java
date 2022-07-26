@@ -1,6 +1,5 @@
 package com.tangcheng.app.api.rest.filter;
 
-import com.google.code.kaptcha.Constants;
 import com.tangcheng.app.domain.exception.CaptchaException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -25,8 +24,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String verification = request.getParameter("code");
-        String captcha = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-
+        String captcha = (String) request.getSession().getAttribute("KAPTCHA_SESSION_KEY");
         if (!captcha.contentEquals(verification)) {
             throw new CaptchaException("captcha code not matched!");
         }

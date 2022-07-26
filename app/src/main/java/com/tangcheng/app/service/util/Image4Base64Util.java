@@ -1,12 +1,10 @@
 package com.tangcheng.app.service.util;
 
-import com.google.code.kaptcha.Producer;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
-import java.awt.image.RenderedImage;
 import java.io.*;
 import java.util.Base64;
 
@@ -14,14 +12,15 @@ import java.util.Base64;
 public class Image4Base64Util {
 
 
-    @Autowired
-    private Producer producer;
-
+    //    @Autowired
+//    private Producer producer;
+//
     public String image2Base64() throws IOException {
-        String imageCode = producer.createText();
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        RenderedImage image = producer.createImage(imageCode);
-        ImageIO.write(image, "PNG", output);
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
+        String code = lineCaptcha.getCode();
+        lineCaptcha.write(output);
+//        ImageIO.write(lineCaptchaImage, "PNG", output);
         return DatatypeConverter.printBase64Binary(output.toByteArray());
     }
 

@@ -1,7 +1,7 @@
 package com.tangcheng.app.api.web;
 
-import com.google.code.kaptcha.Constants;
-import com.google.code.kaptcha.Producer;
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
 import com.tangcheng.app.domain.vo.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.annotation.Resource;
-import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,8 +32,8 @@ import static com.google.common.collect.Lists.newArrayList;
 public class IndexController {
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
-    @Resource
-    private Producer captchaProducer;
+//    @Resource
+//    private Producer captchaProducer;
 
     @RequestMapping(value = {"/home", "/"}, method = RequestMethod.GET)
     public ModelAndView home(@ApiIgnore Principal principal) {
@@ -85,11 +83,14 @@ public class IndexController {
         response.setHeader("Pragma", "no-cache");
         response.setContentType("image/jpeg");
 
-        String capText = captchaProducer.createText();
-        request.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(160, 50);
+        String code = lineCaptcha.getCode();
+//        String capText = captchaProducer.createText();
+        request.getSession().setAttribute("KAPTCHA_SESSION_KEY", code);
 
         try (ServletOutputStream out = response.getOutputStream()) {
-            ImageIO.write(captchaProducer.createImage(capText), "jpg", out);
+//            ImageIO.write(captchaProducer.createImage(capText), "jpg", out);
+            lineCaptcha.write(out);
             out.flush();
         }
         return null;
