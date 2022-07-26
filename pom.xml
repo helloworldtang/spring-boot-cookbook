@@ -13,6 +13,7 @@
         <module>app</module>
         <module>app-lock</module>
         <module>cookbook-common</module>
+        <module>time-cost-statistics</module>
     </modules>
     <packaging>pom</packaging>
 
