@@ -6,6 +6,7 @@ import org.joda.time.LocalDateTime;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class ExcelExportBO<T> {
     private List<String> columnNames;
     private List<T> content;
 
-    public String getExcelFileName() {
+    public String encodeExcelFileName() {
         if (this.excelFileName == null) {
             String generateStrCode = new RandomStringGenerator.Builder()
                     .withinRange('a', 'z')
@@ -29,8 +30,8 @@ public class ExcelExportBO<T> {
             return generateStrCode + LocalDateTime.now().toString("yyyyMMddHHmmssSSS");
         }
         try {
-            return URLEncoder.encode(excelFileName, "utf-8");
-        } catch (UnsupportedEncodingException e) {
+            return URLEncoder.encode(excelFileName, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException ignored) {
         }
         return "tmp";
     }

@@ -23,12 +23,14 @@ public abstract class Excel2003ViewAbstractXlsView extends AbstractXlsView {
     protected void buildExcelDocument(Map<String, Object> map, Workbook workbook, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
         @SuppressWarnings("unchecked")
         ExcelExportBO<WeatherVO> exportBO = (ExcelExportBO<WeatherVO>) map.get(EXPORT_DATA);
+        httpServletResponse.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
         String userAgent = httpServletRequest.getHeader("User-Agent");
-        String excelFileName = exportBO.getExcelFileName() + ".xls";
+        String excelFileName = exportBO.encodeExcelFileName() + ".xls";
         if (null != userAgent && userAgent.toLowerCase().contains("firefox")) {
-            httpServletResponse.setHeader("content-disposition", String.format("attachment;filename*=utf-8'zh_cn'%s", excelFileName));
+            excelFileName = excelFileName.replaceAll("\\s", "");
+            httpServletResponse.setHeader("Content-Disposition", String.format("attachment;filename*=utf-8'zh_cn'%s", excelFileName));
         } else {
-            httpServletResponse.setHeader("content-disposition", "attachment;filename=" + excelFileName);
+            httpServletResponse.setHeader("Content-Disposition", "attachment;filename=" + excelFileName);
         }
         fillSheet(exportBO, workbook);
     }
