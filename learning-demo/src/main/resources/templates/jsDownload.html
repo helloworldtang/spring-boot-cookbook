@@ -14,9 +14,9 @@
 
 </body>
 <script>
-    let url = document.getElementById('fileUrl').value;
-    console.log(url);
     document.getElementById('btn').onclick = function () {
+        let url = document.getElementById('fileUrl').value;
+        console.log(url);
         document.getElementById('status').innerHTML = '下载中';
         fetch(url).then(res => res.blob().then(blob => {
             let a = document.createElement('a');
