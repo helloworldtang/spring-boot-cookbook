@@ -31,7 +31,7 @@ import java.util.Map;
  * Created by tang.cheng on 2016/12/12.
  */
 @SuppressWarnings("SpringJavaAutowiringInspection")
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@Order(SecurityProperties.DEFAULT_FILTER_ORDER)
 @EnableWebSecurity
 //As of Spring Security 4.0, @EnableWebMvcSecurity is deprecated. The replacement is @EnableWebSecurity which will determine adding the Spring MVC features based upon the classpath.
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

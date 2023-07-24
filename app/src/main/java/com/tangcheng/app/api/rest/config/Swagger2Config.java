@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Profile("!prod")
 @Configuration
-@EnableSwagger2
+//@EnableSwagger2
 public class Swagger2Config {
 
     /**
@@ -74,7 +74,7 @@ public class Swagger2Config {
                 .title("Spring Boot cookbook")
                 .description("side project")
                 .termsOfServiceUrl("https://github.com/helloworldtang/spring-boot-cookbook")//服务条款
-                .version("1.0.1")//本次发布的版本
+                .version("1.0.2")//本次发布的版本
                 .contact(new Contact("Tang.Cheng", "https://github.com/helloworldtang/spring-boot-cookbook", "helloworld.tang@qq.com"))
                 .build();
     }

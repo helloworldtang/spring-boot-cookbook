@@ -19,7 +19,7 @@ import java.util.List;
  * Created by tangcheng on 4/29/2017.
  */
 @Configuration
-@EnableSwagger2
+//@EnableSwagger2
 public class Swagger2Config {
 
     @Bean
@@ -28,7 +28,7 @@ public class Swagger2Config {
                 .title("schedule cookbook")
                 .description("side project")
                 .termsOfServiceUrl("https://github.com/helloworldtang/spring-boot-cookbook")//服务条款
-                .version("1.0.1")//本次发布的版本
+                .version("1.0.2")//本次发布的版本
                 .contact(new Contact("Tang.Cheng", "https://github.com/helloworldtang/spring-boot-cookbook", "helloworld.tang@qq.com"))
                 .build();
 

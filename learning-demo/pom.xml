@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.tangcheng</groupId>
             <artifactId>cookbook-common</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
 
         <dependency>
@@ -117,7 +117,7 @@
         <dependency>
             <groupId>com.tangcheng</groupId>
             <artifactId>time-cost-statistics</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
 
         <dependency>
