@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.Objects;
 
 /**
  * @Auther: cheng.tang
@@ -86,7 +87,7 @@ public class NetworkUtil {
                 }
             }
         }
-        if (ip.equals("0:0:0:0:0:0:0:1")) {//win7下使用localhost访问时没有经过路由
+        if (Objects.equals(ip, "0:0:0:0:0:0:0:1")) {//win7下使用localhost访问时没有经过路由
             return InetAddress.getLocalHost().getHostAddress();
         }
         if (StringUtils.isBlank(ip)) {
