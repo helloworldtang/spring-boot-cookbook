@@ -1,5 +1,6 @@
 package com.tangcheng.learning.adapter.web.api;
 
+import com.tangcheng.component.log.aop.annotation.LogReqBizParameters;
 import com.tangcheng.learning.adapter.web.dto.req.ContentNegotiationReq;
 import com.tangcheng.learning.adapter.web.dto.req.DateReq;
 import com.tangcheng.learning.adapter.web.dto.req.UserReq;
@@ -30,16 +31,36 @@ public class HttpMessageConverterTestController {
 
     /**
      * Spring MVC会自动将long型的时间转换成java.util.Date
+     * <p>
+     * 测试MVC会自动将long型的时间转换成java.util.Date  com.tangcheng.learning.adapter.web.api.HttpMessageConverterTestController#postBookTime,dateReq:DateReq(bookTime=Mon Mar 12 11:50:09 CST 2018), Header THE_BIZ_FLAG:null, url : http://localhost:1111/hmc/test/book-time cost:1ms
      *
      * @param dateReq 请求信息
      * @return
+     * @LogReqBizParameters
      */
+    @LogReqBizParameters(bizKey = "测试MVC会自动将long型的时间转换成java.util.Date")
     @ApiOperation("Spring MVC会自动将long型的时间转换成java.util.Date")
     @PostMapping("/test/book-time")
     public ResponseEntity<Object> postBookTime(@Valid @RequestBody DateReq dateReq) {
         String formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(dateReq.getBookTime());
         log.info("{},{}", formatDate, dateReq.getBookTime());
         return ResponseEntity.ok().body(formatDate);
+    }
+
+
+    /**
+     * 2023-07-24 19:02:38.999  INFO 63349 --- [nio-1111-exec-1] c.t.c.l.a.a.LogReqBizParametersAspect    :  使用value设置bizkey com.tangcheng.learning.adapter.web.api.HttpMessageConverterTestController#logUser,req:UserReq(name=hmc, age=20), Header THE_BIZ_FLAG:null, url : http://localhost:1111/hmc/log cost:6ms
+     *
+     * @param req
+     * @return
+     */
+    @LogReqBizParameters("使用value设置bizkey")
+    @PostMapping(value = "log")
+    public UserResp logUser(@Valid @RequestBody UserReq req) {
+        UserResp resp = new UserResp();
+        BeanUtils.copyProperties(req, resp);
+        resp.setName("emmm!!!" + req.getName());
+        return resp;
     }
 
     /**
