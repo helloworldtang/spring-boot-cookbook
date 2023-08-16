@@ -67,6 +67,21 @@ public class SpringInitBean implements BeanNameAware, BeanFactoryAware, Applicat
         return bean;
     }
 
+    /**
+     * 这段代码是Spring框架中的一部分，定义了一个接口InitializingBean。
+     * 这个接口被需要在一系列属性被设置之后执行某些操作（例如自定义初始化，或者仅仅检查所有必需的属性是否已经被设置）的Bean使用。
+     * <p>
+     * 接口中定义了一个方法afterPropertiesSet()。
+     * 当Bean的所有属性都已经设置并且所有的BeanFactoryAware、ApplicationContextAware等已经满足后，这个方法会被调用。
+     * 这个方法允许Bean实例在所有属性都已经设置的情况下进行整体配置的验证和最后的初始化。
+     *
+     * <p>
+     * 如果在Bean的初始化过程中出现了错误（例如，未能设置一个必要的属性）或者其他任何原因导致初始化失败，那么这个方法将抛出异常。
+     * <p>
+     * 总的来说，这个接口提供了一种方式，让Spring框架在Bean的所有属性都已经设置后执行一些额外的初始化操作，同时也可以在Bean的初始化过程中捕获并处理任何可能出现的错误。
+     *
+     * @throws Exception
+     */
     @Override
     public void afterPropertiesSet() throws Exception {
         log.info("Step-7调用。InitializingBean.afterPropertiesSet");
